@@ -3024,40 +3024,11 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
   const totalRecipes = allRecipes.length;
   const [search, setSearch] = useState("");
 
-  // Time-of-day greeting
-  const hour = new Date().getHours();
-  const greeting = hour < 11 ? { text: "Good morning! ☀️", sub: "What are we cooking today?", bg: "#1a1209", accent: "#f59e0b" }
-    : hour < 15 ? { text: "Lunch time! 🌤", sub: "Something quick and satisfying?", bg: "#0c1a12", accent: "#16a34a" }
-    : hour < 18 ? { text: "Afternoon snack? 🍵", sub: "Or planning ahead for dinner?", bg: "#0f172a", accent: "#0284c7" }
-    : hour < 21 ? { text: "Dinner time! 🌙", sub: "Let's figure out what to cook.", bg: "#1c0a00", accent: "#d97706" }
-    : { text: "Late night cooking? 🌛", sub: "Something easy and quick.", bg: "#0f0f1a", accent: "#7c3aed" };
-
-  // Random recipe of the day — seeded by date so it's consistent all day
-  const dayIndex = Math.floor(Date.now() / 86400000);
-  const savoryRecipes = allRecipes.filter(r => r.taste === "Savory");
-  const recipeOfDay = savoryRecipes[dayIndex % savoryRecipes.length];
-
-  // Quick protein filters for horizontal scroll
-  const proteinGroups = [
-    { label: "🐔 Chicken", key: "Chicken" },
-    { label: "🥩 Beef", key: "Beef" },
-    { label: "🦐 Shrimp", key: "Shrimp" },
-    { label: "🦑 Squid", key: "Squid" },
-    { label: "🐟 Fish", key: "Fish" },
-    { label: "🫘 Tofu", key: "Tofu & Tempeh" },
-    { label: "🥦 Veg", key: "Vegetable" },
-  ];
-
-  // Feature tiles — big illustrated cards
   const features = [
-    { id: "today",     emoji: "🍽️", title: "What's for
-dinner?",   bg: "#78290f", accent: "#fb923c", pattern: "🧅🫑🥩🧄🍳" },
-    { id: "week",      emoji: "📅",  title: "Plan the
-week",        bg: "#0c4a6e", accent: "#38bdf8", pattern: "🗓️📝🛒✅🍱" },
-    { id: "inventory", emoji: "🧺",  title: "My
-pantry",            bg: "#14532d", accent: "#4ade80", pattern: "🧅🥦🫙🍋🥕" },
-    { id: "browse",    emoji: "📖",  title: "Recipe
-book",          bg: "#3b0764", accent: "#c084fc", pattern: "🔍📚🍜🥘🫕" },
+    { id: "today",     emoji: "🍽", title: "What's for dinner?", subtitle: "Pick from what's in your freezer", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
+    { id: "week",      emoji: "📅", title: "Plan the week",       subtitle: "Weekend prep made easy",            description: "Map out 7 days of meals, auto-generate your shopping list", color: "#0284c7", light: "#e0f2fe", border: "#bae6fd", stat: "Mon — Sun" },
+    { id: "inventory", emoji: "🧺", title: "My pantry",           subtitle: "Know what you have",               description: "Upload grocery receipts — get recipe recommendations from your inventory", color: "#16a34a", light: "#dcfce7", border: "#bbf7d0", stat: inventoryCount > 0 ? `${inventoryCount} items` : "Upload receipt" },
+    { id: "browse",    emoji: "📖", title: "Recipe book",         subtitle: "Browse all recipes",               description: "Search and explore your full collection by ingredient or cuisine", color: "#7c3aed", light: "#f3e8ff", border: "#ddd6fe", stat: `${totalRecipes} recipes` },
   ];
 
   // Multi-word search
@@ -3073,57 +3044,38 @@ book",          bg: "#3b0764", accent: "#c084fc", pattern: "🔍📚🍜🥘🫕
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-      {/* ── Hero: time-of-day greeting + search ── */}
-      <div style={{ background: greeting.bg, padding: "44px 24px 28px", position: "relative", overflow: "hidden" }}>
-        {/* Decorative food emoji blur layer */}
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "120px", opacity: 0.06, pointerEvents: "none", userSelect: "none", filter: "blur(2px)", letterSpacing: "8px" }}>
-          🍳🥘🍜🥗🍱
-        </div>
-        <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "160px", height: "160px", borderRadius: "50%", background: `${greeting.accent}20`, pointerEvents: "none" }} />
-
+      {/* Hero + search */}
+      <div style={{ background: "#1c1917", padding: "40px 24px 28px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "180px", height: "180px", borderRadius: "50%", background: "rgba(217,119,6,0.15)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(217,119,6,0.08)", pointerEvents: "none" }} />
         <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
-          {/* App name */}
-          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
-            <span style={{ fontSize: "28px" }}>🍳</span>
-            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 700, color: "rgba(255,255,255,0.7)" }}>Our Kitchen</span>
-          </div>
-
-          {/* Greeting */}
-          <div style={{ marginBottom: "20px" }}>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "30px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.15 }}>{greeting.text}</h1>
-            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px", margin: 0 }}>{greeting.sub}</p>
-          </div>
+          <div style={{ fontSize: "36px", marginBottom: "8px" }}>🍳</div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.1 }}>Our Kitchen</h1>
+          <p style={{ color: "#a8a29e", fontSize: "13px", margin: "0 0 20px" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}{inventoryCount > 0 ? ` · ${inventoryCount} pantry items` : ""}</p>
 
           {/* Search bar */}
           <div style={{ position: "relative" }}>
-            <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", fontSize: "15px", pointerEvents: "none" }}>🔍</span>
+            <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder={"Try 'ayam mentega' or 'japanese'…"}
-              style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", padding: "12px 40px 12px 42px", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+              placeholder="Search any recipe… try 'ayam mentega'"
+              style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", padding: "12px 14px 12px 42px", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
             />
             {search && (
               <button onClick={() => setSearch("")} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: "18px", cursor: "pointer", lineHeight: 1 }}>×</button>
             )}
-          </div>
-
-          {/* Stats row */}
-          <div style={{ display: "flex", gap: "16px", marginTop: "14px" }}>
-            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>{totalRecipes} recipes</span>
-            {inventoryCount > 0 && <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>· {inventoryCount} pantry items</span>}
-            {customRecipes.length > 0 && <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>· {customRecipes.length} added</span>}
           </div>
         </div>
       </div>
 
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 80px" }}>
 
-        {/* ── Search results ── */}
+        {/* Search results */}
         {searchResults.length > 0 && (
-          <div style={{ marginBottom: "28px" }}>
+          <div style={{ marginBottom: "24px" }}>
             <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
               {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} for "{search}"
             </div>
@@ -3131,94 +3083,52 @@ book",          bg: "#3b0764", accent: "#c084fc", pattern: "🔍📚🍜🥘🫕
               {searchResults.map(r => <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={C.orange} />)}
             </div>
             <button onClick={() => { setSearch(""); onNavigate("browse"); }}
-              style={{ marginTop: "10px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "10px", color: C.textMuted, fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
-              See all in Recipe Book →
+              style={{ marginTop: "12px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "10px", color: C.textMuted, fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
+              See all results in Recipe Book →
             </button>
           </div>
         )}
 
         {search.trim() && searchResults.length === 0 && (
           <div style={{ textAlign: "center", padding: "32px 20px", marginBottom: "20px" }}>
-            <div style={{ fontSize: "32px", marginBottom: "8px" }}>🤷</div>
+            <div style={{ fontSize: "28px", marginBottom: "8px" }}>🤷</div>
             <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No recipes found for "{search}"</div>
-            <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try different keywords</div>
+            <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try different keywords or browse by category below</div>
           </div>
         )}
 
-        {!search.trim() && (<>
-
-          {/* ── Feature tiles — big illustrated 2×2 bento grid ── */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
+        {/* Feature cards */}
+        {!search.trim() && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
             {features.map(f => (
-              <button key={f.id} onClick={() => onNavigate(f.id)}
-                style={{ background: f.bg, border: "none", borderRadius: "18px", padding: "18px 16px 14px", cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden", minHeight: "130px", display: "flex", flexDirection: "column", justifyContent: "space-between", transition: "transform 0.12s, opacity 0.12s" }}
-                onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
-                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-              >
-                {/* Background emoji pattern */}
-                <div style={{ position: "absolute", bottom: "-4px", right: "-4px", fontSize: "42px", opacity: 0.18, pointerEvents: "none", userSelect: "none", lineHeight: 1 }}>
-                  {f.emoji}
-                </div>
-                <div>
-                  <div style={{ fontSize: "26px", marginBottom: "8px" }}>{f.emoji}</div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 800, color: "#fff", lineHeight: 1.2, whiteSpace: "pre-line" }}>{f.title}</div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "10px" }}>
-                  <div style={{ width: "28px", height: "3px", borderRadius: "2px", background: f.accent, opacity: 0.8 }} />
-                  <span style={{ fontSize: "16px", color: "rgba(255,255,255,0.4)" }}>›</span>
+              <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "16px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.12s, box-shadow 0.12s" }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
+                <div style={{ width: "6px", background: f.color, flexShrink: 0 }} />
+                <div style={{ flex: 1, padding: "18px 16px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ fontSize: "24px" }}>{f.emoji}</span>
+                      <div>
+                        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text, lineHeight: 1.2 }}>{f.title}</div>
+                        <div style={{ fontSize: "12px", color: f.color, fontWeight: 600, marginTop: "1px" }}>{f.subtitle}</div>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
+                      <span style={{ fontSize: "11px", color: f.color, background: f.light, padding: "3px 8px", borderRadius: "20px", border: `1px solid ${f.border}`, fontWeight: 600, whiteSpace: "nowrap" }}>{f.stat}</span>
+                      <span style={{ color: C.textFaint, fontSize: "18px" }}>›</span>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: "12px", color: C.textMuted, lineHeight: 1.5, paddingLeft: "34px" }}>{f.description}</div>
                 </div>
               </button>
             ))}
           </div>
-
-          {/* ── Quick filter: protein chips ── */}
-          <div style={{ marginBottom: "22px" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>Browse by ingredient</div>
-            <div style={{ display: "flex", gap: "8px", overflowX: "auto", paddingBottom: "4px" }}>
-              {proteinGroups.map(p => (
-                <button key={p.key} onClick={() => setSearch(p.key.toLowerCase())}
-                  style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", border: `1px solid ${C.border}`, background: C.surface, color: C.text, whiteSpace: "nowrap", boxShadow: C.shadow, flexShrink: 0 }}>
-                  {p.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* ── Recipe of the day ── */}
-          {recipeOfDay && (
-            <div style={{ marginBottom: "8px" }}>
-              <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>✨ Recipe of the day</div>
-              <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", overflow: "hidden", boxShadow: C.shadowMd }}>
-                {recipeOfDay.image && (
-                  <img src={recipeOfDay.image} alt={recipeOfDay.name}
-                    style={{ width: "100%", height: "160px", objectFit: "cover", display: "block" }} />
-                )}
-                <div style={{ padding: "14px 16px" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipeOfDay.name}</div>
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "12px" }}>
-                    <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipeOfDay.time}</span>
-                    <span style={{ color: C.border }}>·</span>
-                    <span style={{ fontSize: "12px", color: C.textMuted }}>{recipeOfDay.protein}</span>
-                    <span style={{ color: C.border }}>·</span>
-                    <span style={{ fontSize: "12px", color: C.textMuted }}>{recipeOfDay.cuisine}</span>
-                    <span style={{ color: C.border }}>·</span>
-                    <span style={{ fontSize: "12px", fontWeight: 600, color: C.orange }}>{recipeOfDay.nutrition.protein}g protein/srv</span>
-                  </div>
-                  <button onClick={() => onSelect(recipeOfDay, C.orange)}
-                    style={{ width: "100%", padding: "10px", background: C.orange, color: "#fff", border: "none", borderRadius: "10px", fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
-                    View recipe →
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-        </>)}
+        )}
       </div>
     </div>
   );
 }
-
 // ─── MAIN APP ──────────────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("home");
