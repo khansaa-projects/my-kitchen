@@ -393,6 +393,7 @@ const recipes = [
     protein: "Chicken", taste: "Savory", method: "Stir-fry",
     cuisine: "Indonesian", time: "~35 min", servings: 4,
     link: "https://cookpad.com/id/resep/25072270?ref=profile",
+    image: "https://img-global.cpcdn.com/recipes/50e1beb3df269597/1200x630cq80/photo.jpg",
     nutrition: { calories: 380, protein: 28, carbs: 14, fat: 18, fiber: 2 },
     tags: ["crispy", "buttery"],
     ingredients: ["350 gr paha ayam filet", "1/2 jeruk nipis", "2 sdm maizena", "1/2 sdm kaldu bubuk", "1/2 bawang bombai", "3 siung bawang putih", "1 sdm minyak", "1 sdm margarin", "2 sdm kecap manis", "1 sdm saus tiram", "1/2 sdt kecap Maggi"],
@@ -722,6 +723,555 @@ const recipes = [
       "Finish with sesame oil, serve with rice, and garnish with green scallions.",
     ],
   },
+  {
+    id: 146, name: "Honey Garlic Crispy Chicken",
+    protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
+    cuisine: "Asian Fusion", time: "30 min", servings: 6,
+    nutrition: { calories: 420, protein: 32, carbs: 18, fat: 22, fiber: 1 },
+    tags: ["crispy", "honey garlic", "sticky", "weeknight"],
+    ingredients: [
+      "4 boneless chicken thighs, skin on (about 500g / 1–1.2 lb)",
+      "1.5 tbsp soy sauce",
+      "1 tbsp oyster sauce",
+      "1 tsp garlic powder",
+      "1/4 tsp salt",
+      "Black pepper to taste",
+      "1/4 cup cornstarch (for coating)",
+      "1/4 cup oil (for pan frying)",
+      "2 tbsp butter",
+      "1 bulb garlic, finely minced",
+      "1 tbsp soy sauce",
+      "1 tbsp honey",
+      "Dried parsley for garnish (optional)",
+    ],
+    steps: [
+      "Debone chicken thighs if needed, keep skin on. Wash and pat dry with paper towels.",
+      "Lightly score the meat side a few times, then flip and gently pound with the back of a knife so it cooks evenly and stays flat.",
+      "Mix soy sauce, oyster sauce, garlic powder, salt, and black pepper. Marinate chicken for at least 15 minutes.",
+      "Lightly coat each chicken thigh with cornstarch, shaking off the excess.",
+      "In a large pan over low-medium heat, add oil and place chicken skin side down. Pan fry 4–5 minutes per side until golden brown and crispy (internal temp 74°C / 165°F).",
+      "Remove chicken and set aside. Pour out excess oil. Melt butter over low heat, add minced garlic and cook until fragrant. Stir in honey and soy sauce, simmer until slightly thickened.",
+      "Return chicken to pan, coat both sides in sauce. Garnish with dried parsley and serve with steamed jasmine rice.",
+    ],
+  },
+  {
+    id: 147, name: "Beef and Broccoli",
+    protein: "Beef", taste: "Savory", method: "Stir-fry",
+    cuisine: "Chinese", time: "~20 min", servings: 2,
+    nutrition: { calories: 380, protein: 36, carbs: 22, fat: 16, fiber: 4 },
+    tags: ["takeout", "stir-fry", "broccoli", "quick"],
+    ingredients: [
+      "1 lb beef flank steak, thinly sliced against the grain (⅛–¼ inch thick)",
+      "3 tbsp water",
+      "1 tbsp Shaoxing cooking wine",
+      "½ tsp kosher salt",
+      "¼ tsp baking soda",
+      "2 tbsp cornstarch",
+      "1 tbsp neutral oil (for marinade)",
+      "½ cup light soy sauce",
+      "½ cup water (for sauce)",
+      "3 tbsp granulated sugar",
+      "2 tbsp cornstarch (for sauce)",
+      "1 tsp toasted sesame oil",
+      "1 lb broccoli, cut into florets",
+      "1 tbsp garlic, minced (about 2 cloves)",
+      "1 tbsp ginger, peeled and minced",
+      "Oil as needed for stir frying",
+      "Toasted sesame seeds for garnish (optional)",
+    ],
+    steps: [
+      "Slice flank steak thinly against the grain, no thicker than ¼ inch.",
+      "Combine beef with water, oil, Shaoxing wine, salt, cornstarch, and baking soda. Mix well and marinate 10–15 minutes (or overnight).",
+      "Mix all sauce ingredients together until no dry cornstarch remains. Set aside.",
+      "Boil broccoli florets in salted water for 2–3 minutes until just tender. Drain and set aside.",
+      "In a wok over medium-high heat, add oil and stir fry beef until about 90% cooked. Separate slices to cook evenly. Remove and set aside.",
+      "Keep 2 tbsp oil in the wok. Add minced garlic and ginger, cook until fragrant, about 15 seconds.",
+      "Pour in the sauce and bring to a simmer, stirring frequently until thickened and glossy.",
+      "Reduce to medium-low heat, return beef and broccoli to the pan. Toss until evenly coated. Garnish with sesame seeds and serve hot.",
+    ],
+  },
+  {
+    id: 148, name: "Terong Raos",
+    protein: "Vegetable", taste: "Savory", method: "Deep-fry + Stir-fry",
+    cuisine: "Indonesian", time: "35 min", servings: 2,
+    nutrition: { calories: 280, protein: 5, carbs: 42, fat: 12, fiber: 6 },
+    tags: ["terong", "crispy", "sambal", "spicy"],
+    ingredients: [
+      "300 gr terong",
+      "100 gr tepung terigu protein sedang",
+      "30 gr tepung maizena",
+      "1 sdt cabe bubuk halus",
+      "¼ sdt kunyit bubuk",
+      "1½ sdt baking powder",
+      "1 sdt kaldu ayam bubuk",
+      "1 sdt penyedap",
+      "¼ sdt merica",
+      "300 ml air dingin",
+      "6 siung bawang merah",
+      "3 siung bawang putih",
+      "6 buah cabe keriting merah",
+      "4 siung bawang merah, iris",
+      "2 buah cabai rawit, iris",
+      "2 buah cabe merah keriting, iris",
+      "2 buah cabai hijau, iris",
+      "2 lembar daun salam",
+      "1 batang serai, geprek",
+      "3 lembar daun jeruk",
+      "½ blok terasi",
+      "1–2 sdm gula merah pekat",
+      "1 sdt kaldu ayam bubuk",
+      "½ sdt penyedap",
+    ],
+    steps: [
+      "Potong terong sesuai selera. Sisihkan.",
+      "Buat adonan celup: campur terigu, maizena, cabe bubuk, kunyit, baking powder, kaldu ayam, penyedap, dan merica. Tambahkan air dingin sedikit-sedikit, aduk hingga adonan kental tapi bisa mengalir.",
+      "Celupkan potongan terong ke adonan, goreng dalam minyak panas hingga keemasan dan crispy. Angkat dan tiriskan.",
+      "Haluskan: bawang merah, bawang putih, cabe keriting merah, dan terasi.",
+      "Tumis bumbu halus dengan sedikit minyak hingga matang dan harum. Masukkan daun salam, serai, dan daun jeruk.",
+      "Masukkan irisan bawang merah, cabai rawit, cabe merah keriting, dan cabai hijau. Tumis sebentar.",
+      "Tambahkan gula merah, kaldu ayam, dan penyedap. Masak hingga bumbu mengental dan meresap.",
+      "Masukkan terong goreng, aduk rata hingga terbalut bumbu. Sajikan.",
+    ],
+  },
+  {
+    id: 149, name: "Terong Asem Manis Pedas",
+    protein: "Vegetable", taste: "Savory", method: "Stir-fry",
+    cuisine: "Indonesian", time: "30 min", servings: 3,
+    nutrition: { calories: 140, protein: 3, carbs: 22, fat: 5, fiber: 5 },
+    tags: ["asem manis", "pedas", "terong", "vegetarian"],
+    ingredients: [
+      "3 bh terong ukuran besar",
+      "Tepung maizena secukupnya untuk membaluri terong",
+      "Cuka + air secukupnya untuk merendam terong",
+      "6 siung bawang putih",
+      "Cabe rawit sesuai selera",
+      "Irisan daun bawang",
+      "2 sdm kecap asin",
+      "1 sdm cuka beras",
+      "2 sdm tepung maizena",
+      "2 sdm air",
+      "Garam dan gula secukupnya",
+    ],
+    steps: [
+      "Potong terong sesuai selera, rendam dalam campuran cuka dan air sebentar agar tidak hitam. Tiriskan.",
+      "Baluri terong dengan tepung maizena hingga rata, lalu goreng hingga kecokelatan. Tiriskan dan sisihkan.",
+      "Cincang halus bawang putih dan cabe rawit.",
+      "Tumis bawang putih dan cabe rawit hingga harum dan matang.",
+      "Tambahkan kecap asin, cuka beras, garam, dan gula. Aduk rata.",
+      "Larutkan maizena dengan air, tuang ke dalam tumisan. Aduk hingga saus mengental.",
+      "Masukkan terong goreng, aduk rata hingga terbalut saus. Taburi irisan daun bawang. Sajikan.",
+    ],
+  },
+  {
+    id: 150, name: "Brown Butter Chocolate Chip Banana Bread",
+    protein: "Fruit / Flour", taste: "Baking", method: "Baking",
+    cuisine: "Western", time: "75 min", servings: 6,
+    nutrition: { calories: 420, protein: 5, carbs: 58, fat: 20, fiber: 3 },
+    tags: ["brown butter", "banana bread", "chocolate chip", "loaf"],
+    ingredients: [
+      "3 ripe bananas",
+      "9 tbsp unsalted butter (browned to ~½ cup)",
+      "1 large egg, room temperature",
+      "¾ cup brown sugar",
+      "¼ cup white sugar",
+      "1½ cups all-purpose flour",
+      "1 tsp baking soda",
+      "½ tsp baking powder",
+      "½ tsp salt",
+      "1 tsp cinnamon",
+      "1 tsp vanilla",
+      "1 to 1½ cups semi-sweet chocolate chips",
+    ],
+    steps: [
+      "Brown butter over medium heat until golden and nutty. Transfer to a bowl and chill 5 minutes until warm, not hot.",
+      "Mash bananas in a large bowl. Whisk in browned butter (½ cup), sugars, egg, and vanilla until smooth.",
+      "Add flour, baking soda, baking powder, salt, and cinnamon. Mix until just combined.",
+      "Preheat oven to 175°C / 350°F. Fold in ~1 cup chocolate chips.",
+      "Pour into a lined loaf pan, top with remaining chocolate chips.",
+      "Bake 60 minutes, covering loosely with foil halfway through.",
+      "Toothpick test: moist crumbs = done. Bake 5–10 more minutes if needed. Cool before slicing.",
+    ],
+  },
+  {
+    id: 151, name: "Ayam Madu",
+    protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
+    cuisine: "Indonesian", time: "55 min", servings: 4,
+    nutrition: { calories: 340, protein: 30, carbs: 16, fat: 14, fiber: 0 },
+    tags: ["madu", "honey", "glossy", "halal"],
+    ingredients: [
+      "3 pcs paha ayam fillet",
+      "2 sdm saus tiram (untuk marinasi)",
+      "2 siung bawang putih, parut",
+      "1 cm jahe, parut",
+      "Garam secukupnya",
+      "Lada putih secukupnya",
+      "2 sdm kecap asin",
+      "3 sdm saus tiram",
+      "3 sdm madu",
+      "100 ml air",
+    ],
+    steps: [
+      "Marinasi ayam dengan saus tiram, bawang putih parut, jahe parut, garam, dan lada putih. Diamkan 30 menit.",
+      "Panaskan sedikit minyak, pan sear ayam hingga berubah warna dan kecokelatan di kedua sisi.",
+      "Tuangkan campuran kecap asin, saus tiram, madu, dan air ke dalam pan. Masak ayam hingga saus meresap dan mengkilat.",
+      "Sajikan dengan nasi putih hangat.",
+    ],
+  },
+  {
+    id: 152, name: "Daging Empal Gepuk Basah",
+    protein: "Beef", taste: "Savory", method: "Simmering",
+    cuisine: "Indonesian", time: "25 min", servings: 6,
+    nutrition: { calories: 380, protein: 32, carbs: 18, fat: 20, fiber: 2 },
+    tags: ["empal", "gepuk", "Sunda", "kelapa sangrai"],
+    ingredients: [
+      "1 kg daging sapi bagian paha / khas luar (sudah di-presto)",
+      "15 siung bawang merah",
+      "10 siung bawang putih",
+      "3 buah cabe merah besar",
+      "5 buah kemiri",
+      "5 cm jahe",
+      "3 lembar daun salam",
+      "5 lembar daun jeruk",
+      "2 batang serai",
+      "250 ml kaldu",
+      "8 cm lengkuas, parut",
+      "3 sdm air asam jawa",
+      "100 gr kelapa parut, sangrai",
+      "3 sdt ketumbar bubuk",
+      "½ sdt merica",
+      "1 sdt garam",
+      "1 sdt kaldu jamur",
+      "100 gr gula merah",
+    ],
+    steps: [
+      "Potong dan memarkan daging sapi yang sudah di-presto hingga pipih.",
+      "Blender bawang merah, bawang putih, cabe merah, kemiri, dan jahe hingga halus.",
+      "Tumis bumbu halus bersama daun salam, daun jeruk, dan serai hingga bumbu matang dan harum.",
+      "Masukkan lengkuas parut, kaldu, garam, kaldu jamur, merica, gula merah, ketumbar, dan air asam jawa. Aduk rata.",
+      "Masukkan daging, masak 5 menit hingga bumbu meresap.",
+      "Tambahkan kelapa sangrai, lanjutkan memasak hingga agak kering.",
+      "Sajikan dengan nasi, lalapan, dan sambal terasi.",
+    ],
+  },
+  {
+    id: 153, name: "Cumi Goreng Saus Mentega",
+    protein: "Squid", taste: "Savory", method: "Deep-fry + Stir-fry",
+    cuisine: "Indonesian", time: "30 min", servings: 6,
+    nutrition: { calories: 280, protein: 22, carbs: 24, fat: 10, fiber: 1 },
+    tags: ["crispy", "saus mentega", "cumi", "anti alot"],
+    ingredients: [
+      "500 gr cumi segar, potong ring dan bersihkan",
+      "1 sdm air jeruk nipis",
+      "120 gr tepung terigu",
+      "30 gr tepung maizena",
+      "½ sdt baking powder",
+      "¼ sdt garam",
+      "180 ml air soda dingin",
+      "2 sdm margarin",
+      "3 siung bawang putih, cincang",
+      "2 sdm kecap manis",
+      "1 sdm saus tiram",
+      "1 sdt kecap asin",
+      "1 sdm kecap inggris",
+      "½ sdt gula",
+      "¼ sdt MSG",
+      "¼ sdt merica",
+    ],
+    steps: [
+      "Potong cumi bentuk ring, bersihkan. Balur dengan jeruk nipis, diamkan 10 menit.",
+      "Campur tepung terigu, maizena, baking powder, garam, dan merica. Tuang air soda dingin sedikit-sedikit hingga jadi adonan kental.",
+      "Panaskan minyak api sedang. Celup cumi ke batter, goreng hingga kering dan crunchy. Angkat dan tiriskan.",
+      "Panaskan margarin di wajan. Tumis bawang putih hingga harum.",
+      "Masukkan kecap manis, saus tiram, kecap asin, kecap inggris, gula, MSG, dan merica. Masak hingga sedikit mengental.",
+      "Masukkan cumi goreng, aduk cepat 10–15 detik hingga saus melapisi cumi. Sajikan hangat.",
+    ],
+  },
+  {
+    id: 154, name: "Udang Saus Balado",
+    protein: "Shrimp", taste: "Savory", method: "Stir-fry",
+    cuisine: "Indonesian", time: "~40 min", servings: 5,
+    nutrition: { calories: 290, protein: 22, carbs: 20, fat: 14, fiber: 3 },
+    tags: ["balado", "pedas", "petai", "kentang"],
+    ingredients: [
+      "350 gr udang",
+      "½ sdm perasan jeruk nipis (marinasi)",
+      "1 sdt garam (marinasi)",
+      "¼ sdt merica (marinasi)",
+      "50 gr bawang merah (bumbu halus)",
+      "5 siung bawang putih (bumbu halus)",
+      "70 gr cabai merah keriting",
+      "130 gr cabai merah tanjung",
+      "200 gr kentang, potong-potong",
+      "100 ml minyak",
+      "50 gr bawang merah, iris",
+      "8 lembar daun jeruk",
+      "1 batang serai, geprek",
+      "½ sdm garam",
+      "½ sdm penyedap",
+      "2 sdt gula pasir",
+      "1 sdt perasan jeruk nipis",
+      "50 gr petai kupas",
+      "20 buah cabai rawit hijau",
+      "50 ml air",
+    ],
+    steps: [
+      "Potong bagian tajam udang, belah punggung lalu bersihkan.",
+      "Marinasi udang dengan jeruk nipis, garam, dan merica. Aduk rata.",
+      "Goreng udang sebentar, tiriskan. Goreng kentang hingga kecokelatan, tiriskan.",
+      "Rebus cabai merah tanjung dan cabai keriting sebentar, tiriskan.",
+      "Masukkan bawang putih, bawang merah, dan cabai rebus ke food chopper, haluskan.",
+      "Iris bawang merah dan geprek serai.",
+      "Panaskan minyak, tumis bawang merah iris, serai, dan daun jeruk hingga wangi. Masukkan bumbu halus, tumis hingga harum.",
+      "Masukkan garam, penyedap, gula, jeruk nipis, udang, kentang, petai, dan cabai rawit hijau. Aduk rata, tambahkan air. Masak hingga bumbu meresap.",
+      "Sajikan dengan nasi putih.",
+    ],
+  },
+  {
+    id: 155, name: "Telur Asam Manis",
+    protein: "Vegetable", taste: "Savory", method: "Pan-fry / Sauté",
+    cuisine: "Indonesian", time: "~20 min", servings: 6,
+    nutrition: { calories: 180, protein: 8, carbs: 14, fat: 10, fiber: 1 },
+    tags: ["telur", "asam manis", "budget-friendly", "quick"],
+    ingredients: [
+      "6 butir telur",
+      "Garam secukupnya",
+      "2 siung bawang putih, cincang",
+      "½ buah bawang bombai, iris",
+      "1 buah cabai merah tanjung, buang biji, iris miring",
+      "1 sdm minyak",
+      "1 sdm margarin",
+      "2 sdm saus tomat",
+      "2 sdm saus sambal",
+      "½ sdt cuka",
+      "½ sdm saus tiram",
+      "1 sdt maizena",
+      "2 sdt gula pasir",
+      "150 ml air",
+    ],
+    steps: [
+      "Panaskan sedikit minyak, goreng telur ceplok dengan sedikit garam hingga matang. Sisihkan.",
+      "Campur air, saus tomat, saus sambal, saus tiram, gula pasir, cuka, dan maizena. Aduk rata untuk saus asam manis.",
+      "Panaskan sedikit minyak, tumis bawang putih hingga wangi. Masukkan bawang bombai dan cabai merah, tumis sesaat.",
+      "Tuang campuran saus asam manis dan margarin. Masak hingga mendidih dan sedikit mengental.",
+      "Masukkan telur ceplok, masak beberapa saat hingga saus meresap. Sajikan dengan nasi putih.",
+    ],
+  },
+  {
+    id: 156, name: "Oseng Tahu Telur Kucai",
+    protein: "Tofu & Tempeh", taste: "Savory", method: "Stir-fry",
+    cuisine: "Indonesian", time: "~25 min", servings: 4,
+    nutrition: { calories: 190, protein: 12, carbs: 10, fat: 11, fiber: 2 },
+    tags: ["tahu", "telur", "kucai", "ebi"],
+    ingredients: [
+      "6 buah tahu putih, potong-potong",
+      "1 butir telur, kocok lepas",
+      "80 gr kucai, potong-potong",
+      "1 sdt gula pasir",
+      "½ sdt garam",
+      "1 sdm saus tiram",
+      "1 sdt kaldu jamur",
+      "50 ml air",
+      "Minyak untuk menumis",
+      "1 sdm ebi kering, rendam air panas",
+      "5 siung bawang putih",
+      "5 siung bawang merah",
+      "5 buah cabai rawit merah",
+      "5 buah cabai merah keriting",
+    ],
+    steps: [
+      "Masukkan bawang merah, bawang putih, cabai merah keriting, cabai rawit, dan ebi ke food chopper. Haluskan.",
+      "Potong-potong tahu, kocok telur lalu campurkan ke tahu. Aduk rata.",
+      "Panaskan sedikit minyak, masak campuran tahu dan telur hingga kecokelatan. Sisihkan.",
+      "Panaskan sedikit minyak, tumis bumbu halus hingga wangi.",
+      "Masukkan tahu, air, garam, kaldu jamur, gula pasir, dan saus tiram. Masak beberapa saat.",
+      "Masukkan kucai, masak sesaat hingga layu. Sajikan dengan nasi putih.",
+    ],
+  },
+  {
+    id: 157, name: "Sapi Saus Lada Hitam",
+    protein: "Beef", taste: "Savory", method: "Stir-fry",
+    cuisine: "Indonesian", time: "~25 min", servings: 3,
+    nutrition: { calories: 360, protein: 28, carbs: 18, fat: 18, fiber: 1 },
+    tags: ["lada hitam", "black pepper", "sapi iris", "quick"],
+    ingredients: [
+      "200 gr daging sapi iris",
+      "2 sdm maizena (marinasi)",
+      "2 sdm air (marinasi)",
+      "1 sdm kecap asin (marinasi)",
+      "3 siung bawang putih, cincang",
+      "5 siung bawang merah, cincang",
+      "4 buah cabai merah keriting, iris",
+      "½ buah bawang bombai, iris",
+      "1–2 sdm minyak",
+      "½ sdm lada hitam kasar",
+      "2 sdm saus tiram",
+      "½ sdm saus tomat",
+      "½ sdm saus sambal (opsional)",
+      "1 sdm kecap manis",
+      "1 sdm margarin",
+      "225 ml air",
+      "1 sdm maizena (pengental)",
+    ],
+    steps: [
+      "Campurkan maizena, kecap asin, dan air. Masukkan daging sapi iris, aduk perlahan. Marinasi 10 menit.",
+      "Cincang bawang putih dan bawang merah. Iris bawang bombai dan cabai merah keriting.",
+      "Panaskan minyak, tumis bawang merah dan bawang putih hingga wangi. Masukkan bawang bombai, cabai, dan daging sapi. Aduk rata.",
+      "Masukkan lada hitam, tumis sesaat. Tambahkan saus tiram, kecap manis, saus sambal, saus tomat, dan margarin. Masak sesaat.",
+      "Larutkan maizena dengan air, tuang ke wajan. Masak hingga mendidih dan mengental.",
+      "Sajikan dengan nasi putih dan telur mata sapi.",
+    ],
+  },
+  {
+    id: 158, name: "Sayap Ayam Kecap Inggris",
+    protein: "Chicken", taste: "Savory", method: "Air Fryer",
+    cuisine: "Indonesian", time: "~45 min", servings: 6,
+    nutrition: { calories: 320, protein: 28, carbs: 6, fat: 18, fiber: 0 },
+    tags: ["air fryer", "sayap ayam", "kecap inggris", "easy"],
+    ingredients: [
+      "600 gr sayap ayam, belah dua",
+      "1½ sdm bawang putih bubuk (atau 3 siung bawang putih, haluskan)",
+      "1 sdm kaldu ayam bubuk",
+      "2 sdm kecap inggris",
+      "1½ sdm kecap manis",
+    ],
+    steps: [
+      "Marinasi sayap ayam dengan bawang putih bubuk, kaldu ayam bubuk, kecap inggris, dan kecap manis. Aduk rata, diamkan 30 menit atau semalaman di kulkas.",
+      "Masukkan sayap ayam ke air fryer, oles dengan sisa bumbu marinasi. Panggang 170°C selama 15 menit.",
+      "Di tengah proses, balik sayap dan oles kembali dengan sisa marinasi. Panggang hingga matang dan kecokelatan.",
+      "Sajikan hangat.",
+    ],
+  },
+  {
+    id: 159, name: "Chicken Luncheon",
+    protein: "Chicken", taste: "Savory", method: "Steaming",
+    cuisine: "Indonesian", time: "~60 min", servings: 6,
+    nutrition: { calories: 310, protein: 26, carbs: 10, fat: 18, fiber: 0 },
+    tags: ["luncheon meat", "homemade", "meal prep", "steam"],
+    ingredients: [
+      "12 gr daun bawang cung bagian putih, iris",
+      "30 gr minyak (untuk minyak aromatik)",
+      "275 gr paha ayam filet",
+      "75 gr daging sapi cincang",
+      "100 gr kulit ayam",
+      "1 sdt garam",
+      "1 sdm gula pasir",
+      "2 sdt kaldu jamur",
+      "½ sdm kaldu ayam bubuk",
+      "¼ sdt merica",
+      "1 sdt baking powder",
+      "2 sdt bawang putih bubuk",
+      "1 sdt angkak bubuk",
+      "100 gr es batu / air es",
+      "1 butir putih telur",
+      "1½ sdm kecap asin",
+      "25 gr tapioka / sang fen",
+      "2 sdm tepung roti putih",
+    ],
+    steps: [
+      "Didihkan air, rebus kulit ayam beberapa saat. Tiriskan.",
+      "Iris daun bawang cung bagian putih, tumis dengan minyak sebentar. Sisihkan sebagai minyak aromatik.",
+      "Masukkan paha ayam, daging sapi cincang, kulit ayam rebus, garam, gula, merica, kaldu jamur, kaldu ayam bubuk, baking powder, bawang putih bubuk, angkak, dan es batu ke food processor. Haluskan hingga lengket.",
+      "Tambahkan minyak aromatik, putih telur, kecap asin, tapioka, dan tepung roti. Haluskan kembali hingga rata.",
+      "Tuang adonan ke loyang yang sudah dialasi baking paper, ratakan dan hentakkan ke meja. Tutup dengan aluminium foil.",
+      "Kukus 40 menit api sedang-kecil. Diamkan hingga dingin lalu potong-potong.",
+      "Panaskan sedikit minyak, goreng potongan chicken luncheon hingga sedikit kecokelatan. Sajikan dengan nasi dan telur mata sapi.",
+    ],
+  },
+  {
+    id: 160, name: "Ayam Cincang Kemangi",
+    protein: "Minced Beef", taste: "Savory", method: "Stir-fry",
+    cuisine: "Indonesian", time: "~25 min", servings: 5,
+    nutrition: { calories: 300, protein: 26, carbs: 8, fat: 16, fiber: 1 },
+    tags: ["kemangi", "ayam giling", "pedas", "terasi"],
+    ingredients: [
+      "350 gr paha ayam giling",
+      "1 sdm kecap manis (marinasi)",
+      "1½ sdm saus tiram (marinasi)",
+      "1 sdt kecap maggi / kecap ikan (marinasi)",
+      "4 siung bawang putih, cincang",
+      "4 siung bawang merah, cincang",
+      "5 buah cabai merah keriting, iris",
+      "8 buah cabai rawit hijau, iris",
+      "1 batang serai bagian putih, cincang",
+      "4 gr terasi, bakar",
+      "2 sdm minyak",
+      "10 buah bawang merah kecil, utuh",
+      "2 sdt gula pasir",
+      "¼ sdt merica",
+      "½ sdt kaldu bubuk",
+      "½ sdm saus tiram",
+      "25 gr kemangi",
+    ],
+    steps: [
+      "Campurkan ayam giling dengan kecap manis, saus tiram, dan kecap maggi. Aduk rata.",
+      "Cincang bawang putih, bawang merah, dan serai. Iris cabai merah keriting dan cabai rawit hijau.",
+      "Panaskan minyak, tumis bawang putih dan bawang merah hingga wangi. Masukkan terasi bakar, serai, dan cabai. Tumis hingga harum.",
+      "Masukkan ayam yang sudah dimarinasi, masak hingga matang. Tambahkan bawang merah utuh, gula, merica, kaldu bubuk, dan saus tiram. Masak sesaat.",
+      "Masukkan kemangi, aduk sebentar hingga layu. Sajikan dengan nasi putih, telur mata sapi, dan perasan jeruk limau.",
+    ],
+  },
+  {
+    id: 161, name: "Hainan Chicken Rice",
+    protein: "Chicken", taste: "Savory", method: "Rice Cooker / Steaming",
+    cuisine: "Asian", time: "~45 min", servings: 5,
+    nutrition: { calories: 480, protein: 30, carbs: 52, fat: 14, fiber: 1 },
+    tags: ["one-pot", "rice cooker", "nasi hainan", "comfort food"],
+    ingredients: [
+      "5 pcs paha ayam fillet",
+      "5 siung bawang putih, cincang",
+      "3 cm jahe, cincang",
+      "1 sdm margarin",
+      "500 gr beras",
+      "750 ml kaldu ayam",
+      "2 sdm kecap asin",
+      "1 sdt kaldu jamur",
+      "2 sdm minyak wijen",
+      "Sambal jahe untuk pelengkap",
+      "Kaldu ayam untuk pelengkap",
+      "Jahe iris + cabe rawit untuk pelengkap",
+    ],
+    steps: [
+      "Lelehkan margarin di wajan.",
+      "Tumis bawang putih dan jahe hingga kecokelatan dan harum.",
+      "Masukkan beras, aduk hingga tercampur rata dengan tumisan.",
+      "Tambahkan kecap asin, kaldu jamur, dan minyak wijen. Aduk rata.",
+      "Pindahkan beras ke rice cooker, tuang kaldu ayam. Letakkan paha ayam fillet di atas beras.",
+      "Masak dengan rice cooker hingga matang. Sajikan dengan sambal jahe, semangkuk kaldu, dan jahe iris beserta cabe rawit.",
+    ],
+  },
+  {
+    id: 162, name: "Tongseng Ayam",
+    protein: "Chicken", taste: "Savory", method: "Simmering",
+    cuisine: "Indonesian", time: "~35 min", servings: 4,
+    nutrition: { calories: 350, protein: 30, carbs: 16, fat: 16, fiber: 3 },
+    tags: ["tongseng", "kol", "kunyit", "Jawa"],
+    ingredients: [
+      "500 gr paha ayam fillet",
+      "3 cm lengkuas, geprek",
+      "1 batang serai",
+      "2 lembar daun jeruk",
+      "1 lembar daun salam",
+      "10 siung bawang merah, iris",
+      "4 siung bawang putih, iris",
+      "1 sdt kunyit bubuk",
+      "3 sdm kecap manis",
+      "½ bonggol kol, potong-potong",
+      "2 batang daun bawang, iris",
+      "1 buah tomat, potong",
+      "½ sdt garam",
+      "1 sdt kaldu jamur",
+      "½ sdt lada putih",
+      "Air secukupnya",
+    ],
+    steps: [
+      "Panaskan minyak, masukkan ayam. Masak hingga kandungan air berkurang.",
+      "Masukkan irisan bawang merah dan bawang putih, tambahkan serai, lengkuas, daun jeruk, dan daun salam. Tumis hingga harum.",
+      "Masukkan kunyit bubuk dan kecap manis, aduk rata.",
+      "Tambahkan air secukupnya, masak hingga bumbu meresap.",
+      "Tambahkan garam, kaldu jamur, dan lada putih. Aduk rata.",
+      "Masukkan kol, tomat, dan daun bawang. Masak hingga matang. Sajikan.",
+    ],
+  },
 ];
 
 // ─── ENRICHMENT ────────────────────────────────────────────────────────────────
@@ -831,7 +1381,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
       <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: "12px" }}>
@@ -842,6 +1392,14 @@ function RecipeDetail({ recipe, onBack, accent }) {
       </div>
 
       <div style={{ maxWidth: "640px", margin: "0 auto", padding: "28px 20px 60px" }}>
+        {/* Hero image */}
+        {recipe.image && (
+          <div style={{ marginBottom: "20px", borderRadius: "14px", overflow: "hidden", boxShadow: C.shadowMd }}>
+            <img src={recipe.image} alt={recipe.name}
+              style={{ width: "100%", height: "220px", objectFit: "cover", display: "block" }} />
+          </div>
+        )}
+
         {/* Header */}
         <div style={{ marginBottom: "20px" }}>
           <div style={{ fontSize: "11px", color: acc, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "8px" }}>
@@ -963,18 +1521,26 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext }) {
         border: `1px solid ${proteinBadge?.meets && recipe.nutrition.protein > 0 ? C.greenBorder : C.border}`,
         borderLeft: `3px solid ${proteinBadge && recipe.nutrition.protein > 0 ? (proteinBadge.meets ? C.green : C.orange) : acc}`,
         borderRadius: "10px",
-        padding: "12px 14px",
+        padding: "0",
         cursor: "pointer",
         transition: "background 0.12s",
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
-        gap: "10px",
+        alignItems: "stretch",
+        gap: "0",
         boxShadow: C.shadow,
         userSelect: "none",
+        overflow: "hidden",
       }}
     >
-      <div style={{ flex: 1, minWidth: 0 }}>
+      {/* Left thumbnail — only if image exists */}
+      {recipe.image && (
+        <img src={recipe.image} alt={recipe.name}
+          style={{ width: "72px", minWidth: "72px", objectFit: "cover", display: "block", borderRight: `1px solid ${C.border}` }} />
+      )}
+
+      {/* Content */}
+      <div style={{ flex: 1, minWidth: 0, padding: "12px 14px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px", flexWrap: "wrap" }}>
           <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "14px", fontWeight: 600, color: C.text, lineHeight: 1.3 }}>{recipe.name}</span>
           {r.isComplete && <span style={{ fontSize: "10px", background: C.greenLight, color: C.green, padding: "1px 7px", borderRadius: "10px", border: `1px solid ${C.greenBorder}`, flexShrink: 0 }}>complete</span>}
@@ -990,9 +1556,10 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext }) {
           {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 7px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ deep-fried</span>}
           {r.hasGluten && <span style={{ fontSize: "10px", color: C.yellow, background: C.yellowLight, padding: "2px 7px", borderRadius: "20px", border: "1px solid #fde68a" }}>🌾 gluten</span>}
         </div>
-
       </div>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "2px", flexShrink: 0 }}>
+
+      {/* Right — protein + arrow */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", justifyContent: "center", gap: "2px", flexShrink: 0, padding: "12px 14px" }}>
         <span style={{ fontSize: "14px", fontWeight: 700, color: proteinBadge && recipe.nutrition.protein > 0 ? (proteinBadge.meets ? C.green : C.orange) : acc }}>{recipe.nutrition.protein}g</span>
         <span style={{ fontSize: "10px", color: C.textFaint }}>protein</span>
         <span style={{ fontSize: "12px", color: C.textFaint }}>›</span>
@@ -1002,14 +1569,124 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext }) {
 }
 
 // ─── TODAY PLANNER ─────────────────────────────────────────────────────────────
+function MealSummaryPage({ protein, veg, onBack, onSelect }) {
+  const recipes = [protein, veg].filter(Boolean);
+  const proteinTotal = ((protein?.nutrition?.protein || 0) + (veg?.nutrition?.protein || 0)) * 2;
+  const pct = Math.min(100, Math.round((proteinTotal / COMBINED_PROTEIN_GOAL) * 100));
+  const ok = pct >= 80;
+
+  return (
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+      {/* Header */}
+      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+          <button onClick={onBack} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "10px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>← Back</button>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>Today's Meal</div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "24px 16px 60px" }}>
+
+        {/* Protein summary card */}
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "20px", boxShadow: C.shadowMd }}>
+          <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "12px" }}>Protein summary</div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+            <span style={{ fontSize: "13px", color: C.textMuted }}>Combined (2 servings)</span>
+            <span style={{ fontSize: "13px", fontWeight: 700, color: ok ? C.green : C.orange }}>{proteinTotal}g / {COMBINED_PROTEIN_GOAL}g goal</span>
+          </div>
+          <div style={{ background: C.bg, borderRadius: "6px", height: "8px", overflow: "hidden", border: `1px solid ${C.border}`, marginBottom: "8px" }}>
+            <div style={{ width: `${pct}%`, height: "100%", background: ok ? C.green : C.orange, borderRadius: "6px", transition: "width 0.3s" }} />
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            {protein && <span style={{ fontSize: "11px", color: C.textMuted }}>{protein.nutrition.protein * 2}g from {protein.name}</span>}
+            {protein && veg && <span style={{ color: C.border }}>·</span>}
+            {veg && <span style={{ fontSize: "11px", color: C.textMuted }}>{veg.nutrition.protein * 2}g from {veg.name}</span>}
+          </div>
+        </div>
+
+        {/* Recipe cards — full detail */}
+        {recipes.map((recipe, i) => {
+          const r = enrichRecipe(recipe);
+          const acc = i === 0 ? C.orange : C.green;
+          const label = i === 0 ? "🥩 Protein dish" : "🥦 Vegetable side";
+          return (
+            <div key={recipe.id} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", overflow: "hidden", marginBottom: "16px", boxShadow: C.shadowMd }}>
+              {/* Recipe header */}
+              <div style={{ borderLeft: `4px solid ${acc}`, padding: "16px 18px", borderBottom: `1px solid ${C.border}` }}>
+                <div style={{ fontSize: "10px", color: acc, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>{label}</div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipe.name}</div>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipe.time}</span>
+                  <span style={{ color: C.border }}>·</span>
+                  <span style={{ fontSize: "12px", color: C.textMuted }}>👤 {recipe.servings} servings</span>
+                  <span style={{ color: C.border }}>·</span>
+                  <span style={{ fontSize: "12px", color: C.textMuted }}>{METHOD_ICONS[recipe.method] || "🍴"} {recipe.method}</span>
+                  <span style={{ color: C.border }}>·</span>
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: acc }}>{recipe.nutrition.protein}g protein/srv</span>
+                </div>
+                {/* Warnings */}
+                <div style={{ display: "flex", gap: "6px", marginTop: "8px", flexWrap: "wrap" }}>
+                  {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 8px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ Deep-fried</span>}
+                  {r.hasGluten && <span style={{ fontSize: "10px", color: C.yellow, background: C.yellowLight, padding: "2px 8px", borderRadius: "20px", border: "1px solid #fde68a" }}>🌾 Gluten</span>}
+                  {recipe.tags?.map(t => <span key={t} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>#{t}</span>)}
+                </div>
+              </div>
+
+              {/* Ingredients */}
+              <div style={{ padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>Ingredients</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                  {recipe.ingredients?.map((ing, j) => (
+                    <div key={j} style={{ display: "flex", gap: "10px", alignItems: "flex-start", padding: "4px 0", borderBottom: j < recipe.ingredients.length - 1 ? `1px solid ${C.border}` : "none", fontSize: "13px", color: C.text }}>
+                      <span style={{ color: acc, fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
+                      {ing}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div style={{ padding: "14px 18px" }}>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>Directions</div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {recipe.steps?.map((step, j) => (
+                    <div key={j} style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "8px 0", borderBottom: j < recipe.steps.length - 1 ? `1px solid ${C.border}` : "none" }}>
+                      <div style={{ background: acc, color: "#fff", borderRadius: "50%", width: "22px", height: "22px", minWidth: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, marginTop: "1px" }}>{j + 1}</div>
+                      <p style={{ margin: 0, fontSize: "13px", color: C.text, lineHeight: 1.65 }}>{step}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Source link */}
+              {recipe.link && (
+                <div style={{ padding: "10px 18px", borderTop: `1px solid ${C.border}`, background: C.bg }}>
+                  <a href={recipe.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: "12px", color: acc, textDecoration: "none", fontWeight: 600 }}>📎 View original source →</a>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        <p style={{ fontSize: "11px", color: C.textFaint, textAlign: "center" }}>* Nutrition values are estimates.</p>
+      </div>
+    </div>
+  );
+}
+
 function TodayPlanner({ allRecipes, onSelect }) {
   const [step, setStep] = useState(1); // 1 = protein, 2 = veg
-  const [browsedProtein, setBrowsedProtein] = useState(null);   // what's highlighted in step 1
-  const [browsedVeg, setBrowsedVeg] = useState(null);           // what's highlighted in step 2
-  const [pickedProtein, setPickedProtein] = useState(null);     // confirmed protein recipe
-  const [pickedVeg, setPickedVeg] = useState(null);             // confirmed veg recipe
+  const [browsedProtein, setBrowsedProtein] = useState(null);
+  const [browsedVeg, setBrowsedVeg] = useState(null);
+  const [pickedProtein, setPickedProtein] = useState(null);
+  const [pickedVeg, setPickedVeg] = useState(null);
   const [wifeFilter, setWifeFilter] = useState(true);
   const [quickOnly, setQuickOnly] = useState(false);
+  const [showMealSummary, setShowMealSummary] = useState(false);
 
   const enriched = allRecipes.map(enrichRecipe);
   const savory = enriched.filter(r => r.taste === "Savory");
@@ -1038,8 +1715,16 @@ function TodayPlanner({ allRecipes, onSelect }) {
     setBrowsedProtein(null);
     setBrowsedVeg(null);
     setStep(1);
+    setShowMealSummary(false);
   };
 
+  if (showMealSummary) {
+    return (
+      <div style={{ position: "fixed", inset: 0, zIndex: 200, overflowY: "auto", background: C.bg }}>
+        <MealSummaryPage protein={pickedProtein} veg={pickedVeg} onBack={() => setShowMealSummary(false)} onSelect={onSelect} />
+      </div>
+    );
+  }
   return (
     <div>
       {/* ── Sticky picked section ── */}
@@ -1048,7 +1733,20 @@ function TodayPlanner({ allRecipes, onSelect }) {
           <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "12px 14px", boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
               <span style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em" }}>Today's Meal</span>
-              <button onClick={clearAll} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "12px", fontWeight: 600 }}>Clear all ×</button>
+              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                {pickedProtein && pickedVeg && (
+                  <button onClick={() => setShowMealSummary(true)} title="View full meal plan"
+                    style={{ background: C.orange, border: "none", borderRadius: "8px", padding: "5px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", fontWeight: 700, color: "#fff", boxShadow: C.shadow }}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                      <polyline points="17 21 17 13 7 13 7 21"/>
+                      <polyline points="7 3 7 8 15 8"/>
+                    </svg>
+                    View recipes
+                  </button>
+                )}
+                <button onClick={clearAll} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "12px", fontWeight: 600 }}>Clear ×</button>
+              </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: pickedProtein && pickedVeg ? "1fr 1fr" : "1fr", gap: "8px" }}>
               {pickedProtein && (
@@ -1852,13 +2550,20 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
 
   const enriched = allRecipes.map(enrichRecipe);
   const filtered = search.trim()
-    ? enriched.filter(r =>
-        r.name.toLowerCase().includes(search.toLowerCase()) ||
-        r.tags.some(t => t.toLowerCase().includes(search.toLowerCase())) ||
-        r.cuisine.toLowerCase().includes(search.toLowerCase()) ||
-        r.method.toLowerCase().includes(search.toLowerCase()) ||
-        r.protein.toLowerCase().includes(search.toLowerCase())
-      )
+    ? (() => {
+        // Split query into individual words — all must match somewhere in the recipe
+        const words = search.trim().toLowerCase().split(/\s+/);
+        return enriched.filter(r => {
+          const haystack = [
+            r.name,
+            ...r.tags,
+            r.cuisine,
+            r.method,
+            r.protein,
+          ].join(" ").toLowerCase();
+          return words.every(w => haystack.includes(w));
+        });
+      })()
     : enriched;
 
   const groups = Object.entries(PROTEIN_GROUPS).map(([label, proteins], i) => ({
@@ -2144,25 +2849,393 @@ If you can access the page, return just the raw caption/recipe text. If you cann
   );
 }
 
+// ─── INVENTORY VIEW ────────────────────────────────────────────────────────────
+function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
+  const [uploadStatus, setUploadStatus] = useState("idle");
+  const [activeTab, setActiveTab] = useState("inventory");
+  const [dragOver, setDragOver] = useState(false);
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+    setUploadStatus("scanning");
+    try {
+      const base64 = await new Promise((res, rej) => {
+        const reader = new FileReader();
+        reader.onload = () => res(reader.result.split(",")[1]);
+        reader.onerror = rej;
+        reader.readAsDataURL(file);
+      });
+      const mediaType = file.type || "image/jpeg";
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{
+            role: "user",
+            content: [
+              { type: "image", source: { type: "base64", media_type: mediaType, data: base64 } },
+              { type: "text", text: `This is a grocery receipt or invoice. Extract all food/ingredient items purchased. Return ONLY a JSON array, no markdown, no explanation. Each object: {"name":string,"quantity":string,"unit":string}. Focus only on food ingredients, skip non-food items.` }
+            ]
+          }]
+        })
+      });
+      const data = await res.json();
+      const raw = data.content?.find(b => b.type === "text")?.text || "[]";
+      const clean = raw.replace(/```json|```/g, "").trim();
+      const items = JSON.parse(clean);
+      const updated = { ...inventory };
+      items.forEach(item => {
+        const key = item.name.toLowerCase().trim();
+        updated[key] = { name: item.name, quantity: item.quantity, unit: item.unit };
+      });
+      onInventoryUpdate(updated);
+      setUploadStatus("done");
+    } catch(e) {
+      setUploadStatus("error");
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileUpload(file);
+  };
+
+  const removeItem = (key) => {
+    const updated = { ...inventory };
+    delete updated[key];
+    onInventoryUpdate(updated);
+  };
+
+  const inventoryKeys = Object.keys(inventory);
+
+  const getRecommendations = () => {
+    if (inventoryKeys.length === 0) return [];
+    const enriched = allRecipes.map(enrichRecipe).filter(r => r.taste === "Savory");
+    return enriched.map(r => {
+      const ingText = (r.ingredients || []).join(" ").toLowerCase();
+      const matches = inventoryKeys.filter(k => ingText.includes(k.toLowerCase()));
+      return { ...r, matchCount: matches.length, matchedItems: matches };
+    }).filter(r => r.matchCount > 0).sort((a, b) => b.matchCount - a.matchCount).slice(0, 15);
+  };
+
+  const recommendations = getRecommendations();
+
+  return (
+    <div>
+      <div style={{ display: "flex", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "12px", padding: "4px", marginBottom: "20px", boxShadow: C.shadow }}>
+        {[{ id: "inventory", label: "🧺 My Inventory" }, { id: "recommendations", label: "✨ Recommended" }].map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+            flex: 1, padding: "9px", border: "none", borderRadius: "9px", cursor: "pointer",
+            fontSize: "13px", fontWeight: 600, transition: "all 0.15s",
+            background: activeTab === t.id ? C.orange : "transparent",
+            color: activeTab === t.id ? "#fff" : C.textMuted,
+          }}>{t.label}</button>
+        ))}
+      </div>
+
+      {activeTab === "inventory" && (
+        <div>
+          <div
+            onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={handleDrop}
+            onClick={() => document.getElementById("inv-file-input").click()}
+            style={{ border: `2px dashed ${dragOver ? C.orange : C.borderStrong}`, borderRadius: "14px", padding: "28px 20px", textAlign: "center", background: dragOver ? C.orangeLight : C.surface, cursor: "pointer", marginBottom: "20px", transition: "all 0.15s", boxShadow: C.shadow }}>
+            <input id="inv-file-input" type="file" accept="image/*,.pdf" style={{ display: "none" }} onChange={e => handleFileUpload(e.target.files[0])} />
+            {uploadStatus === "scanning" ? (
+              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>🔍</div><div style={{ fontSize: "14px", fontWeight: 600, color: C.text }}>Scanning your receipt…</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Claude is reading the ingredients</div></div>
+            ) : uploadStatus === "done" ? (
+              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>✅</div><div style={{ fontSize: "14px", fontWeight: 600, color: C.green }}>Inventory updated!</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Upload another receipt to add more</div></div>
+            ) : uploadStatus === "error" ? (
+              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>⚠️</div><div style={{ fontSize: "14px", fontWeight: 600, color: "#be123c" }}>Couldn't read the receipt</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Try a clearer photo or different file</div></div>
+            ) : (
+              <div><div style={{ fontSize: "32px", marginBottom: "10px" }}>🧾</div><div style={{ fontSize: "14px", fontWeight: 700, color: C.text, marginBottom: "4px" }}>Upload grocery receipt or invoice</div><div style={{ fontSize: "12px", color: C.textMuted }}>Photo, screenshot, or PDF — Claude reads the ingredients automatically</div></div>
+            )}
+          </div>
+
+          {inventoryKeys.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px", color: C.textFaint }}>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🧺</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No inventory yet</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Upload a receipt above to get started</div>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "12px" }}>{inventoryKeys.length} items in your pantry</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                {Object.entries(inventory).sort((a,b) => a[0].localeCompare(b[0])).map(([key, item]) => (
+                  <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", boxShadow: C.shadow }}>
+                    <span style={{ fontSize: "13px", color: C.text, flex: 1, fontWeight: 500 }}>{item.name}</span>
+                    <span style={{ fontSize: "12px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{item.quantity} {item.unit}</span>
+                    <button onClick={() => removeItem(key)} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "16px", lineHeight: 1, padding: "0 2px" }}>×</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === "recommendations" && (
+        <div>
+          {inventoryKeys.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px" }}>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🧺</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>Add inventory first</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Upload a receipt in the My Inventory tab to get recipe recommendations</div>
+            </div>
+          ) : recommendations.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px" }}>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🤔</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No matches found</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try updating your inventory with more ingredients</div>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "16px" }}>{recommendations.length} recipes you can cook with what you have</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {recommendations.map(r => (
+                  <div key={r.id}>
+                    <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 3 ? C.green : C.orange} />
+                    <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "5px 4px 2px" }}>
+                      {r.matchedItems.slice(0, 5).map(item => (
+                        <span key={item} style={{ fontSize: "10px", color: C.green, background: C.greenLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.greenBorder}` }}>✓ {item}</span>
+                      ))}
+                      {r.matchedItems.length > 5 && <span style={{ fontSize: "10px", color: C.textMuted }}>+{r.matchedItems.length - 5} more</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── HOME SCREEN ───────────────────────────────────────────────────────────────
+function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect }) {
+  const inventoryCount = Object.keys(inventory).length;
+  const totalRecipes = allRecipes.length;
+  const [search, setSearch] = useState("");
+
+  // Time-of-day greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 11 ? { text: "Good morning! ☀️", sub: "What are we cooking today?", bg: "#1a1209", accent: "#f59e0b" }
+    : hour < 15 ? { text: "Lunch time! 🌤", sub: "Something quick and satisfying?", bg: "#0c1a12", accent: "#16a34a" }
+    : hour < 18 ? { text: "Afternoon snack? 🍵", sub: "Or planning ahead for dinner?", bg: "#0f172a", accent: "#0284c7" }
+    : hour < 21 ? { text: "Dinner time! 🌙", sub: "Let's figure out what to cook.", bg: "#1c0a00", accent: "#d97706" }
+    : { text: "Late night cooking? 🌛", sub: "Something easy and quick.", bg: "#0f0f1a", accent: "#7c3aed" };
+
+  // Random recipe of the day — seeded by date so it's consistent all day
+  const dayIndex = Math.floor(Date.now() / 86400000);
+  const savoryRecipes = allRecipes.filter(r => r.taste === "Savory");
+  const recipeOfDay = savoryRecipes[dayIndex % savoryRecipes.length];
+
+  // Quick protein filters for horizontal scroll
+  const proteinGroups = [
+    { label: "🐔 Chicken", key: "Chicken" },
+    { label: "🥩 Beef", key: "Beef" },
+    { label: "🦐 Shrimp", key: "Shrimp" },
+    { label: "🦑 Squid", key: "Squid" },
+    { label: "🐟 Fish", key: "Fish" },
+    { label: "🫘 Tofu", key: "Tofu & Tempeh" },
+    { label: "🥦 Veg", key: "Vegetable" },
+  ];
+
+  // Feature tiles — big illustrated cards
+  const features = [
+    { id: "today",     emoji: "🍽️", title: "What's for
+dinner?",   bg: "#78290f", accent: "#fb923c", pattern: "🧅🫑🥩🧄🍳" },
+    { id: "week",      emoji: "📅",  title: "Plan the
+week",        bg: "#0c4a6e", accent: "#38bdf8", pattern: "🗓️📝🛒✅🍱" },
+    { id: "inventory", emoji: "🧺",  title: "My
+pantry",            bg: "#14532d", accent: "#4ade80", pattern: "🧅🥦🫙🍋🥕" },
+    { id: "browse",    emoji: "📖",  title: "Recipe
+book",          bg: "#3b0764", accent: "#c084fc", pattern: "🔍📚🍜🥘🫕" },
+  ];
+
+  // Multi-word search
+  const searchResults = search.trim()
+    ? (() => {
+        const words = search.trim().toLowerCase().split(/\s+/);
+        return allRecipes.map(enrichRecipe).filter(r => {
+          const haystack = [r.name, ...r.tags, r.cuisine, r.method, r.protein].join(" ").toLowerCase();
+          return words.every(w => haystack.includes(w));
+        }).slice(0, 8);
+      })()
+    : [];
+
+  return (
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+      {/* ── Hero: time-of-day greeting + search ── */}
+      <div style={{ background: greeting.bg, padding: "44px 24px 28px", position: "relative", overflow: "hidden" }}>
+        {/* Decorative food emoji blur layer */}
+        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "120px", opacity: 0.06, pointerEvents: "none", userSelect: "none", filter: "blur(2px)", letterSpacing: "8px" }}>
+          🍳🥘🍜🥗🍱
+        </div>
+        <div style={{ position: "absolute", top: "-30px", right: "-30px", width: "160px", height: "160px", borderRadius: "50%", background: `${greeting.accent}20`, pointerEvents: "none" }} />
+
+        <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
+          {/* App name */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+            <span style={{ fontSize: "28px" }}>🍳</span>
+            <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 700, color: "rgba(255,255,255,0.7)" }}>Our Kitchen</span>
+          </div>
+
+          {/* Greeting */}
+          <div style={{ marginBottom: "20px" }}>
+            <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "30px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.15 }}>{greeting.text}</h1>
+            <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "14px", margin: 0 }}>{greeting.sub}</p>
+          </div>
+
+          {/* Search bar */}
+          <div style={{ position: "relative" }}>
+            <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", fontSize: "15px", pointerEvents: "none" }}>🔍</span>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder={"Try \"ayam mentega\" or \"japanese\"…"}
+              style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", padding: "12px 40px 12px 42px", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+            />
+            {search && (
+              <button onClick={() => setSearch("")} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: "18px", cursor: "pointer", lineHeight: 1 }}>×</button>
+            )}
+          </div>
+
+          {/* Stats row */}
+          <div style={{ display: "flex", gap: "16px", marginTop: "14px" }}>
+            <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>{totalRecipes} recipes</span>
+            {inventoryCount > 0 && <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>· {inventoryCount} pantry items</span>}
+            {customRecipes.length > 0 && <span style={{ fontSize: "12px", color: "rgba(255,255,255,0.4)" }}>· {customRecipes.length} added</span>}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 80px" }}>
+
+        {/* ── Search results ── */}
+        {searchResults.length > 0 && (
+          <div style={{ marginBottom: "28px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
+              {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} for "{search}"
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+              {searchResults.map(r => <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={C.orange} />)}
+            </div>
+            <button onClick={() => { setSearch(""); onNavigate("browse"); }}
+              style={{ marginTop: "10px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "10px", color: C.textMuted, fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
+              See all in Recipe Book →
+            </button>
+          </div>
+        )}
+
+        {search.trim() && searchResults.length === 0 && (
+          <div style={{ textAlign: "center", padding: "32px 20px", marginBottom: "20px" }}>
+            <div style={{ fontSize: "32px", marginBottom: "8px" }}>🤷</div>
+            <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No recipes found for "{search}"</div>
+            <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try different keywords</div>
+          </div>
+        )}
+
+        {!search.trim() && (<>
+
+          {/* ── Feature tiles — big illustrated 2×2 bento grid ── */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginBottom: "28px" }}>
+            {features.map(f => (
+              <button key={f.id} onClick={() => onNavigate(f.id)}
+                style={{ background: f.bg, border: "none", borderRadius: "18px", padding: "18px 16px 14px", cursor: "pointer", textAlign: "left", position: "relative", overflow: "hidden", minHeight: "130px", display: "flex", flexDirection: "column", justifyContent: "space-between", transition: "transform 0.12s, opacity 0.12s" }}
+                onMouseEnter={e => e.currentTarget.style.opacity = "0.9"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+              >
+                {/* Background emoji pattern */}
+                <div style={{ position: "absolute", bottom: "-4px", right: "-4px", fontSize: "42px", opacity: 0.18, pointerEvents: "none", userSelect: "none", lineHeight: 1 }}>
+                  {f.emoji}
+                </div>
+                <div>
+                  <div style={{ fontSize: "26px", marginBottom: "8px" }}>{f.emoji}</div>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 800, color: "#fff", lineHeight: 1.2, whiteSpace: "pre-line" }}>{f.title}</div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "10px" }}>
+                  <div style={{ width: "28px", height: "3px", borderRadius: "2px", background: f.accent, opacity: 0.8 }} />
+                  <span style={{ fontSize: "16px", color: "rgba(255,255,255,0.4)" }}>›</span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* ── Quick filter: protein chips ── */}
+          <div style={{ marginBottom: "22px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>Browse by ingredient</div>
+            <div style={{ display: "flex", gap: "8px", overflowX: "auto", paddingBottom: "4px" }}>
+              {proteinGroups.map(p => (
+                <button key={p.key} onClick={() => setSearch(p.key.toLowerCase())}
+                  style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", border: `1px solid ${C.border}`, background: C.surface, color: C.text, whiteSpace: "nowrap", boxShadow: C.shadow, flexShrink: 0 }}>
+                  {p.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Recipe of the day ── */}
+          {recipeOfDay && (
+            <div style={{ marginBottom: "8px" }}>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>✨ Recipe of the day</div>
+              <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", overflow: "hidden", boxShadow: C.shadowMd }}>
+                {recipeOfDay.image && (
+                  <img src={recipeOfDay.image} alt={recipeOfDay.name}
+                    style={{ width: "100%", height: "160px", objectFit: "cover", display: "block" }} />
+                )}
+                <div style={{ padding: "14px 16px" }}>
+                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipeOfDay.name}</div>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "12px" }}>
+                    <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipeOfDay.time}</span>
+                    <span style={{ color: C.border }}>·</span>
+                    <span style={{ fontSize: "12px", color: C.textMuted }}>{recipeOfDay.protein}</span>
+                    <span style={{ color: C.border }}>·</span>
+                    <span style={{ fontSize: "12px", color: C.textMuted }}>{recipeOfDay.cuisine}</span>
+                    <span style={{ color: C.border }}>·</span>
+                    <span style={{ fontSize: "12px", fontWeight: 600, color: C.orange }}>{recipeOfDay.nutrition.protein}g protein/srv</span>
+                  </div>
+                  <button onClick={() => onSelect(recipeOfDay, C.orange)}
+                    style={{ width: "100%", padding: "10px", background: C.orange, color: "#fff", border: "none", borderRadius: "10px", fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
+                    View recipe →
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+        </>)}
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN APP ──────────────────────────────────────────────────────────────────
 export default function App() {
-  const [tab, setTab] = useState("today");
+  const [screen, setScreen] = useState("home");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [selectedAccent, setSelectedAccent] = useState(C.orange);
   const [showAddModal, setShowAddModal] = useState(false);
   const [customRecipes, setCustomRecipes] = useState([]);
+  const [inventory, setInventory] = useState({});
   const [storageReady, setStorageReady] = useState(false);
 
-  // Load saved recipes from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem("custom-recipes");
-      if (saved) {
-        setCustomRecipes(JSON.parse(saved));
-      }
-    } catch(e) {
-      // No saved recipes yet, start fresh
-    }
+      if (saved) setCustomRecipes(JSON.parse(saved));
+      const savedInv = localStorage.getItem("kitchen-inventory");
+      if (savedInv) setInventory(JSON.parse(savedInv));
+    } catch(e) {}
     setStorageReady(true);
   }, []);
 
@@ -2186,75 +3259,59 @@ export default function App() {
     localStorage.setItem("custom-recipes", JSON.stringify(updated));
   };
 
+  const handleInventoryUpdate = (updated) => {
+    setInventory(updated);
+    localStorage.setItem("kitchen-inventory", JSON.stringify(updated));
+  };
+
   if (selectedRecipe) {
     return <RecipeDetail recipe={selectedRecipe} accent={selectedAccent} onBack={() => setSelectedRecipe(null)} />;
   }
 
-  const TABS = [
-    { id: "today", label: "🍽 Today" },
-    { id: "week",  label: "📅 Week" },
-    { id: "browse",label: "📖 Browse" },
-  ];
+  const SCREEN_META = {
+    today:     { label: "What's for dinner?", emoji: "🍽" },
+    week:      { label: "Weekly plan",         emoji: "📅" },
+    inventory: { label: "My pantry",           emoji: "🧺" },
+    browse:    { label: "Recipe book",         emoji: "📖" },
+  };
+
+  if (screen === "home") {
+    return (
+      <>
+        <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
+        <button onClick={() => setShowAddModal(true)} style={{ position: "fixed", bottom: "24px", right: "24px", width: "52px", height: "52px", borderRadius: "50%", background: C.orange, color: "#fff", border: "none", fontSize: "24px", cursor: "pointer", boxShadow: "0 4px 16px rgba(217,119,6,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }} title="Add recipe">+</button>
+        {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
+      </>
+    );
+  }
+
+  const meta = SCREEN_META[screen] || {};
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-
-      {/* Header */}
-      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "16px 20px 0", position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: "680px", margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-            <div>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 700, color: C.text, margin: "0 0 2px" }}>
-                Our Kitchen <span style={{ color: C.orange }}>🍳</span>
-              </h1>
-              <p style={{ color: C.textMuted, fontSize: "11px", margin: 0 }}>
-                {allRecipes.length} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}
-              </p>
-            </div>
-            <button onClick={() => setShowAddModal(true)} style={{
-              display: "flex", alignItems: "center", gap: "5px",
-              padding: "8px 16px", border: `1px solid ${C.orange}`, borderRadius: "20px",
-              background: C.orangeLight, color: C.orange, fontSize: "13px", fontWeight: 700,
-              cursor: "pointer", whiteSpace: "nowrap", boxShadow: C.shadow,
-            }}>
-              + Add recipe
-            </button>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+          <button onClick={() => setScreen("home")} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "10px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>← Home</button>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>{meta.emoji} {meta.label}</div>
           </div>
-          <div style={{ display: "flex" }}>
-            {TABS.map(t => (
-              <button key={t.id} onClick={() => setTab(t.id)} style={{
-                flex: 1, padding: "9px 0", border: "none", cursor: "pointer",
-                fontSize: "13px", fontWeight: 600, background: "transparent",
-                color: tab === t.id ? C.orange : C.textMuted,
-                borderBottom: tab === t.id ? `2px solid ${C.orange}` : `2px solid transparent`,
-                transition: "all 0.15s",
-              }}>{t.label}</button>
-            ))}
-          </div>
+          <button onClick={() => setShowAddModal(true)} style={{ padding: "7px 14px", border: `1px solid ${C.orange}`, borderRadius: "20px", background: C.orangeLight, color: C.orange, fontSize: "12px", fontWeight: 700, cursor: "pointer", boxShadow: C.shadow }}>+ Add</button>
         </div>
       </div>
-
-      {/* Body */}
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 60px" }}>
         {!storageReady ? (
-          <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading your recipes…</div>
+          <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading…</div>
         ) : (
           <>
-            {tab === "today"  && <TodayPlanner  allRecipes={allRecipes} onSelect={handleSelect} />}
-            {tab === "week"   && <WeeklyPlanner allRecipes={allRecipes} onSelect={handleSelect} />}
-            {tab === "browse" && <BrowseView    allRecipes={allRecipes} onSelect={handleSelect} customIds={customRecipes.map(r => r.id)} onDelete={handleDeleteCustom} />}
+            {screen === "today"     && <TodayPlanner   allRecipes={allRecipes} onSelect={handleSelect} />}
+            {screen === "week"      && <WeeklyPlanner  allRecipes={allRecipes} onSelect={handleSelect} />}
+            {screen === "browse"    && <BrowseView     allRecipes={allRecipes} onSelect={handleSelect} customIds={customRecipes.map(r => r.id)} onDelete={handleDeleteCustom} />}
+            {screen === "inventory" && <InventoryView  allRecipes={allRecipes} onSelect={handleSelect} inventory={inventory} onInventoryUpdate={handleInventoryUpdate} />}
           </>
         )}
       </div>
-
-      {/* Add recipe modal */}
-      {showAddModal && (
-        <AddRecipeModal
-          onClose={() => setShowAddModal(false)}
-          onAdd={handleAddRecipe}
-        />
-      )}
+      {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
     </div>
   );
 }
