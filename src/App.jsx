@@ -2550,13 +2550,20 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
 
   const enriched = allRecipes.map(enrichRecipe);
   const filtered = search.trim()
-    ? enriched.filter(r =>
-        r.name.toLowerCase().includes(search.toLowerCase()) ||
-        r.tags.some(t => t.toLowerCase().includes(search.toLowerCase())) ||
-        r.cuisine.toLowerCase().includes(search.toLowerCase()) ||
-        r.method.toLowerCase().includes(search.toLowerCase()) ||
-        r.protein.toLowerCase().includes(search.toLowerCase())
-      )
+    ? (() => {
+        // Split query into individual words — all must match somewhere in the recipe
+        const words = search.trim().toLowerCase().split(/\s+/);
+        return enriched.filter(r => {
+          const haystack = [
+            r.name,
+            ...r.tags,
+            r.cuisine,
+            r.method,
+            r.protein,
+          ].join(" ").toLowerCase();
+          return words.every(w => haystack.includes(w));
+        });
+      })()
     : enriched;
 
   const groups = Object.entries(PROTEIN_GROUPS).map(([label, proteins], i) => ({
@@ -3012,9 +3019,10 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
 }
 
 // ─── HOME SCREEN ───────────────────────────────────────────────────────────────
-function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes }) {
+function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect }) {
   const inventoryCount = Object.keys(inventory).length;
   const totalRecipes = allRecipes.length;
+  const [search, setSearch] = useState("");
 
   const features = [
     { id: "today",     emoji: "🍽", title: "What's for dinner?", subtitle: "Pick from what's in your freezer", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
@@ -3023,44 +3031,109 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes }) {
     { id: "browse",    emoji: "📖", title: "Recipe book",         subtitle: "Browse all recipes",               description: "Search and explore your full collection by ingredient or cuisine", color: "#7c3aed", light: "#f3e8ff", border: "#ddd6fe", stat: `${totalRecipes} recipes` },
   ];
 
+  // Multi-word search
+  const searchResults = search.trim()
+    ? (() => {
+        const words = search.trim().toLowerCase().split(/\s+/);
+        return allRecipes.map(enrichRecipe).filter(r => {
+          const haystack = [r.name, ...r.tags, r.cuisine, r.method, r.protein].join(" ").toLowerCase();
+          return words.every(w => haystack.includes(w));
+        }).slice(0, 8);
+      })()
+    : [];
+
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div style={{ background: "#1c1917", padding: "48px 24px 36px", position: "relative", overflow: "hidden" }}>
+
+      {/* Hero + search */}
+      <div style={{ background: "#1c1917", padding: "40px 24px 28px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "180px", height: "180px", borderRadius: "50%", background: "rgba(217,119,6,0.15)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(217,119,6,0.08)", pointerEvents: "none" }} />
         <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
           <div style={{ fontSize: "36px", marginBottom: "8px" }}>🍳</div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 6px", lineHeight: 1.1 }}>Our Kitchen</h1>
-          <p style={{ color: "#a8a29e", fontSize: "14px", margin: 0 }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}{inventoryCount > 0 ? ` · ${inventoryCount} pantry items` : ""}</p>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.1 }}>Our Kitchen</h1>
+          <p style={{ color: "#a8a29e", fontSize: "13px", margin: "0 0 20px" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}{inventoryCount > 0 ? ` · ${inventoryCount} pantry items` : ""}</p>
+
+          {/* Search bar */}
+          <div style={{ position: "relative" }}>
+            <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
+            <input
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              placeholder="Search any recipe… try "ayam mentega""
+              style={{
+                width: "100%", boxSizing: "border-box",
+                background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px",
+                padding: "12px 14px 12px 42px",
+                color: "#fff", fontSize: "14px", outline: "none",
+                fontFamily: "'DM Sans', sans-serif",
+              }}
+            />
+            {search && (
+              <button onClick={() => setSearch("")} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: "18px", cursor: "pointer", lineHeight: 1 }}>×</button>
+            )}
+          </div>
         </div>
       </div>
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "24px 16px 80px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {features.map(f => (
-            <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "16px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.12s, box-shadow 0.12s" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
-              <div style={{ width: "6px", background: f.color, flexShrink: 0 }} />
-              <div style={{ flex: 1, padding: "18px 16px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ fontSize: "24px" }}>{f.emoji}</span>
-                    <div>
-                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text, lineHeight: 1.2 }}>{f.title}</div>
-                      <div style={{ fontSize: "12px", color: f.color, fontWeight: 600, marginTop: "1px" }}>{f.subtitle}</div>
+
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 80px" }}>
+
+        {/* Search results */}
+        {searchResults.length > 0 && (
+          <div style={{ marginBottom: "24px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
+              {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} for "{search}"
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+              {searchResults.map(r => (
+                <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={C.orange} />
+              ))}
+            </div>
+            <button onClick={() => { setSearch(""); onNavigate("browse"); }}
+              style={{ marginTop: "12px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "10px", color: C.textMuted, fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
+              See all results in Recipe Book →
+            </button>
+          </div>
+        )}
+
+        {search.trim() && searchResults.length === 0 && (
+          <div style={{ textAlign: "center", padding: "32px 20px", marginBottom: "20px" }}>
+            <div style={{ fontSize: "28px", marginBottom: "8px" }}>🤷</div>
+            <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No recipes found for "{search}"</div>
+            <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try different keywords or browse by category below</div>
+          </div>
+        )}
+
+        {/* Feature cards — hide when search is active */}
+        {!search.trim() && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            {features.map(f => (
+              <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "16px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.12s, box-shadow 0.12s" }}
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)"; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
+                <div style={{ width: "6px", background: f.color, flexShrink: 0 }} />
+                <div style={{ flex: 1, padding: "18px 16px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ fontSize: "24px" }}>{f.emoji}</span>
+                      <div>
+                        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text, lineHeight: 1.2 }}>{f.title}</div>
+                        <div style={{ fontSize: "12px", color: f.color, fontWeight: 600, marginTop: "1px" }}>{f.subtitle}</div>
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
+                      <span style={{ fontSize: "11px", color: f.color, background: f.light, padding: "3px 8px", borderRadius: "20px", border: `1px solid ${f.border}`, fontWeight: 600, whiteSpace: "nowrap" }}>{f.stat}</span>
+                      <span style={{ color: C.textFaint, fontSize: "18px" }}>›</span>
                     </div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
-                    <span style={{ fontSize: "11px", color: f.color, background: f.light, padding: "3px 8px", borderRadius: "20px", border: `1px solid ${f.border}`, fontWeight: 600, whiteSpace: "nowrap" }}>{f.stat}</span>
-                    <span style={{ color: C.textFaint, fontSize: "18px" }}>›</span>
-                  </div>
+                  <div style={{ fontSize: "12px", color: C.textMuted, lineHeight: 1.5, paddingLeft: "34px" }}>{f.description}</div>
                 </div>
-                <div style={{ fontSize: "12px", color: C.textMuted, lineHeight: 1.5, paddingLeft: "34px" }}>{f.description}</div>
-              </div>
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
@@ -3125,7 +3198,7 @@ export default function App() {
   if (screen === "home") {
     return (
       <>
-        <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} />
+        <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
         <button onClick={() => setShowAddModal(true)} style={{ position: "fixed", bottom: "24px", right: "24px", width: "52px", height: "52px", borderRadius: "50%", background: C.orange, color: "#fff", border: "none", fontSize: "24px", cursor: "pointer", boxShadow: "0 4px 16px rgba(217,119,6,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }} title="Add recipe">+</button>
         {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
       </>
