@@ -3102,7 +3102,7 @@ book",          bg: "#3b0764", accent: "#c084fc", pattern: "🔍📚🍜🥘🫕
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder={"Try \"ayam mentega\" or \"japanese\"…"}
+              placeholder={"Try 'ayam mentega' or 'japanese'…"}
               style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", padding: "12px 40px 12px 42px", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
             />
             {search && (
