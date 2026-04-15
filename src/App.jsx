@@ -722,6 +722,269 @@ const recipes = [
       "Finish with sesame oil, serve with rice, and garnish with green scallions.",
     ],
   },
+  {
+    id: 146, name: "Honey Garlic Crispy Chicken",
+    protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
+    cuisine: "Asian Fusion", time: "30 min", servings: 6,
+    nutrition: { calories: 420, protein: 32, carbs: 18, fat: 22, fiber: 1 },
+    tags: ["crispy", "honey garlic", "sticky", "weeknight"],
+    ingredients: [
+      "4 boneless chicken thighs, skin on (about 500g / 1–1.2 lb)",
+      "1.5 tbsp soy sauce",
+      "1 tbsp oyster sauce",
+      "1 tsp garlic powder",
+      "1/4 tsp salt",
+      "Black pepper to taste",
+      "1/4 cup cornstarch (for coating)",
+      "1/4 cup oil (for pan frying)",
+      "2 tbsp butter",
+      "1 bulb garlic, finely minced",
+      "1 tbsp soy sauce",
+      "1 tbsp honey",
+      "Dried parsley for garnish (optional)",
+    ],
+    steps: [
+      "Debone chicken thighs if needed, keep skin on. Wash and pat dry with paper towels.",
+      "Lightly score the meat side a few times, then flip and gently pound with the back of a knife so it cooks evenly and stays flat.",
+      "Mix soy sauce, oyster sauce, garlic powder, salt, and black pepper. Marinate chicken for at least 15 minutes.",
+      "Lightly coat each chicken thigh with cornstarch, shaking off the excess.",
+      "In a large pan over low-medium heat, add oil and place chicken skin side down. Pan fry 4–5 minutes per side until golden brown and crispy (internal temp 74°C / 165°F).",
+      "Remove chicken and set aside. Pour out excess oil. Melt butter over low heat, add minced garlic and cook until fragrant. Stir in honey and soy sauce, simmer until slightly thickened.",
+      "Return chicken to pan, coat both sides in sauce. Garnish with dried parsley and serve with steamed jasmine rice.",
+    ],
+  },
+  {
+    id: 147, name: "Beef and Broccoli",
+    protein: "Beef", taste: "Savory", method: "Stir-fry",
+    cuisine: "Chinese", time: "~20 min", servings: 2,
+    nutrition: { calories: 380, protein: 36, carbs: 22, fat: 16, fiber: 4 },
+    tags: ["takeout", "stir-fry", "broccoli", "quick"],
+    ingredients: [
+      "1 lb beef flank steak, thinly sliced against the grain (⅛–¼ inch thick)",
+      "3 tbsp water",
+      "1 tbsp Shaoxing cooking wine",
+      "½ tsp kosher salt",
+      "¼ tsp baking soda",
+      "2 tbsp cornstarch",
+      "1 tbsp neutral oil (for marinade)",
+      "½ cup light soy sauce",
+      "½ cup water (for sauce)",
+      "3 tbsp granulated sugar",
+      "2 tbsp cornstarch (for sauce)",
+      "1 tsp toasted sesame oil",
+      "1 lb broccoli, cut into florets",
+      "1 tbsp garlic, minced (about 2 cloves)",
+      "1 tbsp ginger, peeled and minced",
+      "Oil as needed for stir frying",
+      "Toasted sesame seeds for garnish (optional)",
+    ],
+    steps: [
+      "Slice flank steak thinly against the grain, no thicker than ¼ inch.",
+      "Combine beef with water, oil, Shaoxing wine, salt, cornstarch, and baking soda. Mix well and marinate 10–15 minutes (or overnight).",
+      "Mix all sauce ingredients together until no dry cornstarch remains. Set aside.",
+      "Boil broccoli florets in salted water for 2–3 minutes until just tender. Drain and set aside.",
+      "In a wok over medium-high heat, add oil and stir fry beef until about 90% cooked. Separate slices to cook evenly. Remove and set aside.",
+      "Keep 2 tbsp oil in the wok. Add minced garlic and ginger, cook until fragrant, about 15 seconds.",
+      "Pour in the sauce and bring to a simmer, stirring frequently until thickened and glossy.",
+      "Reduce to medium-low heat, return beef and broccoli to the pan. Toss until evenly coated. Garnish with sesame seeds and serve hot.",
+    ],
+  },
+  {
+    id: 148, name: "Terong Raos",
+    protein: "Vegetable", taste: "Savory", method: "Deep-fry + Stir-fry",
+    cuisine: "Indonesian", time: "35 min", servings: 2,
+    nutrition: { calories: 280, protein: 5, carbs: 42, fat: 12, fiber: 6 },
+    tags: ["terong", "crispy", "sambal", "spicy"],
+    ingredients: [
+      "300 gr terong",
+      "100 gr tepung terigu protein sedang",
+      "30 gr tepung maizena",
+      "1 sdt cabe bubuk halus",
+      "¼ sdt kunyit bubuk",
+      "1½ sdt baking powder",
+      "1 sdt kaldu ayam bubuk",
+      "1 sdt penyedap",
+      "¼ sdt merica",
+      "300 ml air dingin",
+      "6 siung bawang merah",
+      "3 siung bawang putih",
+      "6 buah cabe keriting merah",
+      "4 siung bawang merah, iris",
+      "2 buah cabai rawit, iris",
+      "2 buah cabe merah keriting, iris",
+      "2 buah cabai hijau, iris",
+      "2 lembar daun salam",
+      "1 batang serai, geprek",
+      "3 lembar daun jeruk",
+      "½ blok terasi",
+      "1–2 sdm gula merah pekat",
+      "1 sdt kaldu ayam bubuk",
+      "½ sdt penyedap",
+    ],
+    steps: [
+      "Potong terong sesuai selera. Sisihkan.",
+      "Buat adonan celup: campur terigu, maizena, cabe bubuk, kunyit, baking powder, kaldu ayam, penyedap, dan merica. Tambahkan air dingin sedikit-sedikit, aduk hingga adonan kental tapi bisa mengalir.",
+      "Celupkan potongan terong ke adonan, goreng dalam minyak panas hingga keemasan dan crispy. Angkat dan tiriskan.",
+      "Haluskan: bawang merah, bawang putih, cabe keriting merah, dan terasi.",
+      "Tumis bumbu halus dengan sedikit minyak hingga matang dan harum. Masukkan daun salam, serai, dan daun jeruk.",
+      "Masukkan irisan bawang merah, cabai rawit, cabe merah keriting, dan cabai hijau. Tumis sebentar.",
+      "Tambahkan gula merah, kaldu ayam, dan penyedap. Masak hingga bumbu mengental dan meresap.",
+      "Masukkan terong goreng, aduk rata hingga terbalut bumbu. Sajikan.",
+    ],
+  },
+  {
+    id: 149, name: "Terong Asem Manis Pedas",
+    protein: "Vegetable", taste: "Savory", method: "Stir-fry",
+    cuisine: "Indonesian", time: "30 min", servings: 3,
+    nutrition: { calories: 140, protein: 3, carbs: 22, fat: 5, fiber: 5 },
+    tags: ["asem manis", "pedas", "terong", "vegetarian"],
+    ingredients: [
+      "3 bh terong ukuran besar",
+      "Tepung maizena secukupnya untuk membaluri terong",
+      "Cuka + air secukupnya untuk merendam terong",
+      "6 siung bawang putih",
+      "Cabe rawit sesuai selera",
+      "Irisan daun bawang",
+      "2 sdm kecap asin",
+      "1 sdm cuka beras",
+      "2 sdm tepung maizena",
+      "2 sdm air",
+      "Garam dan gula secukupnya",
+    ],
+    steps: [
+      "Potong terong sesuai selera, rendam dalam campuran cuka dan air sebentar agar tidak hitam. Tiriskan.",
+      "Baluri terong dengan tepung maizena hingga rata, lalu goreng hingga kecokelatan. Tiriskan dan sisihkan.",
+      "Cincang halus bawang putih dan cabe rawit.",
+      "Tumis bawang putih dan cabe rawit hingga harum dan matang.",
+      "Tambahkan kecap asin, cuka beras, garam, dan gula. Aduk rata.",
+      "Larutkan maizena dengan air, tuang ke dalam tumisan. Aduk hingga saus mengental.",
+      "Masukkan terong goreng, aduk rata hingga terbalut saus. Taburi irisan daun bawang. Sajikan.",
+    ],
+  },
+  {
+    id: 150, name: "Brown Butter Chocolate Chip Banana Bread",
+    protein: "Fruit / Flour", taste: "Baking", method: "Baking",
+    cuisine: "Western", time: "75 min", servings: 6,
+    nutrition: { calories: 420, protein: 5, carbs: 58, fat: 20, fiber: 3 },
+    tags: ["brown butter", "banana bread", "chocolate chip", "loaf"],
+    ingredients: [
+      "3 ripe bananas",
+      "9 tbsp unsalted butter (browned to ~½ cup)",
+      "1 large egg, room temperature",
+      "¾ cup brown sugar",
+      "¼ cup white sugar",
+      "1½ cups all-purpose flour",
+      "1 tsp baking soda",
+      "½ tsp baking powder",
+      "½ tsp salt",
+      "1 tsp cinnamon",
+      "1 tsp vanilla",
+      "1 to 1½ cups semi-sweet chocolate chips",
+    ],
+    steps: [
+      "Brown butter over medium heat until golden and nutty. Transfer to a bowl and chill 5 minutes until warm, not hot.",
+      "Mash bananas in a large bowl. Whisk in browned butter (½ cup), sugars, egg, and vanilla until smooth.",
+      "Add flour, baking soda, baking powder, salt, and cinnamon. Mix until just combined.",
+      "Preheat oven to 175°C / 350°F. Fold in ~1 cup chocolate chips.",
+      "Pour into a lined loaf pan, top with remaining chocolate chips.",
+      "Bake 60 minutes, covering loosely with foil halfway through.",
+      "Toothpick test: moist crumbs = done. Bake 5–10 more minutes if needed. Cool before slicing.",
+    ],
+  },
+  {
+    id: 151, name: "Ayam Madu",
+    protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
+    cuisine: "Indonesian", time: "55 min", servings: 4,
+    nutrition: { calories: 340, protein: 30, carbs: 16, fat: 14, fiber: 0 },
+    tags: ["madu", "honey", "glossy", "halal"],
+    ingredients: [
+      "3 pcs paha ayam fillet",
+      "2 sdm saus tiram (untuk marinasi)",
+      "2 siung bawang putih, parut",
+      "1 cm jahe, parut",
+      "Garam secukupnya",
+      "Lada putih secukupnya",
+      "2 sdm kecap asin",
+      "3 sdm saus tiram",
+      "3 sdm madu",
+      "100 ml air",
+    ],
+    steps: [
+      "Marinasi ayam dengan saus tiram, bawang putih parut, jahe parut, garam, dan lada putih. Diamkan 30 menit.",
+      "Panaskan sedikit minyak, pan sear ayam hingga berubah warna dan kecokelatan di kedua sisi.",
+      "Tuangkan campuran kecap asin, saus tiram, madu, dan air ke dalam pan. Masak ayam hingga saus meresap dan mengkilat.",
+      "Sajikan dengan nasi putih hangat.",
+    ],
+  },
+  {
+    id: 152, name: "Daging Empal Gepuk Basah",
+    protein: "Beef", taste: "Savory", method: "Simmering",
+    cuisine: "Indonesian", time: "25 min", servings: 6,
+    nutrition: { calories: 380, protein: 32, carbs: 18, fat: 20, fiber: 2 },
+    tags: ["empal", "gepuk", "Sunda", "kelapa sangrai"],
+    ingredients: [
+      "1 kg daging sapi bagian paha / khas luar (sudah di-presto)",
+      "15 siung bawang merah",
+      "10 siung bawang putih",
+      "3 buah cabe merah besar",
+      "5 buah kemiri",
+      "5 cm jahe",
+      "3 lembar daun salam",
+      "5 lembar daun jeruk",
+      "2 batang serai",
+      "250 ml kaldu",
+      "8 cm lengkuas, parut",
+      "3 sdm air asam jawa",
+      "100 gr kelapa parut, sangrai",
+      "3 sdt ketumbar bubuk",
+      "½ sdt merica",
+      "1 sdt garam",
+      "1 sdt kaldu jamur",
+      "100 gr gula merah",
+    ],
+    steps: [
+      "Potong dan memarkan daging sapi yang sudah di-presto hingga pipih.",
+      "Blender bawang merah, bawang putih, cabe merah, kemiri, dan jahe hingga halus.",
+      "Tumis bumbu halus bersama daun salam, daun jeruk, dan serai hingga bumbu matang dan harum.",
+      "Masukkan lengkuas parut, kaldu, garam, kaldu jamur, merica, gula merah, ketumbar, dan air asam jawa. Aduk rata.",
+      "Masukkan daging, masak 5 menit hingga bumbu meresap.",
+      "Tambahkan kelapa sangrai, lanjutkan memasak hingga agak kering.",
+      "Sajikan dengan nasi, lalapan, dan sambal terasi.",
+    ],
+  },
+  {
+    id: 153, name: "Cumi Goreng Saus Mentega",
+    protein: "Squid", taste: "Savory", method: "Deep-fry + Stir-fry",
+    cuisine: "Indonesian", time: "30 min", servings: 6,
+    nutrition: { calories: 280, protein: 22, carbs: 24, fat: 10, fiber: 1 },
+    tags: ["crispy", "saus mentega", "cumi", "anti alot"],
+    ingredients: [
+      "500 gr cumi segar, potong ring dan bersihkan",
+      "1 sdm air jeruk nipis",
+      "120 gr tepung terigu",
+      "30 gr tepung maizena",
+      "½ sdt baking powder",
+      "¼ sdt garam",
+      "180 ml air soda dingin",
+      "2 sdm margarin",
+      "3 siung bawang putih, cincang",
+      "2 sdm kecap manis",
+      "1 sdm saus tiram",
+      "1 sdt kecap asin",
+      "1 sdm kecap inggris",
+      "½ sdt gula",
+      "¼ sdt MSG",
+      "¼ sdt merica",
+    ],
+    steps: [
+      "Potong cumi bentuk ring, bersihkan. Balur dengan jeruk nipis, diamkan 10 menit.",
+      "Campur tepung terigu, maizena, baking powder, garam, dan merica. Tuang air soda dingin sedikit-sedikit hingga jadi adonan kental.",
+      "Panaskan minyak api sedang. Celup cumi ke batter, goreng hingga kering dan crunchy. Angkat dan tiriskan.",
+      "Panaskan margarin di wajan. Tumis bawang putih hingga harum.",
+      "Masukkan kecap manis, saus tiram, kecap asin, kecap inggris, gula, MSG, dan merica. Masak hingga sedikit mengental.",
+      "Masukkan cumi goreng, aduk cepat 10–15 detik hingga saus melapisi cumi. Sajikan hangat.",
+    ],
+  },
 ];
 
 // ─── ENRICHMENT ────────────────────────────────────────────────────────────────
@@ -831,7 +1094,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
       <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: "12px" }}>
@@ -1002,14 +1265,124 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext }) {
 }
 
 // ─── TODAY PLANNER ─────────────────────────────────────────────────────────────
+function MealSummaryPage({ protein, veg, onBack, onSelect }) {
+  const recipes = [protein, veg].filter(Boolean);
+  const proteinTotal = ((protein?.nutrition?.protein || 0) + (veg?.nutrition?.protein || 0)) * 2;
+  const pct = Math.min(100, Math.round((proteinTotal / COMBINED_PROTEIN_GOAL) * 100));
+  const ok = pct >= 80;
+
+  return (
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+      {/* Header */}
+      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+          <button onClick={onBack} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "10px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>← Back</button>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>Today's Meal</div>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "24px 16px 60px" }}>
+
+        {/* Protein summary card */}
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "20px", boxShadow: C.shadowMd }}>
+          <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "12px" }}>Protein summary</div>
+          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+            <span style={{ fontSize: "13px", color: C.textMuted }}>Combined (2 servings)</span>
+            <span style={{ fontSize: "13px", fontWeight: 700, color: ok ? C.green : C.orange }}>{proteinTotal}g / {COMBINED_PROTEIN_GOAL}g goal</span>
+          </div>
+          <div style={{ background: C.bg, borderRadius: "6px", height: "8px", overflow: "hidden", border: `1px solid ${C.border}`, marginBottom: "8px" }}>
+            <div style={{ width: `${pct}%`, height: "100%", background: ok ? C.green : C.orange, borderRadius: "6px", transition: "width 0.3s" }} />
+          </div>
+          <div style={{ display: "flex", gap: "8px" }}>
+            {protein && <span style={{ fontSize: "11px", color: C.textMuted }}>{protein.nutrition.protein * 2}g from {protein.name}</span>}
+            {protein && veg && <span style={{ color: C.border }}>·</span>}
+            {veg && <span style={{ fontSize: "11px", color: C.textMuted }}>{veg.nutrition.protein * 2}g from {veg.name}</span>}
+          </div>
+        </div>
+
+        {/* Recipe cards — full detail */}
+        {recipes.map((recipe, i) => {
+          const r = enrichRecipe(recipe);
+          const acc = i === 0 ? C.orange : C.green;
+          const label = i === 0 ? "🥩 Protein dish" : "🥦 Vegetable side";
+          return (
+            <div key={recipe.id} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", overflow: "hidden", marginBottom: "16px", boxShadow: C.shadowMd }}>
+              {/* Recipe header */}
+              <div style={{ borderLeft: `4px solid ${acc}`, padding: "16px 18px", borderBottom: `1px solid ${C.border}` }}>
+                <div style={{ fontSize: "10px", color: acc, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>{label}</div>
+                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipe.name}</div>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipe.time}</span>
+                  <span style={{ color: C.border }}>·</span>
+                  <span style={{ fontSize: "12px", color: C.textMuted }}>👤 {recipe.servings} servings</span>
+                  <span style={{ color: C.border }}>·</span>
+                  <span style={{ fontSize: "12px", color: C.textMuted }}>{METHOD_ICONS[recipe.method] || "🍴"} {recipe.method}</span>
+                  <span style={{ color: C.border }}>·</span>
+                  <span style={{ fontSize: "12px", fontWeight: 600, color: acc }}>{recipe.nutrition.protein}g protein/srv</span>
+                </div>
+                {/* Warnings */}
+                <div style={{ display: "flex", gap: "6px", marginTop: "8px", flexWrap: "wrap" }}>
+                  {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 8px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ Deep-fried</span>}
+                  {r.hasGluten && <span style={{ fontSize: "10px", color: C.yellow, background: C.yellowLight, padding: "2px 8px", borderRadius: "20px", border: "1px solid #fde68a" }}>🌾 Gluten</span>}
+                  {recipe.tags?.map(t => <span key={t} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>#{t}</span>)}
+                </div>
+              </div>
+
+              {/* Ingredients */}
+              <div style={{ padding: "14px 18px", borderBottom: `1px solid ${C.border}` }}>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>Ingredients</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                  {recipe.ingredients?.map((ing, j) => (
+                    <div key={j} style={{ display: "flex", gap: "10px", alignItems: "flex-start", padding: "4px 0", borderBottom: j < recipe.ingredients.length - 1 ? `1px solid ${C.border}` : "none", fontSize: "13px", color: C.text }}>
+                      <span style={{ color: acc, fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
+                      {ing}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Steps */}
+              <div style={{ padding: "14px 18px" }}>
+                <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>Directions</div>
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {recipe.steps?.map((step, j) => (
+                    <div key={j} style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "8px 0", borderBottom: j < recipe.steps.length - 1 ? `1px solid ${C.border}` : "none" }}>
+                      <div style={{ background: acc, color: "#fff", borderRadius: "50%", width: "22px", height: "22px", minWidth: "22px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: 700, marginTop: "1px" }}>{j + 1}</div>
+                      <p style={{ margin: 0, fontSize: "13px", color: C.text, lineHeight: 1.65 }}>{step}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Source link */}
+              {recipe.link && (
+                <div style={{ padding: "10px 18px", borderTop: `1px solid ${C.border}`, background: C.bg }}>
+                  <a href={recipe.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: "12px", color: acc, textDecoration: "none", fontWeight: 600 }}>📎 View original source →</a>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        <p style={{ fontSize: "11px", color: C.textFaint, textAlign: "center" }}>* Nutrition values are estimates.</p>
+      </div>
+    </div>
+  );
+}
+
 function TodayPlanner({ allRecipes, onSelect }) {
   const [step, setStep] = useState(1); // 1 = protein, 2 = veg
-  const [browsedProtein, setBrowsedProtein] = useState(null);   // what's highlighted in step 1
-  const [browsedVeg, setBrowsedVeg] = useState(null);           // what's highlighted in step 2
-  const [pickedProtein, setPickedProtein] = useState(null);     // confirmed protein recipe
-  const [pickedVeg, setPickedVeg] = useState(null);             // confirmed veg recipe
+  const [browsedProtein, setBrowsedProtein] = useState(null);
+  const [browsedVeg, setBrowsedVeg] = useState(null);
+  const [pickedProtein, setPickedProtein] = useState(null);
+  const [pickedVeg, setPickedVeg] = useState(null);
   const [wifeFilter, setWifeFilter] = useState(true);
   const [quickOnly, setQuickOnly] = useState(false);
+  const [showMealSummary, setShowMealSummary] = useState(false);
 
   const enriched = allRecipes.map(enrichRecipe);
   const savory = enriched.filter(r => r.taste === "Savory");
@@ -1038,8 +1411,16 @@ function TodayPlanner({ allRecipes, onSelect }) {
     setBrowsedProtein(null);
     setBrowsedVeg(null);
     setStep(1);
+    setShowMealSummary(false);
   };
 
+  if (showMealSummary) {
+    return (
+      <div style={{ position: "fixed", inset: 0, zIndex: 200, overflowY: "auto", background: C.bg }}>
+        <MealSummaryPage protein={pickedProtein} veg={pickedVeg} onBack={() => setShowMealSummary(false)} onSelect={onSelect} />
+      </div>
+    );
+  }
   return (
     <div>
       {/* ── Sticky picked section ── */}
@@ -1048,7 +1429,20 @@ function TodayPlanner({ allRecipes, onSelect }) {
           <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "12px 14px", boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
               <span style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em" }}>Today's Meal</span>
-              <button onClick={clearAll} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "12px", fontWeight: 600 }}>Clear all ×</button>
+              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+                {pickedProtein && pickedVeg && (
+                  <button onClick={() => setShowMealSummary(true)} title="View full meal plan"
+                    style={{ background: C.orange, border: "none", borderRadius: "8px", padding: "5px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", fontWeight: 700, color: "#fff", boxShadow: C.shadow }}>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                      <polyline points="17 21 17 13 7 13 7 21"/>
+                      <polyline points="7 3 7 8 15 8"/>
+                    </svg>
+                    View recipes
+                  </button>
+                )}
+                <button onClick={clearAll} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "12px", fontWeight: 600 }}>Clear ×</button>
+              </div>
             </div>
             <div style={{ display: "grid", gridTemplateColumns: pickedProtein && pickedVeg ? "1fr 1fr" : "1fr", gap: "8px" }}>
               {pickedProtein && (
