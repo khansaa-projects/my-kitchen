@@ -2144,25 +2144,247 @@ If you can access the page, return just the raw caption/recipe text. If you cann
   );
 }
 
+// ─── INVENTORY VIEW ────────────────────────────────────────────────────────────
+function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
+  const [uploadStatus, setUploadStatus] = useState("idle");
+  const [activeTab, setActiveTab] = useState("inventory");
+  const [dragOver, setDragOver] = useState(false);
+
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+    setUploadStatus("scanning");
+    try {
+      const base64 = await new Promise((res, rej) => {
+        const reader = new FileReader();
+        reader.onload = () => res(reader.result.split(",")[1]);
+        reader.onerror = rej;
+        reader.readAsDataURL(file);
+      });
+      const mediaType = file.type || "image/jpeg";
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{
+            role: "user",
+            content: [
+              { type: "image", source: { type: "base64", media_type: mediaType, data: base64 } },
+              { type: "text", text: `This is a grocery receipt or invoice. Extract all food/ingredient items purchased. Return ONLY a JSON array, no markdown, no explanation. Each object: {"name":string,"quantity":string,"unit":string}. Focus only on food ingredients, skip non-food items.` }
+            ]
+          }]
+        })
+      });
+      const data = await res.json();
+      const raw = data.content?.find(b => b.type === "text")?.text || "[]";
+      const clean = raw.replace(/```json|```/g, "").trim();
+      const items = JSON.parse(clean);
+      const updated = { ...inventory };
+      items.forEach(item => {
+        const key = item.name.toLowerCase().trim();
+        updated[key] = { name: item.name, quantity: item.quantity, unit: item.unit };
+      });
+      onInventoryUpdate(updated);
+      setUploadStatus("done");
+    } catch(e) {
+      setUploadStatus("error");
+    }
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file) handleFileUpload(file);
+  };
+
+  const removeItem = (key) => {
+    const updated = { ...inventory };
+    delete updated[key];
+    onInventoryUpdate(updated);
+  };
+
+  const inventoryKeys = Object.keys(inventory);
+
+  const getRecommendations = () => {
+    if (inventoryKeys.length === 0) return [];
+    const enriched = allRecipes.map(enrichRecipe).filter(r => r.taste === "Savory");
+    return enriched.map(r => {
+      const ingText = (r.ingredients || []).join(" ").toLowerCase();
+      const matches = inventoryKeys.filter(k => ingText.includes(k.toLowerCase()));
+      return { ...r, matchCount: matches.length, matchedItems: matches };
+    }).filter(r => r.matchCount > 0).sort((a, b) => b.matchCount - a.matchCount).slice(0, 15);
+  };
+
+  const recommendations = getRecommendations();
+
+  return (
+    <div>
+      <div style={{ display: "flex", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "12px", padding: "4px", marginBottom: "20px", boxShadow: C.shadow }}>
+        {[{ id: "inventory", label: "🧺 My Inventory" }, { id: "recommendations", label: "✨ Recommended" }].map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
+            flex: 1, padding: "9px", border: "none", borderRadius: "9px", cursor: "pointer",
+            fontSize: "13px", fontWeight: 600, transition: "all 0.15s",
+            background: activeTab === t.id ? C.orange : "transparent",
+            color: activeTab === t.id ? "#fff" : C.textMuted,
+          }}>{t.label}</button>
+        ))}
+      </div>
+
+      {activeTab === "inventory" && (
+        <div>
+          <div
+            onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+            onDragLeave={() => setDragOver(false)}
+            onDrop={handleDrop}
+            onClick={() => document.getElementById("inv-file-input").click()}
+            style={{ border: `2px dashed ${dragOver ? C.orange : C.borderStrong}`, borderRadius: "14px", padding: "28px 20px", textAlign: "center", background: dragOver ? C.orangeLight : C.surface, cursor: "pointer", marginBottom: "20px", transition: "all 0.15s", boxShadow: C.shadow }}>
+            <input id="inv-file-input" type="file" accept="image/*,.pdf" style={{ display: "none" }} onChange={e => handleFileUpload(e.target.files[0])} />
+            {uploadStatus === "scanning" ? (
+              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>🔍</div><div style={{ fontSize: "14px", fontWeight: 600, color: C.text }}>Scanning your receipt…</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Claude is reading the ingredients</div></div>
+            ) : uploadStatus === "done" ? (
+              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>✅</div><div style={{ fontSize: "14px", fontWeight: 600, color: C.green }}>Inventory updated!</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Upload another receipt to add more</div></div>
+            ) : uploadStatus === "error" ? (
+              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>⚠️</div><div style={{ fontSize: "14px", fontWeight: 600, color: "#be123c" }}>Couldn't read the receipt</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Try a clearer photo or different file</div></div>
+            ) : (
+              <div><div style={{ fontSize: "32px", marginBottom: "10px" }}>🧾</div><div style={{ fontSize: "14px", fontWeight: 700, color: C.text, marginBottom: "4px" }}>Upload grocery receipt or invoice</div><div style={{ fontSize: "12px", color: C.textMuted }}>Photo, screenshot, or PDF — Claude reads the ingredients automatically</div></div>
+            )}
+          </div>
+
+          {inventoryKeys.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px", color: C.textFaint }}>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🧺</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No inventory yet</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Upload a receipt above to get started</div>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "12px" }}>{inventoryKeys.length} items in your pantry</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                {Object.entries(inventory).sort((a,b) => a[0].localeCompare(b[0])).map(([key, item]) => (
+                  <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", boxShadow: C.shadow }}>
+                    <span style={{ fontSize: "13px", color: C.text, flex: 1, fontWeight: 500 }}>{item.name}</span>
+                    <span style={{ fontSize: "12px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{item.quantity} {item.unit}</span>
+                    <button onClick={() => removeItem(key)} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "16px", lineHeight: 1, padding: "0 2px" }}>×</button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {activeTab === "recommendations" && (
+        <div>
+          {inventoryKeys.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px" }}>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🧺</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>Add inventory first</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Upload a receipt in the My Inventory tab to get recipe recommendations</div>
+            </div>
+          ) : recommendations.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px" }}>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🤔</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No matches found</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try updating your inventory with more ingredients</div>
+            </div>
+          ) : (
+            <div>
+              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "16px" }}>{recommendations.length} recipes you can cook with what you have</div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                {recommendations.map(r => (
+                  <div key={r.id}>
+                    <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 3 ? C.green : C.orange} />
+                    <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "5px 4px 2px" }}>
+                      {r.matchedItems.slice(0, 5).map(item => (
+                        <span key={item} style={{ fontSize: "10px", color: C.green, background: C.greenLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.greenBorder}` }}>✓ {item}</span>
+                      ))}
+                      {r.matchedItems.length > 5 && <span style={{ fontSize: "10px", color: C.textMuted }}>+{r.matchedItems.length - 5} more</span>}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── HOME SCREEN ───────────────────────────────────────────────────────────────
+function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes }) {
+  const inventoryCount = Object.keys(inventory).length;
+  const totalRecipes = allRecipes.length;
+
+  const features = [
+    { id: "today",     emoji: "🍽", title: "What's for dinner?", subtitle: "Pick from what's in your freezer", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
+    { id: "week",      emoji: "📅", title: "Plan the week",       subtitle: "Weekend prep made easy",            description: "Map out 7 days of meals, auto-generate your shopping list", color: "#0284c7", light: "#e0f2fe", border: "#bae6fd", stat: "Mon — Sun" },
+    { id: "inventory", emoji: "🧺", title: "My pantry",           subtitle: "Know what you have",               description: "Upload grocery receipts — get recipe recommendations from your inventory", color: "#16a34a", light: "#dcfce7", border: "#bbf7d0", stat: inventoryCount > 0 ? `${inventoryCount} items` : "Upload receipt" },
+    { id: "browse",    emoji: "📖", title: "Recipe book",         subtitle: "Browse all recipes",               description: "Search and explore your full collection by ingredient or cuisine", color: "#7c3aed", light: "#f3e8ff", border: "#ddd6fe", stat: `${totalRecipes} recipes` },
+  ];
+
+  return (
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      <div style={{ background: "#1c1917", padding: "48px 24px 36px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "180px", height: "180px", borderRadius: "50%", background: "rgba(217,119,6,0.15)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(217,119,6,0.08)", pointerEvents: "none" }} />
+        <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
+          <div style={{ fontSize: "36px", marginBottom: "8px" }}>🍳</div>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 6px", lineHeight: 1.1 }}>Our Kitchen</h1>
+          <p style={{ color: "#a8a29e", fontSize: "14px", margin: 0 }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}{inventoryCount > 0 ? ` · ${inventoryCount} pantry items` : ""}</p>
+        </div>
+      </div>
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "24px 16px 80px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {features.map(f => (
+            <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "16px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.12s, box-shadow 0.12s" }}
+              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)"; }}
+              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
+              <div style={{ width: "6px", background: f.color, flexShrink: 0 }} />
+              <div style={{ flex: 1, padding: "18px 16px" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <span style={{ fontSize: "24px" }}>{f.emoji}</span>
+                    <div>
+                      <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text, lineHeight: 1.2 }}>{f.title}</div>
+                      <div style={{ fontSize: "12px", color: f.color, fontWeight: 600, marginTop: "1px" }}>{f.subtitle}</div>
+                    </div>
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
+                    <span style={{ fontSize: "11px", color: f.color, background: f.light, padding: "3px 8px", borderRadius: "20px", border: `1px solid ${f.border}`, fontWeight: 600, whiteSpace: "nowrap" }}>{f.stat}</span>
+                    <span style={{ color: C.textFaint, fontSize: "18px" }}>›</span>
+                  </div>
+                </div>
+                <div style={{ fontSize: "12px", color: C.textMuted, lineHeight: 1.5, paddingLeft: "34px" }}>{f.description}</div>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN APP ──────────────────────────────────────────────────────────────────
 export default function App() {
-  const [tab, setTab] = useState("today");
+  const [screen, setScreen] = useState("home");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
   const [selectedAccent, setSelectedAccent] = useState(C.orange);
   const [showAddModal, setShowAddModal] = useState(false);
   const [customRecipes, setCustomRecipes] = useState([]);
+  const [inventory, setInventory] = useState({});
   const [storageReady, setStorageReady] = useState(false);
 
-  // Load saved recipes from localStorage on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem("custom-recipes");
-      if (saved) {
-        setCustomRecipes(JSON.parse(saved));
-      }
-    } catch(e) {
-      // No saved recipes yet, start fresh
-    }
+      if (saved) setCustomRecipes(JSON.parse(saved));
+      const savedInv = localStorage.getItem("kitchen-inventory");
+      if (savedInv) setInventory(JSON.parse(savedInv));
+    } catch(e) {}
     setStorageReady(true);
   }, []);
 
@@ -2186,75 +2408,59 @@ export default function App() {
     localStorage.setItem("custom-recipes", JSON.stringify(updated));
   };
 
+  const handleInventoryUpdate = (updated) => {
+    setInventory(updated);
+    localStorage.setItem("kitchen-inventory", JSON.stringify(updated));
+  };
+
   if (selectedRecipe) {
     return <RecipeDetail recipe={selectedRecipe} accent={selectedAccent} onBack={() => setSelectedRecipe(null)} />;
   }
 
-  const TABS = [
-    { id: "today", label: "🍽 Today" },
-    { id: "week",  label: "📅 Week" },
-    { id: "browse",label: "📖 Browse" },
-  ];
+  const SCREEN_META = {
+    today:     { label: "What's for dinner?", emoji: "🍽" },
+    week:      { label: "Weekly plan",         emoji: "📅" },
+    inventory: { label: "My pantry",           emoji: "🧺" },
+    browse:    { label: "Recipe book",         emoji: "📖" },
+  };
+
+  if (screen === "home") {
+    return (
+      <>
+        <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} />
+        <button onClick={() => setShowAddModal(true)} style={{ position: "fixed", bottom: "24px", right: "24px", width: "52px", height: "52px", borderRadius: "50%", background: C.orange, color: "#fff", border: "none", fontSize: "24px", cursor: "pointer", boxShadow: "0 4px 16px rgba(217,119,6,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }} title="Add recipe">+</button>
+        {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
+      </>
+    );
+  }
+
+  const meta = SCREEN_META[screen] || {};
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-
-      {/* Header */}
-      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "16px 20px 0", position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: "680px", margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-            <div>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "22px", fontWeight: 700, color: C.text, margin: "0 0 2px" }}>
-                Our Kitchen <span style={{ color: C.orange }}>🍳</span>
-              </h1>
-              <p style={{ color: C.textMuted, fontSize: "11px", margin: 0 }}>
-                {allRecipes.length} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}
-              </p>
-            </div>
-            <button onClick={() => setShowAddModal(true)} style={{
-              display: "flex", alignItems: "center", gap: "5px",
-              padding: "8px 16px", border: `1px solid ${C.orange}`, borderRadius: "20px",
-              background: C.orangeLight, color: C.orange, fontSize: "13px", fontWeight: 700,
-              cursor: "pointer", whiteSpace: "nowrap", boxShadow: C.shadow,
-            }}>
-              + Add recipe
-            </button>
+      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+        <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+          <button onClick={() => setScreen("home")} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "10px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>← Home</button>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>{meta.emoji} {meta.label}</div>
           </div>
-          <div style={{ display: "flex" }}>
-            {TABS.map(t => (
-              <button key={t.id} onClick={() => setTab(t.id)} style={{
-                flex: 1, padding: "9px 0", border: "none", cursor: "pointer",
-                fontSize: "13px", fontWeight: 600, background: "transparent",
-                color: tab === t.id ? C.orange : C.textMuted,
-                borderBottom: tab === t.id ? `2px solid ${C.orange}` : `2px solid transparent`,
-                transition: "all 0.15s",
-              }}>{t.label}</button>
-            ))}
-          </div>
+          <button onClick={() => setShowAddModal(true)} style={{ padding: "7px 14px", border: `1px solid ${C.orange}`, borderRadius: "20px", background: C.orangeLight, color: C.orange, fontSize: "12px", fontWeight: 700, cursor: "pointer", boxShadow: C.shadow }}>+ Add</button>
         </div>
       </div>
-
-      {/* Body */}
       <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 60px" }}>
         {!storageReady ? (
-          <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading your recipes…</div>
+          <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading…</div>
         ) : (
           <>
-            {tab === "today"  && <TodayPlanner  allRecipes={allRecipes} onSelect={handleSelect} />}
-            {tab === "week"   && <WeeklyPlanner allRecipes={allRecipes} onSelect={handleSelect} />}
-            {tab === "browse" && <BrowseView    allRecipes={allRecipes} onSelect={handleSelect} customIds={customRecipes.map(r => r.id)} onDelete={handleDeleteCustom} />}
+            {screen === "today"     && <TodayPlanner   allRecipes={allRecipes} onSelect={handleSelect} />}
+            {screen === "week"      && <WeeklyPlanner  allRecipes={allRecipes} onSelect={handleSelect} />}
+            {screen === "browse"    && <BrowseView     allRecipes={allRecipes} onSelect={handleSelect} customIds={customRecipes.map(r => r.id)} onDelete={handleDeleteCustom} />}
+            {screen === "inventory" && <InventoryView  allRecipes={allRecipes} onSelect={handleSelect} inventory={inventory} onInventoryUpdate={handleInventoryUpdate} />}
           </>
         )}
       </div>
-
-      {/* Add recipe modal */}
-      {showAddModal && (
-        <AddRecipeModal
-          onClose={() => setShowAddModal(false)}
-          onAdd={handleAddRecipe}
-        />
-      )}
+      {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
     </div>
   );
 }
