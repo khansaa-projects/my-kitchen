@@ -2917,83 +2917,71 @@ If you can access the page, return just the raw caption/recipe text. If you cann
 
 // ─── INVENTORY VIEW ────────────────────────────────────────────────────────────
 function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
-  const [uploadStatus, setUploadStatus] = useState("idle");
-  const [activeTab, setActiveTab] = useState("inventory");
-  const [dragOver, setDragOver] = useState(false);
+  // Kitchen staples — always available, pre-loaded
+  const STAPLES = [
+    "soy sauce", "kecap asin", "kecap manis", "oyster sauce", "saus tiram",
+    "sesame oil", "minyak wijen", "fish sauce", "kecap ikan",
+    "garlic", "bawang putih", "shallot", "bawang merah", "onion", "bawang bombay",
+    "chives", "daun bawang", "ginger", "jahe",
+    "salt", "garam", "pepper", "merica", "lada", "sugar", "gula",
+    "cornstarch", "maizena", "oil", "minyak", "butter", "mentega", "margarin",
+    "chicken stock", "kaldu ayam", "kaldu jamur",
+  ];
 
-  const handleFileUpload = async (file) => {
-    if (!file) return;
-    setUploadStatus("scanning");
-    try {
-      const base64 = await new Promise((res, rej) => {
-        const reader = new FileReader();
-        reader.onload = () => res(reader.result.split(",")[1]);
-        reader.onerror = rej;
-        reader.readAsDataURL(file);
-      });
-      const mediaType = file.type || "image/jpeg";
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [{
-            role: "user",
-            content: [
-              { type: "image", source: { type: "base64", media_type: mediaType, data: base64 } },
-              { type: "text", text: `This is a grocery receipt or invoice. Extract all food/ingredient items purchased. Return ONLY a JSON array, no markdown, no explanation. Each object: {"name":string,"quantity":string,"unit":string}. Focus only on food ingredients, skip non-food items.` }
-            ]
-          }]
-        })
-      });
-      const data = await res.json();
-      const raw = data.content?.find(b => b.type === "text")?.text || "[]";
-      const clean = raw.replace(/```json|```/g, "").trim();
-      const items = JSON.parse(clean);
-      const updated = { ...inventory };
-      items.forEach(item => {
-        const key = item.name.toLowerCase().trim();
-        updated[key] = { name: item.name, quantity: item.quantity, unit: item.unit };
-      });
-      onInventoryUpdate(updated);
-      setUploadStatus("done");
-    } catch(e) {
-      setUploadStatus("error");
-    }
+  const [inputText, setInputText] = useState("");
+  const [activeTab, setActiveTab] = useState("pantry");
+
+  // Parse typed ingredients — split by comma or newline
+  const parseInput = (text) => {
+    return text.split(/[,\n]/).map(s => s.trim().toLowerCase()).filter(s => s.length > 1);
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    const file = e.dataTransfer.files[0];
-    if (file) handleFileUpload(file);
-  };
+  const typedItems = parseInput(inputText);
+  const allItems = [...new Set([...STAPLES, ...typedItems])];
 
-  const removeItem = (key) => {
-    const updated = { ...inventory };
-    delete updated[key];
+  // Save typed items to storage
+  const handleInputChange = (val) => {
+    setInputText(val);
+    const parsed = parseInput(val);
+    const updated = {};
+    parsed.forEach(item => { updated[item] = { name: item, quantity: "", unit: "" }; });
     onInventoryUpdate(updated);
   };
 
-  const inventoryKeys = Object.keys(inventory);
+  // Load saved items on mount
+  const savedText = Object.keys(inventory)
+    .filter(k => !STAPLES.includes(k))
+    .join(", ");
 
+  const [initialized, setInitialized] = useState(false);
+  if (!initialized && savedText && !inputText) {
+    setInputText(savedText);
+    setInitialized(true);
+  }
+
+  // Recommend recipes based on all items (staples + typed)
   const getRecommendations = () => {
-    if (inventoryKeys.length === 0) return [];
+    if (typedItems.length === 0) return [];
     const enriched = allRecipes.map(enrichRecipe).filter(r => r.taste === "Savory");
     return enriched.map(r => {
       const ingText = (r.ingredients || []).join(" ").toLowerCase();
-      const matches = inventoryKeys.filter(k => ingText.includes(k.toLowerCase()));
-      return { ...r, matchCount: matches.length, matchedItems: matches };
-    }).filter(r => r.matchCount > 0).sort((a, b) => b.matchCount - a.matchCount).slice(0, 15);
+      // Only count non-staple matches as "real" matches — staples don't count toward score
+      const realMatches = typedItems.filter(k => ingText.includes(k));
+      const allMatches = allItems.filter(k => ingText.includes(k));
+      return { ...r, matchCount: realMatches.length, allMatchCount: allMatches.length, matchedItems: realMatches, allMatchedItems: allMatches };
+    })
+    .filter(r => r.matchCount > 0)
+    .sort((a, b) => b.matchCount - a.matchCount || b.allMatchCount - a.allMatchCount)
+    .slice(0, 15);
   };
 
   const recommendations = getRecommendations();
 
   return (
     <div>
+      {/* Sub tabs */}
       <div style={{ display: "flex", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "12px", padding: "4px", marginBottom: "20px", boxShadow: C.shadow }}>
-        {[{ id: "inventory", label: "🧺 My Inventory" }, { id: "recommendations", label: "✨ Recommended" }].map(t => (
+        {[{ id: "pantry", label: "🛒 What I bought" }, { id: "recommendations", label: "✨ Cook now" }].map(t => (
           <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
             flex: 1, padding: "9px", border: "none", borderRadius: "9px", cursor: "pointer",
             fontSize: "13px", fontWeight: 600, transition: "all 0.15s",
@@ -3003,42 +2991,46 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
         ))}
       </div>
 
-      {activeTab === "inventory" && (
+      {activeTab === "pantry" && (
         <div>
-          <div
-            onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-            onDragLeave={() => setDragOver(false)}
-            onDrop={handleDrop}
-            onClick={() => document.getElementById("inv-file-input").click()}
-            style={{ border: `2px dashed ${dragOver ? C.orange : C.borderStrong}`, borderRadius: "14px", padding: "28px 20px", textAlign: "center", background: dragOver ? C.orangeLight : C.surface, cursor: "pointer", marginBottom: "20px", transition: "all 0.15s", boxShadow: C.shadow }}>
-            <input id="inv-file-input" type="file" accept="image/*,.pdf" style={{ display: "none" }} onChange={e => handleFileUpload(e.target.files[0])} />
-            {uploadStatus === "scanning" ? (
-              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>🔍</div><div style={{ fontSize: "14px", fontWeight: 600, color: C.text }}>Scanning your receipt…</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Claude is reading the ingredients</div></div>
-            ) : uploadStatus === "done" ? (
-              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>✅</div><div style={{ fontSize: "14px", fontWeight: 600, color: C.green }}>Inventory updated!</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Upload another receipt to add more</div></div>
-            ) : uploadStatus === "error" ? (
-              <div><div style={{ fontSize: "28px", marginBottom: "8px" }}>⚠️</div><div style={{ fontSize: "14px", fontWeight: 600, color: "#be123c" }}>Couldn't read the receipt</div><div style={{ fontSize: "12px", color: C.textMuted, marginTop: "4px" }}>Try a clearer photo or different file</div></div>
-            ) : (
-              <div><div style={{ fontSize: "32px", marginBottom: "10px" }}>🧾</div><div style={{ fontSize: "14px", fontWeight: 700, color: C.text, marginBottom: "4px" }}>Upload grocery receipt or invoice</div><div style={{ fontSize: "12px", color: C.textMuted }}>Photo, screenshot, or PDF — Claude reads the ingredients automatically</div></div>
+          {/* Input */}
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "16px", boxShadow: C.shadow }}>
+            <div style={{ fontSize: "13px", fontWeight: 700, color: C.text, marginBottom: "4px" }}>What did you just buy?</div>
+            <div style={{ fontSize: "12px", color: C.textMuted, marginBottom: "12px" }}>Type ingredients separated by commas or new lines</div>
+            <textarea
+              value={inputText}
+              onChange={e => handleInputChange(e.target.value)}
+              placeholder={"chicken thigh, broccoli, tofu, eggs, salmon\ntempe, shiitake, baby kailan"}
+              rows={5}
+              style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 12px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+            />
+            {inputText.trim() && (
+              <button onClick={() => { setInputText(""); onInventoryUpdate({}); }}
+                style={{ marginTop: "8px", background: "none", border: "none", color: C.textFaint, fontSize: "12px", cursor: "pointer", fontWeight: 600 }}>
+                Clear all ×
+              </button>
             )}
           </div>
 
-          {inventoryKeys.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px 20px", color: C.textFaint }}>
-              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🧺</div>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No inventory yet</div>
-              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Upload a receipt above to get started</div>
+          {/* Staples notice */}
+          <div style={{ background: C.greenLight, border: `1px solid ${C.greenBorder}`, borderRadius: "12px", padding: "12px 14px", marginBottom: "16px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 700, color: C.green, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "6px" }}>✓ Kitchen staples — always available</div>
+            <div style={{ fontSize: "12px", color: C.green, lineHeight: 1.6 }}>
+              Garlic · Shallots · Onion · Chives · Ginger · Soy sauce · Oyster sauce · Kecap manis · Sesame oil · Salt · Pepper · Sugar · Cornstarch · Oil · Butter · Stock powder
             </div>
-          ) : (
+          </div>
+
+          {/* Parsed items preview */}
+          {typedItems.length > 0 && (
             <div>
-              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "12px" }}>{inventoryKeys.length} items in your pantry</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                {Object.entries(inventory).sort((a,b) => a[0].localeCompare(b[0])).map(([key, item]) => (
-                  <div key={key} style={{ display: "flex", alignItems: "center", gap: "10px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", boxShadow: C.shadow }}>
-                    <span style={{ fontSize: "13px", color: C.text, flex: 1, fontWeight: 500 }}>{item.name}</span>
-                    <span style={{ fontSize: "12px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{item.quantity} {item.unit}</span>
-                    <button onClick={() => removeItem(key)} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "16px", lineHeight: 1, padding: "0 2px" }}>×</button>
-                  </div>
+              <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
+                {typedItems.length} item{typedItems.length !== 1 ? "s" : ""} in your cart
+              </div>
+              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                {typedItems.map(item => (
+                  <span key={item} style={{ fontSize: "12px", background: C.orangeLight, color: C.orange, border: `1px solid ${C.orangeBorder}`, padding: "4px 10px", borderRadius: "20px", fontWeight: 500 }}>
+                    {item}
+                  </span>
                 ))}
               </div>
             </div>
@@ -3048,30 +3040,41 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
 
       {activeTab === "recommendations" && (
         <div>
-          {inventoryKeys.length === 0 ? (
+          {typedItems.length === 0 ? (
             <div style={{ textAlign: "center", padding: "40px 20px" }}>
-              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🧺</div>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>Add inventory first</div>
-              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Upload a receipt in the My Inventory tab to get recipe recommendations</div>
+              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🛒</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>Type your groceries first</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Go to "What I bought" and list what you picked up</div>
+              <button onClick={() => setActiveTab("pantry")}
+                style={{ marginTop: "14px", padding: "9px 20px", background: C.orange, color: "#fff", border: "none", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
+                Add ingredients →
+              </button>
             </div>
           ) : recommendations.length === 0 ? (
             <div style={{ textAlign: "center", padding: "40px 20px" }}>
               <div style={{ fontSize: "32px", marginBottom: "10px" }}>🤔</div>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No matches found</div>
-              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try updating your inventory with more ingredients</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No exact matches found</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try adding more ingredients or check the Recipe Book</div>
             </div>
           ) : (
             <div>
-              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "16px" }}>{recommendations.length} recipes you can cook with what you have</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "4px" }}>
+                {recommendations.length} recipes you can cook with what you bought
+              </div>
+              <div style={{ fontSize: "11px", color: C.textFaint, marginBottom: "16px" }}>
+                Staples like garlic, soy sauce, and onion are always counted ✓
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {recommendations.map(r => (
                   <div key={r.id}>
-                    <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 3 ? C.green : C.orange} />
+                    <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 2 ? C.green : C.orange} />
                     <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "5px 4px 2px" }}>
-                      {r.matchedItems.slice(0, 5).map(item => (
+                      {r.matchedItems.map(item => (
+                        <span key={item} style={{ fontSize: "10px", color: C.orange, background: C.orangeLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.orangeBorder}` }}>🛒 {item}</span>
+                      ))}
+                      {r.allMatchedItems.filter(i => STAPLES.includes(i)).slice(0, 3).map(item => (
                         <span key={item} style={{ fontSize: "10px", color: C.green, background: C.greenLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.greenBorder}` }}>✓ {item}</span>
                       ))}
-                      {r.matchedItems.length > 5 && <span style={{ fontSize: "10px", color: C.textMuted }}>+{r.matchedItems.length - 5} more</span>}
                     </div>
                   </div>
                 ))}
@@ -3083,7 +3086,6 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
     </div>
   );
 }
-
 // ─── HOME SCREEN ───────────────────────────────────────────────────────────────
 function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect }) {
   const inventoryCount = Object.keys(inventory).length;
