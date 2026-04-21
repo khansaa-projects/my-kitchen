@@ -2917,7 +2917,6 @@ If you can access the page, return just the raw caption/recipe text. If you cann
 
 // ─── INVENTORY VIEW ────────────────────────────────────────────────────────────
 function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
-  // Kitchen staples — always available, pre-loaded
   const STAPLES = [
     "soy sauce", "kecap asin", "kecap manis", "oyster sauce", "saus tiram",
     "sesame oil", "minyak wijen", "fish sauce", "kecap ikan",
@@ -2929,9 +2928,9 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
   ];
 
   const [inputText, setInputText] = useState("");
-  const [activeTab, setActiveTab] = useState("pantry");
+  const [showResults, setShowResults] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
-  // Parse typed ingredients — split by comma or newline
   const parseInput = (text) => {
     return text.split(/[,\n]/).map(s => s.trim().toLowerCase()).filter(s => s.length > 1);
   };
@@ -2939,9 +2938,9 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
   const typedItems = parseInput(inputText);
   const allItems = [...new Set([...STAPLES, ...typedItems])];
 
-  // Save typed items to storage
   const handleInputChange = (val) => {
     setInputText(val);
+    setShowResults(false); // reset results when input changes
     const parsed = parseInput(val);
     const updated = {};
     parsed.forEach(item => { updated[item] = { name: item, quantity: "", unit: "" }; });
@@ -2952,20 +2951,16 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
   const savedText = Object.keys(inventory)
     .filter(k => !STAPLES.includes(k))
     .join(", ");
-
-  const [initialized, setInitialized] = useState(false);
   if (!initialized && savedText && !inputText) {
     setInputText(savedText);
     setInitialized(true);
   }
 
-  // Recommend recipes based on all items (staples + typed)
   const getRecommendations = () => {
     if (typedItems.length === 0) return [];
     const enriched = allRecipes.map(enrichRecipe).filter(r => r.taste === "Savory");
     return enriched.map(r => {
       const ingText = (r.ingredients || []).join(" ").toLowerCase();
-      // Only count non-staple matches as "real" matches — staples don't count toward score
       const realMatches = typedItems.filter(k => ingText.includes(k));
       const allMatches = allItems.filter(k => ingText.includes(k));
       return { ...r, matchCount: realMatches.length, allMatchCount: allMatches.length, matchedItems: realMatches, allMatchedItems: allMatches };
@@ -2975,110 +2970,82 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
     .slice(0, 15);
   };
 
-  const recommendations = getRecommendations();
+  const recommendations = showResults ? getRecommendations() : [];
 
   return (
     <div>
-      {/* Sub tabs */}
-      <div style={{ display: "flex", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "12px", padding: "4px", marginBottom: "20px", boxShadow: C.shadow }}>
-        {[{ id: "pantry", label: "🛒 What I bought" }, { id: "recommendations", label: "✨ Cook now" }].map(t => (
-          <button key={t.id} onClick={() => setActiveTab(t.id)} style={{
-            flex: 1, padding: "9px", border: "none", borderRadius: "9px", cursor: "pointer",
-            fontSize: "13px", fontWeight: 600, transition: "all 0.15s",
-            background: activeTab === t.id ? C.orange : "transparent",
-            color: activeTab === t.id ? "#fff" : C.textMuted,
-          }}>{t.label}</button>
-        ))}
+      {/* ── Input section ── */}
+      <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "14px", boxShadow: C.shadow }}>
+        <div style={{ fontSize: "14px", fontWeight: 700, color: C.text, marginBottom: "4px" }}>What did you just buy?</div>
+        <div style={{ fontSize: "12px", color: C.textMuted, marginBottom: "12px" }}>Type ingredients separated by commas or new lines</div>
+        <textarea
+          value={inputText}
+          onChange={e => handleInputChange(e.target.value)}
+          placeholder={"chicken thigh, broccoli, tofu, eggs\ntempe, shiitake, baby kailan"}
+          rows={5}
+          style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 12px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+        />
+        {inputText.trim() && (
+          <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "10px", marginBottom: "4px" }}>
+            {typedItems.map(item => (
+              <span key={item} style={{ fontSize: "12px", background: C.orangeLight, color: C.orange, border: `1px solid ${C.orangeBorder}`, padding: "3px 10px", borderRadius: "20px", fontWeight: 500 }}>
+                {item}
+              </span>
+            ))}
+          </div>
+        )}
+        {inputText.trim() && (
+          <div style={{ display: "flex", gap: "8px", marginTop: "12px", alignItems: "center" }}>
+            <button
+              onClick={() => setShowResults(true)}
+              style={{ flex: 1, padding: "11px", background: C.orange, color: "#fff", border: "none", borderRadius: "10px", fontSize: "14px", fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 8px rgba(217,119,6,0.3)" }}>
+              Check recipes →
+            </button>
+            <button onClick={() => { setInputText(""); setShowResults(false); onInventoryUpdate({}); }}
+              style={{ padding: "11px 14px", background: "none", border: `1px solid ${C.border}`, borderRadius: "10px", color: C.textFaint, fontSize: "12px", cursor: "pointer", fontWeight: 600, whiteSpace: "nowrap" }}>
+              Clear
+            </button>
+          </div>
+        )}
       </div>
 
-      {activeTab === "pantry" && (
-        <div>
-          {/* Input */}
-          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "16px", boxShadow: C.shadow }}>
-            <div style={{ fontSize: "13px", fontWeight: 700, color: C.text, marginBottom: "4px" }}>What did you just buy?</div>
-            <div style={{ fontSize: "12px", color: C.textMuted, marginBottom: "12px" }}>Type ingredients separated by commas or new lines</div>
-            <textarea
-              value={inputText}
-              onChange={e => handleInputChange(e.target.value)}
-              placeholder={"chicken thigh, broccoli, tofu, eggs, salmon\ntempe, shiitake, baby kailan"}
-              rows={5}
-              style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 12px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
-            />
-            {inputText.trim() && (
-              <button onClick={() => { setInputText(""); onInventoryUpdate({}); }}
-                style={{ marginTop: "8px", background: "none", border: "none", color: C.textFaint, fontSize: "12px", cursor: "pointer", fontWeight: 600 }}>
-                Clear all ×
-              </button>
-            )}
-          </div>
-
-          {/* Staples notice */}
-          <div style={{ background: C.greenLight, border: `1px solid ${C.greenBorder}`, borderRadius: "12px", padding: "12px 14px", marginBottom: "16px" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: C.green, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "6px" }}>✓ Kitchen staples — always available</div>
-            <div style={{ fontSize: "12px", color: C.green, lineHeight: 1.6 }}>
-              Garlic · Shallots · Onion · Chives · Ginger · Soy sauce · Oyster sauce · Kecap manis · Sesame oil · Salt · Pepper · Sugar · Cornstarch · Oil · Butter · Stock powder
-            </div>
-          </div>
-
-          {/* Parsed items preview */}
-          {typedItems.length > 0 && (
-            <div>
-              <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
-                {typedItems.length} item{typedItems.length !== 1 ? "s" : ""} in your cart
-              </div>
-              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                {typedItems.map(item => (
-                  <span key={item} style={{ fontSize: "12px", background: C.orangeLight, color: C.orange, border: `1px solid ${C.orangeBorder}`, padding: "4px 10px", borderRadius: "20px", fontWeight: 500 }}>
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
+      {/* ── Staples ── */}
+      <div style={{ background: C.greenLight, border: `1px solid ${C.greenBorder}`, borderRadius: "12px", padding: "12px 14px", marginBottom: "16px" }}>
+        <div style={{ fontSize: "11px", fontWeight: 700, color: C.green, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "5px" }}>✓ Kitchen staples — always counted</div>
+        <div style={{ fontSize: "12px", color: C.green, lineHeight: 1.6 }}>
+          Garlic · Shallots · Onion · Chives · Ginger · Soy sauce · Oyster sauce · Kecap manis · Sesame oil · Salt · Pepper · Sugar · Cornstarch · Oil · Butter · Stock powder
         </div>
-      )}
+      </div>
 
-      {activeTab === "recommendations" && (
+      {/* ── Cook now section ── */}
+      {showResults && (
         <div>
-          {typedItems.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px 20px" }}>
-              <div style={{ fontSize: "32px", marginBottom: "10px" }}>🛒</div>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>Type your groceries first</div>
-              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Go to "What I bought" and list what you picked up</div>
-              <button onClick={() => setActiveTab("pantry")}
-                style={{ marginTop: "14px", padding: "9px 20px", background: C.orange, color: "#fff", border: "none", borderRadius: "20px", fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
-                Add ingredients →
-              </button>
-            </div>
-          ) : recommendations.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px 20px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
+            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text }}>✨ Cook now</div>
+            <div style={{ fontSize: "12px", color: C.textMuted }}>{recommendations.length} recipes matched</div>
+          </div>
+
+          {recommendations.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "32px 20px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px" }}>
               <div style={{ fontSize: "32px", marginBottom: "10px" }}>🤔</div>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No exact matches found</div>
-              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try adding more ingredients or check the Recipe Book</div>
+              <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No matches found</div>
+              <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try adding more specific ingredients</div>
             </div>
           ) : (
-            <div>
-              <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "4px" }}>
-                {recommendations.length} recipes you can cook with what you bought
-              </div>
-              <div style={{ fontSize: "11px", color: C.textFaint, marginBottom: "16px" }}>
-                Staples like garlic, soy sauce, and onion are always counted ✓
-              </div>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {recommendations.map(r => (
-                  <div key={r.id}>
-                    <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 2 ? C.green : C.orange} />
-                    <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "5px 4px 2px" }}>
-                      {r.matchedItems.map(item => (
-                        <span key={item} style={{ fontSize: "10px", color: C.orange, background: C.orangeLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.orangeBorder}` }}>🛒 {item}</span>
-                      ))}
-                      {r.allMatchedItems.filter(i => STAPLES.includes(i)).slice(0, 3).map(item => (
-                        <span key={item} style={{ fontSize: "10px", color: C.green, background: C.greenLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.greenBorder}` }}>✓ {item}</span>
-                      ))}
-                    </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {recommendations.map(r => (
+                <div key={r.id}>
+                  <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 2 ? C.green : C.orange} />
+                  <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "5px 4px 2px" }}>
+                    {r.matchedItems.map(item => (
+                      <span key={item} style={{ fontSize: "10px", color: C.orange, background: C.orangeLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.orangeBorder}` }}>🛒 {item}</span>
+                    ))}
+                    {r.allMatchedItems.filter(i => STAPLES.includes(i)).slice(0, 3).map(item => (
+                      <span key={item} style={{ fontSize: "10px", color: C.green, background: C.greenLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.greenBorder}` }}>✓ {item}</span>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
