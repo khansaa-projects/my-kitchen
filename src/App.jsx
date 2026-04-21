@@ -1601,12 +1601,13 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext, matchedItem
         boxShadow: C.shadow,
         userSelect: "none",
         overflow: "hidden",
+        maxHeight: "90px",
       }}
     >
       {/* Left thumbnail — only if image exists */}
       {recipe.image && (
         <img src={recipe.image} alt={recipe.name}
-          style={{ width: "72px", minWidth: "72px", objectFit: "cover", display: "block", borderRight: `1px solid ${C.border}` }} />
+          style={{ width: "72px", minWidth: "72px", height: "100%", minHeight: "72px", objectFit: "cover", display: "block", borderRight: `1px solid ${C.border}`, alignSelf: "stretch" }} />
       )}
 
       {/* Content */}
