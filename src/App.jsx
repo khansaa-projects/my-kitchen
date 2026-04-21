@@ -6,6 +6,7 @@ const recipes = [
     protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
     cuisine: "Western/Fusion", time: "35 min", servings: 6,
     link: "https://www.instagram.com/reel/DUw-8olk38q/?igsh=MWdtcXZtczM1NDhjMg==",
+    image: "https://diethood.com/wp-content/uploads/2018/08/garlic-butter-chicken-rice-5.jpg",
     nutrition: { calories: 520, protein: 34, carbs: 38, fat: 24, fiber: 1 },
     tags: ["creamy", "comfort food", "rice"],
     ingredients: ["2 servings white rice", "2 tbsp unsalted butter", "3 cloves garlic, minced", "Salt & pepper", "400–500g chicken thigh/breast fillet", "½ tsp garlic powder", "½ tsp paprika", "½ tsp dried oregano", "1–2 tbsp oil", "1 tbsp butter (for sauce)", "100–150ml cooking cream", "40–50g cheddar cheese, grated", "Optional: 30ml water/broth", "Optional: parsley or cilantro"],
@@ -15,6 +16,7 @@ const recipes = [
     id: 10, name: "Korean Chicken Rice Bowl (치킨 덮밥)",
     protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
     cuisine: "Korean", time: "35 min", servings: 4,
+    image: "https://www.cherryonmysundae.com/wp-content/uploads/2021/02/korean-spicy-chicken-bowls-feature.jpg",
     nutrition: { calories: 480, protein: 32, carbs: 45, fat: 16, fiber: 2 },
     tags: ["spicy", "rice bowl", "egg"],
     ingredients: ["300g chicken thigh meat", "½ onion", "2–3 cheongyang chili peppers", "1.5–2 tbsp soy sauce", "2 tbsp mirin", "1.5 tbsp sugar", "1.5–2 tbsp gochugaru", "Sesame oil to taste", "3 eggs", "Steamed rice"],
@@ -24,6 +26,7 @@ const recipes = [
     id: 13, name: "Waterless Chicken Soup",
     protein: "Chicken", taste: "Savory", method: "Steaming / Braising",
     cuisine: "Indonesian", time: "38 min", servings: 6,
+    image: "https://nomadette.com/wp-content/uploads/2026/01/Nomadette-Waterless-Chicken-Soup-500x375.jpg",
     nutrition: { calories: 310, protein: 28, carbs: 12, fat: 14, fiber: 3 },
     tags: ["healthy", "soup", "no water added"],
     ingredients: ["1 whole chicken", "1 onion", "1 red apple", "¼ head napa cabbage", "1 knob ginger", "3 dates (optional)", "1 tsp salt", "1 tsp pepper", "1 clove garlic", "1 spring onion", "Oil"],
@@ -33,6 +36,7 @@ const recipes = [
     id: 18, name: "Ayam Masak Saus Tiram",
     protein: "Chicken", taste: "Savory", method: "Deep-fry + Stir-fry",
     cuisine: "Indonesian", time: "50 min", servings: 6,
+    image: "https://awsimages.detik.net.id/community/media/visual/2020/10/27/resep-ayam-fillet-saus-tiram-1.jpeg",
     nutrition: { calories: 420, protein: 30, carbs: 18, fat: 22, fiber: 2 },
     tags: ["oyster sauce", "spicy", "glossy sauce"],
     ingredients: ["750g chicken thigh, cut small", "½ tsp salt + ½ tsp MSG", "1 tbsp oyster sauce + 1 tbsp soy sauce (marinade)", "6 cloves garlic, sliced", "2 slices ginger, julienned", "½ onion", "350ml water", "3 tbsp oyster sauce", "2 tbsp kecap manis", "4 red + 4 green chilies, sliced", "½ tsp cornstarch + 2 tbsp water"],
@@ -1559,7 +1563,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
 }
 
 // ─── RECIPE CARD ───────────────────────────────────────────────────────────────
-function RecipeCard({ recipe, onSelect, accentColor, proteinContext }) {
+function RecipeCard({ recipe, onSelect, accentColor, proteinContext, matchedItems }) {
   // proteinContext = { proteinFromStep1, goal } — passed only in Step 2
   const acc = accentColor || C.orange;
   const r = enrichRecipe(recipe);
@@ -1616,6 +1620,14 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext }) {
             </span>
           )}
         </div>
+        {matchedItems && matchedItems.length > 0 && (
+          <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", marginBottom: "5px" }}>
+            {matchedItems.slice(0, 4).map(item => (
+              <span key={item} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "1px 7px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{item}</span>
+            ))}
+            {matchedItems.length > 4 && <span style={{ fontSize: "10px", color: C.textFaint }}>+{matchedItems.length - 4}</span>}
+          </div>
+        )}
         <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
           <span style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{METHOD_ICONS[recipe.method] || "🍴"} {recipe.method}</span>
           <span style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.border}` }}>⏱ {recipe.time}</span>
@@ -3034,17 +3046,7 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {recommendations.map(r => (
-                <div key={r.id}>
-                  <RecipeCard recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 2 ? C.green : C.orange} />
-                  <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", padding: "5px 4px 2px" }}>
-                    {r.matchedItems.map(item => (
-                      <span key={item} style={{ fontSize: "10px", color: C.orange, background: C.orangeLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.orangeBorder}` }}>🛒 {item}</span>
-                    ))}
-                    {r.allMatchedItems.filter(i => STAPLES.includes(i)).slice(0, 3).map(item => (
-                      <span key={item} style={{ fontSize: "10px", color: C.green, background: C.greenLight, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.greenBorder}` }}>✓ {item}</span>
-                    ))}
-                  </div>
-                </div>
+                <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={r.matchCount >= 2 ? C.green : C.orange} matchedItems={r.matchedItems} />
               ))}
             </div>
           )}
