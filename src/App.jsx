@@ -3703,10 +3703,6 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
                             <div style={{ fontSize: "12px", color: col.accent, fontWeight: 700, marginTop: "2px" }}>{f.subtitle}</div>
                           </div>
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0, marginLeft: "8px" }}>
-                          <span style={{ fontSize: "11px", color: col.text, background: "rgba(255,255,255,0.6)", padding: "3px 10px", borderRadius: "20px", fontWeight: 800, whiteSpace: "nowrap" }}>{f.stat}</span>
-                          <span style={{ color: col.accent, fontSize: "20px", fontWeight: 900, lineHeight: 1 }}>›</span>
-                        </div>
                       </div>
                     </div>
                   </button>
@@ -3833,10 +3829,12 @@ export default function App() {
         {screen !== "home" && (
           <>
             {/* Screen header */}
-            <div style={{ background: "#1A2B5A", padding: "18px 20px 14px", position: "sticky", top: 0, zIndex: 10 }}>
-              <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div>
-                  <div style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: "0.05em", marginBottom: "2px", textTransform: "uppercase" }}>My Kitchen</div>
+            <div style={{ background: "#1A2B5A", padding: "14px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+              <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+                <button onClick={() => setScreen("home")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "10px", width: "36px", height: "36px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <svg width="10" height="18" viewBox="0 0 10 18" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 1L1 9l8 8"/></svg>
+                </button>
+                <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 900, color: "#fff", letterSpacing: "-0.3px" }}>{SCREEN_META[screen]?.emoji} {SCREEN_META[screen]?.label}</div>
                 </div>
                 <button onClick={() => setShowAddModal(true)} style={{ padding: "8px 16px", border: "none", borderRadius: "20px", background: C.orange, color: "#fff", fontSize: "13px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 14px ${C.orange}50` }}>+ Add</button>
