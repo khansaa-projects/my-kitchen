@@ -1922,45 +1922,50 @@ const HUSBAND_PROTEIN_PER_MEAL = 33;
 const WIFE_PROTEIN_PER_MEAL = 33;
 const COMBINED_PROTEIN_GOAL = 66;
 
-// Light mode color tokens — new design
+// Design tokens — exact match from Claude Design HTML
 const C = {
-  // Backgrounds
   bg: "#F5EDD8",
+  card: "#FFFFFF",
   surface: "#FFFFFF",
   surfaceHover: "#F0E8D0",
-  // Borders
+  ink: "#1A2B5A",
+  mid: "#3A5080",
   border: "#E8DCC8",
   borderStrong: "#D4C8A8",
-  // Text
   text: "#1A2B5A",
   textMuted: "#3A5080",
   textFaint: "#8090A8",
-  // Sticky / header
   headerBg: "#FFFFFF",
   stickyBg: "#FFFFFFee",
-  // Shadows
   shadow: "0 2px 10px rgba(0,0,0,0.05)",
-  shadowMd: "0 4px 18px rgba(0,0,0,0.09)",
-  // Primary accent — golden
+  shadowMd: "0 3px 16px rgba(0,0,0,0.07)",
+  // Primary — golden amber
   orange: "#C88A20",
   orangeLight: "#F5E4B0",
   orangeBorder: "#E8D090",
-  // Green (kept as secondary)
+  // Greens
   green: "#70A860",
   greenLight: "#D8EAD0",
   greenBorder: "#B8D8A8",
-  // Danger
+  // Others
   red: "#C83828",
   redLight: "#F5DDD8",
-  // Info
   blue: "#3A8FAA",
   blueLight: "#D4EEF8",
-  // Warn
   yellow: "#E8B830",
   yellowLight: "#F8EEB8",
+  yellowLight2: "#F5E4B0",
+  teal: "#D4EEF8",
+  tealD: "#3A8FAA",
+  pink: "#F5DDD8",
+  pinkD: "#C83828",
+  lilac: "#D8DCF0",
+  lilacD: "#5060B8",
+  peach: "#F0E4C0",
+  peachD: "#C47828",
 };
 
-// Colorful card palette from new design
+// Exact card palette from Claude Design
 const CARD_COLORS = [
   { bg: "#F8EEB8", accent: "#E8B830", text: "#7A5800" },
   { bg: "#F5DDD8", accent: "#D46050", text: "#8A2010" },
@@ -2057,7 +2062,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
         {/* Ingredients */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "18px", marginBottom: "16px", boxShadow: C.shadow }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-            <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff", margin: 0 }}>Ingredients</h2>
+            <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: C.ink, margin: 0 }}>Ingredients</h2>
             {Object.values(checked).some(Boolean) && (
               <button onClick={() => setChecked({})} style={{ background: "none", border: "none", color: C.textFaint, fontSize: "11px", cursor: "pointer", fontWeight: 600 }}>Clear ×</button>
             )}
@@ -2077,7 +2082,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
 
         {/* Directions — no onClick anywhere on this container */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "18px", marginBottom: "16px", boxShadow: C.shadow }}>
-          <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff", margin: "0 0 12px" }}>Directions</h2>
+          <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: C.ink, margin: "0 0 12px" }}>Directions</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {recipe.steps.map((step, i) => (
               <div key={i} style={{ display: "flex", gap: "14px", alignItems: "flex-start", padding: "10px 0", borderBottom: i < recipe.steps.length - 1 ? `1px solid ${C.border}` : "none" }}>
@@ -3595,6 +3600,13 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
   const totalRecipes = allRecipes.length;
   const [search, setSearch] = useState("");
 
+  // 6 random savory recipes — shuffled once on mount, stable during session
+  const suggested = useState(() => {
+    const savory = allRecipes.filter(r => r.taste === "Savory");
+    const shuffled = [...savory].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, 6);
+  })[0];
+
   const features = [
     { id: "today",     emoji: "🍽", title: "What's for dinner?", subtitle: "Pick from what's in your freezer", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
     { id: "week",      emoji: "📅", title: "Plan the week",       subtitle: "Weekend prep made easy",            description: "Map out 7 days of meals, auto-generate your shopping list", color: "#0284c7", light: "#e0f2fe", border: "#bae6fd", stat: "Mon — Sun" },
@@ -3617,32 +3629,26 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-      {/* Hero + search */}
-      <div style={{ background: "#1A2B5A", padding: "40px 24px 28px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "180px", height: "180px", borderRadius: "50%", background: "rgba(200,138,32,0.18)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(200,138,32,0.10)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
-          <div style={{ fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.55)", marginBottom: "4px" }}>Good evening 👋</div>
-          <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "30px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.15, letterSpacing: "-0.5px" }}>What's for<br />dinner tonight?</h1>
-          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "12px", margin: "0 0 20px" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}</p>
+      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 18px 20px" }}>
 
-          {/* Search bar */}
-          <div style={{ position: "relative" }}>
-            <svg style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.55 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search any recipe… try 'ayam mentega'" 
-              style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)", borderRadius: "14px", padding: "13px 14px 13px 44px", color: "#fff", fontSize: "14px", fontWeight: 600, outline: "none", fontFamily: "'Nunito', sans-serif" }}
-            />
-            {search && (
-              <button onClick={() => setSearch("")} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: "18px", cursor: "pointer", lineHeight: 1 }}>×</button>
-            )}
-          </div>
+        {/* Greeting */}
+        <div style={{ marginBottom: "20px" }}>
+          <div style={{ fontSize: "14px", fontWeight: 700, color: C.mid, marginBottom: "4px" }}>Good evening 👋</div>
+          <h1 style={{ fontSize: "28px", fontWeight: 900, color: C.ink, lineHeight: 1.2, letterSpacing: "-0.5px", margin: "0 0 4px" }}>What's for<br />dinner tonight?</h1>
+          <p style={{ color: C.textFaint, fontSize: "12px", margin: "4px 0 0" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}</p>
         </div>
-      </div>
 
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 80px" }}>
+        {/* Search bar */}
+        <div style={{ background: C.card, borderRadius: "16px", padding: "12px 16px", display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px", boxShadow: C.shadow }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={C.textFaint} strokeWidth="2.5" strokeLinecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Search recipes…"
+            style={{ flex: 1, border: "none", background: "transparent", fontSize: "13px", fontWeight: 600, color: C.text, outline: "none", fontFamily: "'Nunito', sans-serif" }}
+          />
+          {search && <button onClick={() => setSearch("")} style={{ background: "none", border: "none", color: C.textFaint, fontSize: "18px", cursor: "pointer", lineHeight: 1, padding: 0 }}>×</button>}
+        </div>
 
         {/* Search results */}
         {searchResults.length > 0 && (
@@ -3650,11 +3656,11 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
             <div style={{ fontSize: "11px", fontWeight: 800, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
               {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} for "{search}"
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {searchResults.map(r => <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={C.orange} />)}
             </div>
             <button onClick={() => { setSearch(""); onNavigate("browse"); }}
-              style={{ marginTop: "12px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "12px", color: C.textMuted, fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
+              style={{ marginTop: "12px", width: "100%", padding: "10px", background: "none", border: `1.5px solid ${C.border}`, borderRadius: "14px", color: C.textMuted, fontSize: "13px", fontWeight: 700, cursor: "pointer", fontFamily: "'Nunito', sans-serif" }}>
               See all results in Recipe Book →
             </button>
           </div>
@@ -3664,41 +3670,95 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
           <div style={{ textAlign: "center", padding: "32px 20px", marginBottom: "20px" }}>
             <div style={{ fontSize: "28px", marginBottom: "8px" }}>🤷</div>
             <div style={{ fontSize: "14px", fontWeight: 700, color: C.textMuted }}>No recipes found for "{search}"</div>
-            <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try different keywords or browse by category below</div>
           </div>
         )}
 
-        {/* Feature cards */}
+        {/* Feature cards — exact palette from design */}
         {!search.trim() && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {features.map((f, fi) => (
-              <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: CARD_COLORS[fi % CARD_COLORS.length].bg, border: "none", borderRadius: "20px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.15s, box-shadow 0.15s" }}
-                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)"; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
-                <div style={{ flex: 1, padding: "20px 18px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div style={{ width: "48px", height: "48px", borderRadius: "16px", background: "rgba(255,255,255,0.65)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>{f.emoji}</div>
-                      <div>
-                        <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "17px", fontWeight: 900, color: CARD_COLORS[fi % CARD_COLORS.length].text, lineHeight: 1.2 }}>{f.title}</div>
-                        <div style={{ fontSize: "12px", color: CARD_COLORS[fi % CARD_COLORS.length].accent, fontWeight: 700, marginTop: "1px" }}>{f.subtitle}</div>
+          <>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
+              <span style={{ fontWeight: 900, fontSize: "18px", color: C.ink }}>Quick access</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {features.map((f, fi) => {
+                const col = CARD_COLORS[fi % CARD_COLORS.length];
+                return (
+                  <button key={f.id} onClick={() => onNavigate(f.id)}
+                    style={{ background: col.bg, border: "none", borderRadius: "22px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.15s, box-shadow 0.15s", fontFamily: "'Nunito', sans-serif" }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 24px rgba(0,0,0,0.12)`; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
+                    <div style={{ flex: 1, padding: "18px 16px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                          <div style={{ width: "52px", height: "52px", borderRadius: "16px", background: "rgba(255,255,255,0.65)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0 }}>{f.emoji}</div>
+                          <div>
+                            <div style={{ fontSize: "16px", fontWeight: 900, color: col.text, lineHeight: 1.25 }}>{f.title}</div>
+                            <div style={{ fontSize: "12px", color: col.accent, fontWeight: 700, marginTop: "2px" }}>{f.subtitle}</div>
+                          </div>
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0, marginLeft: "8px" }}>
+                          <span style={{ fontSize: "11px", color: col.text, background: "rgba(255,255,255,0.6)", padding: "3px 10px", borderRadius: "20px", fontWeight: 800, whiteSpace: "nowrap" }}>{f.stat}</span>
+                          <span style={{ color: col.accent, fontSize: "20px", fontWeight: 900, lineHeight: 1 }}>›</span>
+                        </div>
                       </div>
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
-                      <span style={{ fontSize: "11px", color: CARD_COLORS[fi % CARD_COLORS.length].text, background: "rgba(255,255,255,0.55)", padding: "3px 10px", borderRadius: "20px", fontWeight: 800, whiteSpace: "nowrap" }}>{f.stat}</span>
-                      <span style={{ color: CARD_COLORS[fi % CARD_COLORS.length].accent, fontSize: "18px", fontWeight: 900 }}>›</span>
-                    </div>
-                  </div>
-                </div>
-              </button>
-            ))}
-          </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Random recipe suggestions */}
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", margin: "24px 0 14px" }}>
+              <span style={{ fontWeight: 900, fontSize: "18px", color: C.ink }}>Suggestions</span>
+              <span onClick={() => onNavigate("browse")} style={{ fontSize: "13px", fontWeight: 700, color: C.orange, cursor: "pointer" }}>See all</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {suggested.map((r, i) => (
+                <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={CARD_COLORS[i % CARD_COLORS.length].accent} />
+              ))}
+            </div>
+          </>
         )}
       </div>
     </div>
   );
 }
 // ─── MAIN APP ──────────────────────────────────────────────────────────────────
+// ─── BOTTOM NAV — exact from Claude Design ─────────────────────────────────────
+const NAV_ITEMS = [
+  { id: "home",      label: "Home",    icon: (a) => <svg width="22" height="22" viewBox="0 0 24 24" fill={a ? C.orange : C.textFaint}><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H5a1 1 0 01-1-1V9.5z"/></svg> },
+  { id: "today",     label: "Decide",  icon: (a) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? C.orange : C.textFaint} strokeWidth="2" strokeLinecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> },
+  { id: "week",      label: "Weekly",  icon: (a) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? C.orange : C.textFaint} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> },
+  { id: "browse",    label: "Recipes", icon: (a) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? C.orange : C.textFaint} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> },
+  { id: "inventory", label: "Pantry",  icon: (a) => <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={a ? C.orange : C.textFaint} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> },
+];
+
+function BottomNav({ active, onNav }) {
+  return (
+    <div style={{
+      position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
+      background: C.card, borderTop: `1px solid ${C.border}`,
+      display: "flex", alignItems: "center", justifyContent: "space-around",
+      padding: "10px 0 18px", boxShadow: "0 -2px 12px rgba(0,0,0,0.06)",
+    }}>
+      {NAV_ITEMS.map(item => {
+        const a = active === item.id;
+        return (
+          <button key={item.id} onClick={() => onNav(item.id)} style={{
+            background: "none", border: "none",
+            display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
+            cursor: "pointer", fontFamily: "'Nunito', sans-serif", padding: "0 12px",
+            minWidth: 0,
+          }}>
+            {item.icon(a)}
+            <span style={{ fontSize: 10, fontWeight: 800, color: a ? C.orange : C.textFaint, letterSpacing: "0.02em" }}>{item.label}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function App() {
   const [screen, setScreen] = useState("home");
   const [selectedRecipe, setSelectedRecipe] = useState(null);
@@ -3754,43 +3814,48 @@ export default function App() {
     browse:    { label: "Recipe book",         emoji: "📖" },
   };
 
-  if (screen === "home") {
-    return (
-      <>
-        <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
-        <button onClick={() => setShowAddModal(true)} style={{ position: "fixed", bottom: "24px", right: "24px", width: "52px", height: "52px", borderRadius: "50%", background: C.orange, color: "#fff", border: "none", fontSize: "24px", cursor: "pointer", boxShadow: "0 4px 16px rgba(217,119,6,0.4)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 50 }} title="Add recipe">+</button>
-        {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
-      </>
-    );
-  }
-
-  const meta = SCREEN_META[screen] || {};
-
   return (
     <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
-          <button onClick={() => setScreen("home")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "12px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 700, boxShadow: C.shadow }}>← Home</button>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff" }}>{meta.emoji} {meta.label}</div>
-          </div>
-          <button onClick={() => setShowAddModal(true)} style={{ padding: "7px 14px", border: `1px solid ${C.orange}`, borderRadius: "20px", background: C.orangeLight, color: C.orange, fontSize: "12px", fontWeight: 700, cursor: "pointer", boxShadow: C.shadow }}>+ Add</button>
-        </div>
-      </div>
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 16px 60px" }}>
-        {!storageReady ? (
-          <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading…</div>
-        ) : (
+
+      {/* Screen content */}
+      <div style={{ paddingBottom: "80px" }}>
+        {screen === "home" && (
+          <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
+        )}
+        {screen !== "home" && (
           <>
-            {screen === "today"     && <TodayPlanner   allRecipes={allRecipes} onSelect={handleSelect} />}
-            {screen === "week"      && <WeeklyPlanner  allRecipes={allRecipes} onSelect={handleSelect} />}
-            {screen === "browse"    && <BrowseView     allRecipes={allRecipes} onSelect={handleSelect} customIds={customRecipes.map(r => r.id)} onDelete={handleDeleteCustom} />}
-            {screen === "inventory" && <InventoryView  allRecipes={allRecipes} onSelect={handleSelect} inventory={inventory} onInventoryUpdate={handleInventoryUpdate} />}
+            {/* Screen header */}
+            <div style={{ background: "#1A2B5A", padding: "18px 20px 14px", position: "sticky", top: 0, zIndex: 10 }}>
+              <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <div>
+                  <div style={{ fontSize: "11px", fontWeight: 700, color: "rgba(255,255,255,0.5)", letterSpacing: "0.05em", marginBottom: "2px", textTransform: "uppercase" }}>My Kitchen</div>
+                  <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 900, color: "#fff", letterSpacing: "-0.3px" }}>{SCREEN_META[screen]?.emoji} {SCREEN_META[screen]?.label}</div>
+                </div>
+                <button onClick={() => setShowAddModal(true)} style={{ padding: "8px 16px", border: "none", borderRadius: "20px", background: C.orange, color: "#fff", fontSize: "13px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 14px ${C.orange}50` }}>+ Add</button>
+              </div>
+            </div>
+            <div style={{ maxWidth: "680px", margin: "0 auto", padding: "16px 16px 20px" }}>
+              {!storageReady ? (
+                <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading…</div>
+              ) : (
+                <>
+                  {screen === "today"     && <TodayPlanner   allRecipes={allRecipes} onSelect={handleSelect} />}
+                  {screen === "week"      && <WeeklyPlanner  allRecipes={allRecipes} onSelect={handleSelect} />}
+                  {screen === "browse"    && <BrowseView     allRecipes={allRecipes} onSelect={handleSelect} customIds={customRecipes.map(r => r.id)} onDelete={handleDeleteCustom} />}
+                  {screen === "inventory" && <InventoryView  allRecipes={allRecipes} onSelect={handleSelect} inventory={inventory} onInventoryUpdate={handleInventoryUpdate} />}
+                </>
+              )}
+            </div>
           </>
         )}
       </div>
+
+      {/* Bottom nav */}
+      <BottomNav active={screen} onNav={setScreen} />
+
       {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
     </div>
   );
 }
+
