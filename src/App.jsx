@@ -1993,11 +1993,11 @@ function RecipeDetail({ recipe, onBack, accent }) {
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
-      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: "12px" }}>
-        <button onClick={onBack} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "8px", padding: "7px 14px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>
-          ← Back
+      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "14px 20px", position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: "12px" }}>
+        <button onClick={onBack} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "10px", width: "36px", height: "36px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+          <svg width="10" height="18" viewBox="0 0 10 18" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 1L1 9l8 8"/></svg>
         </button>
-        <span style={{ fontSize: "13px", color: C.textMuted }}>{recipe.cuisine} · {recipe.method}</span>
+        <span style={{ fontSize: "16px", fontWeight: 900, color: "#fff", fontFamily: "'Nunito', sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{recipe.name}</span>
       </div>
 
       <div style={{ maxWidth: "640px", margin: "0 auto", padding: "28px 20px 60px" }}>
@@ -2197,21 +2197,34 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
   const pct = Math.min(100, Math.round((proteinTotal / COMBINED_PROTEIN_GOAL) * 100));
   const ok = pct >= 80;
 
+  const handlePrint = () => window.print();
+
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      <style>{`@media print { .no-print { display: none !important; } body { background: #fff; } }`}</style>
 
       {/* Header */}
-      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+      <div className="no-print" style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
-          <button onClick={onBack} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "12px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 700, boxShadow: C.shadow }}>← Back</button>
+          <button onClick={onBack} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "12px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 700 }}>← Back</button>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff" }}>Today's Meal</div>
           </div>
         </div>
       </div>
 
-      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "24px 16px 60px" }}>
+      {/* Sticky PDF export button */}
+      <div className="no-print" style={{ position: "sticky", top: "56px", zIndex: 9, maxWidth: "640px", margin: "0 auto", padding: "10px 16px 0", pointerEvents: "none" }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", pointerEvents: "all" }}>
+          <button onClick={handlePrint} style={{ background: C.orange, color: "#fff", border: "none", borderRadius: "20px", padding: "9px 18px", fontSize: "13px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 16px ${C.orange}50`, display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Export PDF
+          </button>
+        </div>
+      </div>
+
+      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "16px 16px 60px" }}>
 
         {/* Protein summary card */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "20px", boxShadow: C.shadowMd }}>
@@ -2230,32 +2243,35 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
           </div>
         </div>
 
-        {/* Recipe cards — full detail */}
+        {/* Recipe cards */}
         {recipes.map((recipe, i) => {
           const r = enrichRecipe(recipe);
           const acc = i === 0 ? C.orange : C.green;
           const label = i === 0 ? "🥩 Protein dish" : "🥦 Vegetable side";
           return (
             <div key={recipe.id} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", overflow: "hidden", marginBottom: "16px", boxShadow: C.shadowMd }}>
-              {/* Recipe header */}
-              <div style={{ borderLeft: `4px solid ${acc}`, padding: "16px 18px", borderBottom: `1px solid ${C.border}` }}>
-                <div style={{ fontSize: "10px", color: acc, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>{label}</div>
-                <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipe.name}</div>
-                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
-                  <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipe.time}</span>
-                  <span style={{ color: C.border }}>·</span>
-                  <span style={{ fontSize: "12px", color: C.textMuted }}>👤 {recipe.servings} servings</span>
-                  <span style={{ color: C.border }}>·</span>
-                  <span style={{ fontSize: "12px", color: C.textMuted }}>{METHOD_ICONS[recipe.method] || "🍴"} {recipe.method}</span>
-                  <span style={{ color: C.border }}>·</span>
-                  <span style={{ fontSize: "12px", fontWeight: 600, color: acc }}>{recipe.nutrition.protein}g protein/srv</span>
+              {/* Recipe header with image */}
+              <div style={{ borderLeft: `4px solid ${acc}`, padding: "16px 18px", borderBottom: `1px solid ${C.border}`, display: "flex", alignItems: "flex-start", gap: "14px" }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: "10px", color: acc, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>{label}</div>
+                  <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "18px", fontWeight: 900, color: C.text, marginBottom: "6px", lineHeight: 1.3 }}>{recipe.name}</div>
+                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                    <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipe.time}</span>
+                    <span style={{ color: C.border }}>·</span>
+                    <span style={{ fontSize: "12px", color: C.textMuted }}>👤 {recipe.servings} servings</span>
+                    <span style={{ color: C.border }}>·</span>
+                    <span style={{ fontSize: "12px", fontWeight: 700, color: acc }}>{recipe.nutrition.protein}g protein/srv</span>
+                  </div>
+                  <div style={{ display: "flex", gap: "6px", marginTop: "8px", flexWrap: "wrap" }}>
+                    {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 8px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ Deep-fried</span>}
+                    {recipe.tags?.map(t => <span key={t} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>#{t}</span>)}
+                  </div>
                 </div>
-                {/* Warnings */}
-                <div style={{ display: "flex", gap: "6px", marginTop: "8px", flexWrap: "wrap" }}>
-                  {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 8px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ Deep-fried</span>}
-                  {r.hasGluten && <span style={{ fontSize: "10px", color: C.yellow, background: C.yellowLight, padding: "2px 8px", borderRadius: "20px", border: "1px solid #fde68a" }}>🌾 Gluten</span>}
-                  {recipe.tags?.map(t => <span key={t} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>#{t}</span>)}
-                </div>
+                {recipe.image && (
+                  <div style={{ width: "80px", height: "80px", flexShrink: 0, borderRadius: "12px", overflow: "hidden", boxShadow: C.shadow }}>
+                    <img src={recipe.image} alt={recipe.name} style={{ width: "80px", height: "80px", objectFit: "cover", display: "block" }} />
+                  </div>
+                )}
               </div>
 
               {/* Ingredients */}
@@ -2284,7 +2300,6 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
                 </div>
               </div>
 
-              {/* Source link */}
               {recipe.link && (
                 <div style={{ padding: "10px 18px", borderTop: `1px solid ${C.border}`, background: C.bg }}>
                   <a href={recipe.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: "12px", color: acc, textDecoration: "none", fontWeight: 600 }}>📎 View original source →</a>
@@ -2418,15 +2433,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
         </div>
       )}
 
-      {/* ── Filters ── */}
-      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "18px" }}>
-        <button onClick={() => setWifeFilter(w => !w)} style={{ padding: "6px 13px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${wifeFilter ? "#fed7aa" : C.border}`, background: wifeFilter ? "#fff7ed" : C.surface, color: wifeFilter ? "#c2410c" : C.textMuted, boxShadow: C.shadow }}>
-          {wifeFilter ? "👩 Wife-friendly ON" : "👩 Wife-friendly OFF"}
-        </button>
-        <button onClick={() => setQuickOnly(q => !q)} style={{ padding: "6px 13px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${quickOnly ? "#bfdbfe" : C.border}`, background: quickOnly ? C.blueLight : C.surface, color: quickOnly ? C.blue : C.textMuted, boxShadow: C.shadow }}>
-          {quickOnly ? "⚡ ≤35 min ON" : "⚡ ≤35 min OFF"}
-        </button>
-      </div>
+
 
       {/* ── Step tabs ── */}
       <div style={{ display: "flex", gap: "0", marginBottom: "20px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", overflow: "hidden", boxShadow: C.shadow }}>
@@ -2465,7 +2472,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
                   <div style={{ fontSize: "11px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>✓ Complete dishes — no veg side needed</div>
                   <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                     {completeDishes.map(r => (
-                      <button key={r.id} onClick={() => { setPickedProtein(pickedProtein?.id === r.id ? null : r); setPickedVeg(null); }}
+                      <button key={r.id} onClick={() => { const newPick = pickedProtein?.id === r.id ? null : r; setPickedProtein(newPick); setPickedVeg(null); if (newPick) setTimeout(() => setStep(2), 300); }}
                         style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", transition: "all 0.12s", border: `1px solid ${pickedProtein?.id === r.id ? C.green : C.greenBorder}`, background: pickedProtein?.id === r.id ? C.green : C.greenLight, color: pickedProtein?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow }}>
                         {pickedProtein?.id === r.id ? "✓ " : ""}{r.name}
                       </button>
@@ -2483,7 +2490,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
                     <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                       {proteinDishes.map((r, i) => (
                         <div key={r.id} style={{ position: "relative" }}
-                          onClick={() => setPickedProtein(pickedProtein?.id === r.id ? null : r)}>
+                          onClick={() => { const newPick = pickedProtein?.id === r.id ? null : r; setPickedProtein(newPick); if (newPick) setTimeout(() => setStep(2), 300); }}>
                           <RecipeCard recipe={r} onSelect={() => setPickedProtein(pickedProtein?.id === r.id ? null : r)} accentColor={pickedProtein?.id === r.id ? C.orange : ACCENTS[i % ACCENTS.length]} />
                           {pickedProtein?.id === r.id && (
                             <div style={{ position: "absolute", top: "8px", right: "10px", background: C.orange, color: "#fff", borderRadius: "50%", width: "18px", height: "18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 700 }}>✓</div>
@@ -3684,7 +3691,7 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
                 const col = CARD_COLORS[fi % CARD_COLORS.length];
                 return (
                   <button key={f.id} onClick={() => onNavigate(f.id)}
-                    style={{ background: col.bg, border: "none", borderRadius: "22px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.15s, box-shadow 0.15s", fontFamily: "'Nunito', sans-serif" }}
+                    style={{ background: C.card, border: `1.5px solid ${C.border}`, borderRadius: "22px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.15s, box-shadow 0.15s", fontFamily: "'Nunito', sans-serif" }}
                     onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 24px rgba(0,0,0,0.12)`; }}
                     onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
                     <div style={{ flex: 1, padding: "18px 16px" }}>
@@ -3851,8 +3858,6 @@ export default function App() {
         )}
       </div>
 
-      {/* Bottom nav */}
-      <BottomNav active={screen} onNav={setScreen} />
 
       {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
     </div>
