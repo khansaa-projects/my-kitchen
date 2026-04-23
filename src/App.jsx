@@ -1916,39 +1916,59 @@ const METHOD_ICONS = {
   "Boiling / Soup":"🍲","Roasting":"🔥",
 };
 
-const ACCENTS = ["#d97706","#16a34a","#0284c7","#db2777","#7c3aed","#ea580c","#059669","#2563eb","#9333ea","#ca8a04","#dc2626","#0891b2"];
+const ACCENTS = ["#E8B830","#D46050","#5AAAC8","#7080C8","#70A860","#D4A840","#E8B830","#D46050","#5AAAC8","#7080C8","#70A860","#D4A840"];
 
 const HUSBAND_PROTEIN_PER_MEAL = 33;
 const WIFE_PROTEIN_PER_MEAL = 33;
 const COMBINED_PROTEIN_GOAL = 66;
 
-// Light mode color tokens
+// Light mode color tokens — new design
 const C = {
-  bg: "#f8f7f4",
-  surface: "#ffffff",
-  surfaceHover: "#f1ede6",
-  border: "#e5e0d8",
-  borderStrong: "#d1c9be",
-  text: "#1c1917",
-  textMuted: "#78716c",
-  textFaint: "#a8a29e",
-  headerBg: "#ffffff",
-  stickyBg: "#ffffffee",
-  shadow: "0 1px 3px rgba(0,0,0,0.08)",
-  shadowMd: "0 4px 12px rgba(0,0,0,0.1)",
-  orange: "#d97706",
-  orangeLight: "#fef3c7",
-  orangeBorder: "#fde68a",
-  green: "#16a34a",
-  greenLight: "#dcfce7",
-  greenBorder: "#bbf7d0",
-  red: "#dc2626",
-  redLight: "#fee2e2",
-  blue: "#2563eb",
-  blueLight: "#dbeafe",
-  yellow: "#ca8a04",
-  yellowLight: "#fefce8",
+  // Backgrounds
+  bg: "#F5EDD8",
+  surface: "#FFFFFF",
+  surfaceHover: "#F0E8D0",
+  // Borders
+  border: "#E8DCC8",
+  borderStrong: "#D4C8A8",
+  // Text
+  text: "#1A2B5A",
+  textMuted: "#3A5080",
+  textFaint: "#8090A8",
+  // Sticky / header
+  headerBg: "#FFFFFF",
+  stickyBg: "#FFFFFFee",
+  // Shadows
+  shadow: "0 2px 10px rgba(0,0,0,0.05)",
+  shadowMd: "0 4px 18px rgba(0,0,0,0.09)",
+  // Primary accent — golden
+  orange: "#C88A20",
+  orangeLight: "#F5E4B0",
+  orangeBorder: "#E8D090",
+  // Green (kept as secondary)
+  green: "#70A860",
+  greenLight: "#D8EAD0",
+  greenBorder: "#B8D8A8",
+  // Danger
+  red: "#C83828",
+  redLight: "#F5DDD8",
+  // Info
+  blue: "#3A8FAA",
+  blueLight: "#D4EEF8",
+  // Warn
+  yellow: "#E8B830",
+  yellowLight: "#F8EEB8",
 };
+
+// Colorful card palette from new design
+const CARD_COLORS = [
+  { bg: "#F8EEB8", accent: "#E8B830", text: "#7A5800" },
+  { bg: "#F5DDD8", accent: "#D46050", text: "#8A2010" },
+  { bg: "#D4EEF8", accent: "#5AAAC8", text: "#1A5070" },
+  { bg: "#D8DCF0", accent: "#7080C8", text: "#1A2B60" },
+  { bg: "#D8EAD0", accent: "#70A860", text: "#2A5818" },
+  { bg: "#F0E4C0", accent: "#D4A840", text: "#7A5010" },
+];
 
 // ─── RECIPE DETAIL PAGE ────────────────────────────────────────────────────────
 function RecipeDetail({ recipe, onBack, accent }) {
@@ -1964,11 +1984,11 @@ function RecipeDetail({ recipe, onBack, accent }) {
   if (r.hasGluten) warnings.push({ icon: "🌾", text: "Contains gluten — limit for wife" });
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
-      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: "12px" }}>
+      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10, display: "flex", alignItems: "center", gap: "12px" }}>
         <button onClick={onBack} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "8px", padding: "7px 14px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>
           ← Back
         </button>
@@ -1989,7 +2009,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
           <div style={{ fontSize: "11px", color: acc, textTransform: "uppercase", letterSpacing: "0.1em", fontWeight: 700, marginBottom: "8px" }}>
             {recipe.taste} · {recipe.protein}
           </div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "26px", fontWeight: 700, color: C.text, margin: "0 0 10px", lineHeight: 1.2 }}>{recipe.name}</h1>
+          <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "26px", fontWeight: 700, color: C.text, margin: "0 0 10px", lineHeight: 1.2 }}>{recipe.name}</h1>
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "10px" }}>
             <span style={{ fontSize: "13px", color: C.textMuted }}>⏱ {recipe.time}</span>
             <span style={{ color: C.border }}>·</span>
@@ -2037,7 +2057,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
         {/* Ingredients */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "18px", marginBottom: "16px", boxShadow: C.shadow }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text, margin: 0 }}>Ingredients</h2>
+            <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff", margin: 0 }}>Ingredients</h2>
             {Object.values(checked).some(Boolean) && (
               <button onClick={() => setChecked({})} style={{ background: "none", border: "none", color: C.textFaint, fontSize: "11px", cursor: "pointer", fontWeight: 600 }}>Clear ×</button>
             )}
@@ -2057,7 +2077,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
 
         {/* Directions — no onClick anywhere on this container */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "18px", marginBottom: "16px", boxShadow: C.shadow }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text, margin: "0 0 12px" }}>Directions</h2>
+          <h2 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff", margin: "0 0 12px" }}>Directions</h2>
           <div style={{ display: "flex", flexDirection: "column" }}>
             {recipe.steps.map((step, i) => (
               <div key={i} style={{ display: "flex", gap: "14px", alignItems: "flex-start", padding: "10px 0", borderBottom: i < recipe.steps.length - 1 ? `1px solid ${C.border}` : "none" }}>
@@ -2109,20 +2129,20 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext, matchedItem
       onMouseLeave={() => setHov(false)}
       style={{
         background: hov ? C.surfaceHover : C.surface,
-        border: `1px solid ${proteinBadge?.meets && recipe.nutrition.protein > 0 ? C.greenBorder : C.border}`,
-        borderLeft: `3px solid ${proteinBadge && recipe.nutrition.protein > 0 ? (proteinBadge.meets ? C.green : C.orange) : acc}`,
-        borderRadius: "10px",
+        border: `1.5px solid ${proteinBadge?.meets && recipe.nutrition.protein > 0 ? C.greenBorder : C.border}`,
+        borderRadius: "18px",
         padding: "0",
         cursor: "pointer",
-        transition: "background 0.12s",
+        transition: "transform 0.12s, box-shadow 0.12s",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "stretch",
         gap: "0",
-        boxShadow: C.shadow,
+        boxShadow: hov ? "0 6px 20px rgba(0,0,0,0.10)" : C.shadow,
         userSelect: "none",
         overflow: "hidden",
         height: "72px",
+        transform: hov ? "translateY(-1px)" : "translateY(0)",
       }}
     >
       {/* Left thumbnail — only if image exists */}
@@ -2136,7 +2156,7 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext, matchedItem
       {/* Content */}
       <div style={{ flex: 1, minWidth: 0, padding: "10px 12px", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "5px", overflow: "hidden" }}>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "13px", fontWeight: 600, color: C.text, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{recipe.name}</span>
+          <span style={{ fontFamily: "'Nunito', sans-serif", fontSize: "13px", fontWeight: 800, color: C.text, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{recipe.name}</span>
           {r.isComplete && <span style={{ fontSize: "9px", background: C.greenLight, color: C.green, padding: "1px 5px", borderRadius: "8px", border: `1px solid ${C.greenBorder}`, flexShrink: 0 }}>complete</span>}
           {proteinBadge?.meets && recipe.nutrition.protein > 0 && (
             <span style={{ fontSize: "9px", background: C.greenLight, color: C.green, padding: "1px 5px", borderRadius: "8px", border: `1px solid ${C.greenBorder}`, flexShrink: 0, fontWeight: 700 }}>✓</span>
@@ -2157,7 +2177,7 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext, matchedItem
 
       {/* Right — protein + arrow */}
       <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", justifyContent: "center", gap: "2px", flexShrink: 0, padding: "12px 14px" }}>
-        <span style={{ fontSize: "14px", fontWeight: 700, color: proteinBadge && recipe.nutrition.protein > 0 ? (proteinBadge.meets ? C.green : C.orange) : acc }}>{recipe.nutrition.protein}g</span>
+        <span style={{ fontSize: "15px", fontWeight: 900, color: proteinBadge && recipe.nutrition.protein > 0 ? (proteinBadge.meets ? C.green : C.orange) : acc }}>{recipe.nutrition.protein}g</span>
         <span style={{ fontSize: "10px", color: C.textFaint }}>protein</span>
         <span style={{ fontSize: "12px", color: C.textFaint }}>›</span>
       </div>
@@ -2173,15 +2193,15 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
   const ok = pct >= 80;
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Header */}
-      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
-          <button onClick={onBack} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "10px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>← Back</button>
+          <button onClick={onBack} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "12px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 700, boxShadow: C.shadow }}>← Back</button>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>Today's Meal</div>
+            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff" }}>Today's Meal</div>
           </div>
         </div>
       </div>
@@ -2215,7 +2235,7 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
               {/* Recipe header */}
               <div style={{ borderLeft: `4px solid ${acc}`, padding: "16px 18px", borderBottom: `1px solid ${C.border}` }}>
                 <div style={{ fontSize: "10px", color: acc, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "4px" }}>{label}</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipe.name}</div>
+                <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "20px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{recipe.name}</div>
                 <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
                   <span style={{ fontSize: "12px", color: C.textMuted }}>⏱ {recipe.time}</span>
                   <span style={{ color: C.border }}>·</span>
@@ -2474,7 +2494,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
               {pickedProtein && (
                 <div style={{ marginTop: "20px", textAlign: "center" }}>
                   <button onClick={() => setStep(2)}
-                    style={{ padding: "11px 28px", background: C.orange, color: "#fff", border: "none", borderRadius: "20px", fontSize: "14px", fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 8px rgba(217,119,6,0.3)" }}>
+                    style={{ padding: "14px 28px", background: C.orange, color: "#fff", border: "none", borderRadius: "16px", fontSize: "14px", fontWeight: 800, cursor: "pointer", boxShadow: `0 6px 20px ${C.orange}50` }}>
                     Next — pick a vegetable →
                   </button>
                 </div>
@@ -3170,7 +3190,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
 
       <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "20px" }}>
         <button onClick={() => setActiveGroup(null)}
-          style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${!activeGroup ? C.orange : C.border}`, background: !activeGroup ? C.orangeLight : C.surface, color: !activeGroup ? C.orange : C.textMuted }}>
+          style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${!activeGroup ? C.orange : C.border}`, background: !activeGroup ? C.orange : C.surface, color: !activeGroup ? '#fff' : C.textMuted }}>
           All ({filtered.length})
         </button>
         {customIds.length > 0 && (
@@ -3190,7 +3210,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
       {/* "Added by you" special group */}
       {activeGroup === "__custom__" && (
         <div style={{ marginBottom: "24px" }}>
-          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: C.green, marginBottom: "10px", paddingBottom: "6px", borderBottom: `2px solid ${C.greenBorder}` }}>
+          <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", fontWeight: 900, color: C.orange, marginBottom: "10px", paddingBottom: "6px", borderBottom: `2px solid ${C.greenBorder}` }}>
             ✨ Added by you <span style={{ fontSize: "12px", color: C.textFaint, fontWeight: 400, fontFamily: "sans-serif" }}>({customIds.length})</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
@@ -3210,7 +3230,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
 
       {activeGroup !== "__custom__" && groups.filter(g => !activeGroup || g.label === activeGroup).map(g => (
         <div key={g.label} style={{ marginBottom: "24px" }}>
-          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "15px", fontWeight: 700, color: g.accent, marginBottom: "10px", paddingBottom: "6px", borderBottom: `2px solid ${g.accent}30` }}>
+          <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "15px", fontWeight: 900, color: g.accent, marginBottom: "10px", paddingBottom: "6px", borderBottom: `2px solid ${g.accent}30` }}>
             {g.label} <span style={{ fontSize: "12px", color: C.textFaint, fontWeight: 400, fontFamily: "sans-serif" }}>({g.recs.length})</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
@@ -3362,7 +3382,7 @@ If you can access the page, return just the raw caption/recipe text. If you cann
               <textarea value={text} onChange={e => { setText(e.target.value); setStatus("idle"); setParsed(null); }}
                 placeholder={"Paste a recipe here — from Instagram captions, websites, WhatsApp, anywhere.\n\nInclude the recipe name, ingredients, and steps for best results."}
                 rows={8}
-                style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "12px 14px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+                style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "12px 14px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'Nunito', sans-serif" }}
               />
             </div>
           ) : (
@@ -3399,7 +3419,7 @@ If you can access the page, return just the raw caption/recipe text. If you cann
             <div style={{ background: C.bg, border: `1px solid ${C.greenBorder}`, borderRadius: "12px", overflow: "hidden" }}>
               <div style={{ background: C.greenLight, padding: "12px 14px", borderBottom: `1px solid ${C.greenBorder}` }}>
                 <div style={{ fontSize: "11px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "4px" }}>✓ Parsed successfully</div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>{parsed.name}</div>
+                <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff" }}>{parsed.name}</div>
                 <div style={{ fontSize: "12px", color: C.textMuted, marginTop: "3px" }}>
                   {parsed.protein} · {parsed.method} · ⏱ {parsed.time} · 👤 {parsed.servings} srv · {parsed.nutrition?.protein}g protein/srv
                 </div>
@@ -3509,7 +3529,7 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
           onChange={e => handleInputChange(e.target.value)}
           placeholder={"chicken thigh, broccoli, tofu, eggs\ntempe, shiitake, baby kailan"}
           rows={5}
-          style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 12px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+          style={{ width: "100%", boxSizing: "border-box", background: C.bg, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 12px", color: C.text, fontSize: "13px", lineHeight: 1.6, resize: "vertical", outline: "none", fontFamily: "'Nunito', sans-serif" }}
         />
         {inputText.trim() && (
           <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginTop: "10px", marginBottom: "4px" }}>
@@ -3524,7 +3544,7 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
           <div style={{ display: "flex", gap: "8px", marginTop: "12px", alignItems: "center" }}>
             <button
               onClick={() => setShowResults(true)}
-              style={{ flex: 1, padding: "11px", background: C.orange, color: "#fff", border: "none", borderRadius: "10px", fontSize: "14px", fontWeight: 700, cursor: "pointer", boxShadow: "0 2px 8px rgba(217,119,6,0.3)" }}>
+              style={{ flex: 1, padding: "13px", background: C.text, color: "#fff", border: "none", borderRadius: "14px", fontSize: "14px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 14px ${C.text}40` }}>
               Check recipes →
             </button>
             <button onClick={() => { setInputText(""); setShowResults(false); onInventoryUpdate({}); }}
@@ -3547,7 +3567,7 @@ function InventoryView({ allRecipes, onSelect, inventory, onInventoryUpdate }) {
       {showResults && (
         <div>
           <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "12px" }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text }}>✨ Cook now</div>
+            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "18px", fontWeight: 900, color: C.text }}>✨ Cook now</div>
             <div style={{ fontSize: "12px", color: C.textMuted }}>{recommendations.length} recipes matched</div>
           </div>
 
@@ -3594,26 +3614,26 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
     : [];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Hero + search */}
-      <div style={{ background: "#1c1917", padding: "40px 24px 28px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "180px", height: "180px", borderRadius: "50%", background: "rgba(217,119,6,0.15)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(217,119,6,0.08)", pointerEvents: "none" }} />
+      <div style={{ background: "#1A2B5A", padding: "40px 24px 28px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", top: "-40px", right: "-40px", width: "180px", height: "180px", borderRadius: "50%", background: "rgba(200,138,32,0.18)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(200,138,32,0.10)", pointerEvents: "none" }} />
         <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
-          <div style={{ fontSize: "36px", marginBottom: "8px" }}>🍳</div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.1 }}>My Kitchen</h1>
-          <p style={{ color: "#a8a29e", fontSize: "13px", margin: "0 0 20px" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}{inventoryCount > 0 ? ` · ${inventoryCount} pantry items` : ""}</p>
+          <div style={{ fontSize: "13px", fontWeight: 700, color: "rgba(255,255,255,0.55)", marginBottom: "4px" }}>Good evening 👋</div>
+          <h1 style={{ fontFamily: "'Nunito', sans-serif", fontSize: "30px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.15, letterSpacing: "-0.5px" }}>What's for<br />dinner tonight?</h1>
+          <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "12px", margin: "0 0 20px" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}</p>
 
           {/* Search bar */}
           <div style={{ position: "relative" }}>
-            <svg style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.6 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.55 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search any recipe… try 'ayam mentega'" 
-              style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", padding: "12px 14px 12px 42px", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
+              style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.12)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.18)", borderRadius: "14px", padding: "13px 14px 13px 44px", color: "#fff", fontSize: "14px", fontWeight: 600, outline: "none", fontFamily: "'Nunito', sans-serif" }}
             />
             {search && (
               <button onClick={() => setSearch("")} style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", background: "none", border: "none", color: "rgba(255,255,255,0.5)", fontSize: "18px", cursor: "pointer", lineHeight: 1 }}>×</button>
@@ -3627,14 +3647,14 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
         {/* Search results */}
         {searchResults.length > 0 && (
           <div style={{ marginBottom: "24px" }}>
-            <div style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
+            <div style={{ fontSize: "11px", fontWeight: 800, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "10px" }}>
               {searchResults.length} result{searchResults.length !== 1 ? "s" : ""} for "{search}"
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
               {searchResults.map(r => <RecipeCard key={r.id} recipe={r} onSelect={onSelect} accentColor={C.orange} />)}
             </div>
             <button onClick={() => { setSearch(""); onNavigate("browse"); }}
-              style={{ marginTop: "12px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "10px", color: C.textMuted, fontSize: "13px", fontWeight: 600, cursor: "pointer" }}>
+              style={{ marginTop: "12px", width: "100%", padding: "10px", background: "none", border: `1px solid ${C.border}`, borderRadius: "12px", color: C.textMuted, fontSize: "13px", fontWeight: 700, cursor: "pointer" }}>
               See all results in Recipe Book →
             </button>
           </div>
@@ -3643,7 +3663,7 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
         {search.trim() && searchResults.length === 0 && (
           <div style={{ textAlign: "center", padding: "32px 20px", marginBottom: "20px" }}>
             <div style={{ fontSize: "28px", marginBottom: "8px" }}>🤷</div>
-            <div style={{ fontSize: "14px", fontWeight: 600, color: C.textMuted }}>No recipes found for "{search}"</div>
+            <div style={{ fontSize: "14px", fontWeight: 700, color: C.textMuted }}>No recipes found for "{search}"</div>
             <div style={{ fontSize: "12px", color: C.textFaint, marginTop: "4px" }}>Try different keywords or browse by category below</div>
           </div>
         )}
@@ -3651,26 +3671,24 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
         {/* Feature cards */}
         {!search.trim() && (
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            {features.map(f => (
-              <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "16px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.12s, box-shadow 0.12s" }}
+            {features.map((f, fi) => (
+              <button key={f.id} onClick={() => onNavigate(f.id)} style={{ background: CARD_COLORS[fi % CARD_COLORS.length].bg, border: "none", borderRadius: "20px", padding: "0", cursor: "pointer", textAlign: "left", boxShadow: C.shadowMd, overflow: "hidden", display: "flex", alignItems: "stretch", transition: "transform 0.15s, box-shadow 0.15s" }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = "0 8px 24px rgba(0,0,0,0.12)"; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = C.shadowMd; }}>
-                <div style={{ width: "6px", background: f.color, flexShrink: 0 }} />
-                <div style={{ flex: 1, padding: "18px 16px" }}>
+                <div style={{ flex: 1, padding: "20px 18px" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "6px" }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span style={{ fontSize: "24px" }}>{f.emoji}</span>
+                      <div style={{ width: "48px", height: "48px", borderRadius: "16px", background: "rgba(255,255,255,0.65)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "22px", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}>{f.emoji}</div>
                       <div>
-                        <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "17px", fontWeight: 700, color: C.text, lineHeight: 1.2 }}>{f.title}</div>
-                        <div style={{ fontSize: "12px", color: f.color, fontWeight: 600, marginTop: "1px" }}>{f.subtitle}</div>
+                        <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "17px", fontWeight: 900, color: CARD_COLORS[fi % CARD_COLORS.length].text, lineHeight: 1.2 }}>{f.title}</div>
+                        <div style={{ fontSize: "12px", color: CARD_COLORS[fi % CARD_COLORS.length].accent, fontWeight: 700, marginTop: "1px" }}>{f.subtitle}</div>
                       </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "4px", flexShrink: 0 }}>
-                      <span style={{ fontSize: "11px", color: f.color, background: f.light, padding: "3px 8px", borderRadius: "20px", border: `1px solid ${f.border}`, fontWeight: 600, whiteSpace: "nowrap" }}>{f.stat}</span>
-                      <span style={{ color: C.textFaint, fontSize: "18px" }}>›</span>
+                      <span style={{ fontSize: "11px", color: CARD_COLORS[fi % CARD_COLORS.length].text, background: "rgba(255,255,255,0.55)", padding: "3px 10px", borderRadius: "20px", fontWeight: 800, whiteSpace: "nowrap" }}>{f.stat}</span>
+                      <span style={{ color: CARD_COLORS[fi % CARD_COLORS.length].accent, fontSize: "18px", fontWeight: 900 }}>›</span>
                     </div>
                   </div>
-                  <div style={{ fontSize: "12px", color: C.textMuted, lineHeight: 1.5, paddingLeft: "34px" }}>{f.description}</div>
                 </div>
               </button>
             ))}
@@ -3749,13 +3767,13 @@ export default function App() {
   const meta = SCREEN_META[screen] || {};
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'DM Sans', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-      <div style={{ background: C.stickyBg, borderBottom: `1px solid ${C.border}`, backdropFilter: "blur(8px)", padding: "12px 20px", position: "sticky", top: 0, zIndex: 10 }}>
+    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+      <div style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
-          <button onClick={() => setScreen("home")} style={{ background: C.surface, border: `1px solid ${C.border}`, color: C.text, borderRadius: "10px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 600, boxShadow: C.shadow }}>← Home</button>
+          <button onClick={() => setScreen("home")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "12px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 700, boxShadow: C.shadow }}>← Home</button>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text }}>{meta.emoji} {meta.label}</div>
+            <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff" }}>{meta.emoji} {meta.label}</div>
           </div>
           <button onClick={() => setShowAddModal(true)} style={{ padding: "7px 14px", border: `1px solid ${C.orange}`, borderRadius: "20px", background: C.orangeLight, color: C.orange, fontSize: "12px", fontWeight: 700, cursor: "pointer", boxShadow: C.shadow }}>+ Add</button>
         </div>
