@@ -1444,6 +1444,9 @@ function RecipeDetail({ recipe, onBack, accent }) {
   const acc = accent || C.orange;
   const r = enrichRecipe(recipe);
   const proteinPerServing = recipe.nutrition.protein;
+  const [checked, setChecked] = useState({});
+
+  const toggleCheck = (i) => setChecked(prev => ({ ...prev, [i]: !prev[i] }));
 
   const warnings = [];
   if (r.isDeepFried) warnings.push({ icon: "⚠️", text: "Deep-fried — not ideal for wife's IBD" });
@@ -1513,21 +1516,28 @@ function RecipeDetail({ recipe, onBack, accent }) {
               </div>
             ))}
           </div>
-          <div style={{ fontSize: "12px", color: C.textMuted, borderTop: `1px solid ${C.border}`, paddingTop: "10px", lineHeight: 1.6 }}>
-            🏃 Husband ~{HUSBAND_PROTEIN_PER_MEAL}g/meal &nbsp;·&nbsp; 👩 Wife ~{WIFE_PROTEIN_PER_MEAL}g/meal
+          <div style={{ fontSize: "12px", color: C.textMuted, borderTop: `1px solid ${C.border}`, paddingTop: "10px" }}>
             <span style={{ color: proteinPerServing >= 25 ? C.green : C.orange, fontWeight: 600 }}>
-              {" · "}{proteinPerServing}g protein/serving {proteinPerServing >= 25 ? "✓" : "— consider 2 servings"}
+              {proteinPerServing}g protein/serving {proteinPerServing >= 25 ? "✓ good source" : "— consider 2 servings"}
             </span>
           </div>
         </div>
 
         {/* Ingredients */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "18px", marginBottom: "16px", boxShadow: C.shadow }}>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text, margin: "0 0 12px" }}>Ingredients</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+            <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: C.text, margin: 0 }}>Ingredients</h2>
+            {Object.values(checked).some(Boolean) && (
+              <button onClick={() => setChecked({})} style={{ background: "none", border: "none", color: C.textFaint, fontSize: "11px", cursor: "pointer", fontWeight: 600 }}>Clear ×</button>
+            )}
+          </div>
           <ul style={{ margin: 0, paddingLeft: 0, listStyle: "none" }}>
             {recipe.ingredients.map((ing, i) => (
-              <li key={i} style={{ display: "flex", alignItems: "flex-start", gap: "10px", fontSize: "14px", color: C.text, padding: "7px 0", borderBottom: i < recipe.ingredients.length - 1 ? `1px solid ${C.border}` : "none", lineHeight: 1.5 }}>
-                <span style={{ color: acc, fontSize: "8px", marginTop: "6px", flexShrink: 0 }}>◆</span>
+              <li key={i} onClick={() => toggleCheck(i)}
+                style={{ display: "flex", alignItems: "flex-start", gap: "12px", fontSize: "14px", color: checked[i] ? C.textFaint : C.text, padding: "8px 0", borderBottom: i < recipe.ingredients.length - 1 ? `1px solid ${C.border}` : "none", lineHeight: 1.5, cursor: "pointer", textDecoration: checked[i] ? "line-through" : "none", transition: "color 0.15s" }}>
+                <div style={{ width: "18px", height: "18px", minWidth: "18px", borderRadius: "4px", border: `2px solid ${checked[i] ? acc : C.borderStrong}`, background: checked[i] ? acc : "transparent", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "1px", transition: "all 0.15s", flexShrink: 0 }}>
+                  {checked[i] && <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>}
+                </div>
                 {ing}
               </li>
             ))}
@@ -1601,39 +1611,36 @@ function RecipeCard({ recipe, onSelect, accentColor, proteinContext, matchedItem
         boxShadow: C.shadow,
         userSelect: "none",
         overflow: "hidden",
-        maxHeight: "90px",
+        height: "72px",
       }}
     >
       {/* Left thumbnail — only if image exists */}
       {recipe.image && (
-        <img src={recipe.image} alt={recipe.name}
-          style={{ width: "72px", minWidth: "72px", height: "100%", minHeight: "72px", objectFit: "cover", display: "block", borderRight: `1px solid ${C.border}`, alignSelf: "stretch" }} />
+        <div style={{ width: "72px", minWidth: "72px", height: "72px", flexShrink: 0, overflow: "hidden", borderRight: `1px solid ${C.border}`, alignSelf: "center" }}>
+          <img src={recipe.image} alt={recipe.name}
+            style={{ width: "72px", height: "72px", objectFit: "cover", display: "block" }} />
+        </div>
       )}
 
       {/* Content */}
-      <div style={{ flex: 1, minWidth: 0, padding: "12px 14px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "5px", flexWrap: "wrap" }}>
-          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "14px", fontWeight: 600, color: C.text, lineHeight: 1.3 }}>{recipe.name}</span>
-          {r.isComplete && <span style={{ fontSize: "10px", background: C.greenLight, color: C.green, padding: "1px 7px", borderRadius: "10px", border: `1px solid ${C.greenBorder}`, flexShrink: 0 }}>complete</span>}
+      <div style={{ flex: 1, minWidth: 0, padding: "10px 12px", display: "flex", flexDirection: "column", justifyContent: "center", overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "5px", marginBottom: "5px", overflow: "hidden" }}>
+          <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "13px", fontWeight: 600, color: C.text, lineHeight: 1.3, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{recipe.name}</span>
+          {r.isComplete && <span style={{ fontSize: "9px", background: C.greenLight, color: C.green, padding: "1px 5px", borderRadius: "8px", border: `1px solid ${C.greenBorder}`, flexShrink: 0 }}>complete</span>}
           {proteinBadge?.meets && recipe.nutrition.protein > 0 && (
-            <span style={{ fontSize: "10px", background: C.greenLight, color: C.green, padding: "1px 7px", borderRadius: "10px", border: `1px solid ${C.greenBorder}`, flexShrink: 0, fontWeight: 700 }}>
-              ✓ completes protein
-            </span>
+            <span style={{ fontSize: "9px", background: C.greenLight, color: C.green, padding: "1px 5px", borderRadius: "8px", border: `1px solid ${C.greenBorder}`, flexShrink: 0, fontWeight: 700 }}>✓</span>
           )}
         </div>
         {matchedItems && matchedItems.length > 0 && (
-          <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", marginBottom: "5px" }}>
-            {matchedItems.slice(0, 4).map(item => (
-              <span key={item} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "1px 7px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{item}</span>
+          <div style={{ display: "flex", gap: "4px", marginBottom: "4px", overflow: "hidden" }}>
+            {matchedItems.slice(0, 2).map(item => (
+              <span key={item} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "1px 6px", borderRadius: "20px", border: `1px solid ${C.border}`, whiteSpace: "nowrap" }}>{item}</span>
             ))}
-            {matchedItems.length > 4 && <span style={{ fontSize: "10px", color: C.textFaint }}>+{matchedItems.length - 4}</span>}
+            {matchedItems.length > 2 && <span style={{ fontSize: "10px", color: C.textFaint, whiteSpace: "nowrap" }}>+{matchedItems.length - 2}</span>}
           </div>
         )}
-        <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
-          <span style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.border}` }}>{METHOD_ICONS[recipe.method] || "🍴"} {recipe.method}</span>
-          <span style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.border}` }}>⏱ {recipe.time}</span>
-          {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 7px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ deep-fried</span>}
-          {r.hasGluten && <span style={{ fontSize: "10px", color: C.yellow, background: C.yellowLight, padding: "2px 7px", borderRadius: "20px", border: "1px solid #fde68a" }}>🌾 gluten</span>}
+        <div style={{ display: "flex", gap: "5px", overflow: "hidden" }}>
+          <span style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 7px", borderRadius: "20px", border: `1px solid ${C.border}`, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{METHOD_ICONS[recipe.method] || "🍴"} {recipe.method}</span>
         </div>
       </div>
 
@@ -1916,25 +1923,22 @@ function TodayPlanner({ allRecipes, onSelect }) {
 
           {browsedProtein && (
             <>
-              {/* Complete dishes */}
+              {/* Complete dishes — shown as pills */}
               {completeDishes.length > 0 && (
-                <div style={{ marginBottom: "20px" }}>
+                <div style={{ marginBottom: "16px" }}>
                   <div style={{ fontSize: "11px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>✓ Complete dishes — no veg side needed</div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                     {completeDishes.map(r => (
-                      <div key={r.id} style={{ display: "flex", gap: "8px", alignItems: "stretch" }}>
-                        <div style={{ flex: 1 }}><RecipeCard recipe={r} onSelect={onSelect} accentColor={C.green} /></div>
-                        <button onClick={() => { setPickedProtein(r); setPickedVeg(null); }}
-                          style={{ flexShrink: 0, padding: "0 14px", background: pickedProtein?.id === r.id ? C.green : C.surface, border: `1px solid ${pickedProtein?.id === r.id ? C.green : C.border}`, borderRadius: "10px", cursor: "pointer", fontSize: "13px", fontWeight: 700, color: pickedProtein?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow, transition: "all 0.12s" }}>
-                          {pickedProtein?.id === r.id ? "✓" : "Pick"}
-                        </button>
-                      </div>
+                      <button key={r.id} onClick={() => { setPickedProtein(pickedProtein?.id === r.id ? null : r); setPickedVeg(null); }}
+                        style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", transition: "all 0.12s", border: `1px solid ${pickedProtein?.id === r.id ? C.green : C.greenBorder}`, background: pickedProtein?.id === r.id ? C.green : C.greenLight, color: pickedProtein?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow }}>
+                        {pickedProtein?.id === r.id ? "✓ " : ""}{r.name}
+                      </button>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Protein-only dishes */}
+              {/* Protein-only dishes — clicking card picks it */}
               <div style={{ marginBottom: "8px" }}>
                 <div style={{ fontSize: "11px", color: C.orange, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>{browsedProtein} dishes</div>
                 {proteinDishes.length === 0
@@ -1942,12 +1946,12 @@ function TodayPlanner({ allRecipes, onSelect }) {
                   : (
                     <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                       {proteinDishes.map((r, i) => (
-                        <div key={r.id} style={{ display: "flex", gap: "8px", alignItems: "stretch" }}>
-                          <div style={{ flex: 1 }}><RecipeCard recipe={r} onSelect={onSelect} accentColor={ACCENTS[i % ACCENTS.length]} /></div>
-                          <button onClick={() => setPickedProtein(pickedProtein?.id === r.id ? null : r)}
-                            style={{ flexShrink: 0, padding: "0 14px", background: pickedProtein?.id === r.id ? C.orange : C.surface, border: `1px solid ${pickedProtein?.id === r.id ? C.orange : C.border}`, borderRadius: "10px", cursor: "pointer", fontSize: "13px", fontWeight: 700, color: pickedProtein?.id === r.id ? "#fff" : C.orange, boxShadow: C.shadow, transition: "all 0.12s" }}>
-                            {pickedProtein?.id === r.id ? "✓" : "Pick"}
-                          </button>
+                        <div key={r.id} style={{ position: "relative" }}
+                          onClick={() => setPickedProtein(pickedProtein?.id === r.id ? null : r)}>
+                          <RecipeCard recipe={r} onSelect={() => setPickedProtein(pickedProtein?.id === r.id ? null : r)} accentColor={pickedProtein?.id === r.id ? C.orange : ACCENTS[i % ACCENTS.length]} />
+                          {pickedProtein?.id === r.id && (
+                            <div style={{ position: "absolute", top: "8px", right: "10px", background: C.orange, color: "#fff", borderRadius: "50%", width: "18px", height: "18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 700 }}>✓</div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -2032,19 +2036,17 @@ function TodayPlanner({ allRecipes, onSelect }) {
                 {/* Single unified veg list with inline protein context */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                   {displayList.map(r => (
-                    <div key={r.id} style={{ display: "flex", gap: "8px", alignItems: "stretch" }}>
-                      <div style={{ flex: 1 }}>
-                        <RecipeCard
-                          recipe={r}
-                          onSelect={onSelect}
-                          accentColor={C.green}
-                          proteinContext={proteinContext}
-                        />
-                      </div>
-                      <button onClick={() => setPickedVeg(pickedVeg?.id === r.id ? null : r)}
-                        style={{ flexShrink: 0, padding: "0 14px", background: pickedVeg?.id === r.id ? C.green : C.surface, border: `1px solid ${pickedVeg?.id === r.id ? C.green : C.border}`, borderRadius: "10px", cursor: "pointer", fontSize: "13px", fontWeight: 700, color: pickedVeg?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow, transition: "all 0.12s" }}>
-                        {pickedVeg?.id === r.id ? "✓" : "Pick"}
-                      </button>
+                    <div key={r.id} style={{ position: "relative" }}
+                      onClick={() => setPickedVeg(pickedVeg?.id === r.id ? null : r)}>
+                      <RecipeCard
+                        recipe={r}
+                        onSelect={() => setPickedVeg(pickedVeg?.id === r.id ? null : r)}
+                        accentColor={pickedVeg?.id === r.id ? C.green : C.green}
+                        proteinContext={proteinContext}
+                      />
+                      {pickedVeg?.id === r.id && (
+                        <div style={{ position: "absolute", top: "8px", right: "10px", background: C.green, color: "#fff", borderRadius: "50%", width: "18px", height: "18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 700 }}>✓</div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -2341,7 +2343,7 @@ function WeeklyPlanner({ allRecipes, onSelect }) {
       </div>`;
     }).join("");
 
-    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Our Kitchen — Weekly Plan ${dateStr}</title><style>
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>My Kitchen — Weekly Plan ${dateStr}</title><style>
 *{box-sizing:border-box;margin:0;padding:0}body{font-family:Georgia,serif;color:#1c1917;background:#fff;padding:40px;max-width:860px;margin:0 auto;font-size:13px;line-height:1.6}
 h1{font-size:24px;font-weight:700;margin-bottom:3px}.sub{font-size:12px;color:#78716c;margin-bottom:28px}
 h2{font-size:14px;font-weight:700;color:#d97706;text-transform:uppercase;letter-spacing:.08em;margin:28px 0 12px;padding-bottom:6px;border-bottom:2px solid #fde68a}
@@ -2358,7 +2360,7 @@ td{padding:8px 10px;border-bottom:1px solid #e5e0d8;vertical-align:top}.day{font
 .print-btn{display:block;margin:32px auto 0;padding:10px 28px;background:#d97706;color:#fff;border:none;border-radius:20px;font-size:13px;font-weight:700;cursor:pointer}
 @media print{.print-btn{display:none}.recipe{page-break-inside:avoid}}
 </style></head><body>
-<h1>Our Kitchen 🍳</h1><div class="sub">Weekly Plan · ${dateStr} · ${uniqueRecipes.length} recipe${uniqueRecipes.length!==1?"s":""} planned</div>
+<h1>My Kitchen 🍳</h1><div class="sub">Weekly Plan · ${dateStr} · ${uniqueRecipes.length} recipe${uniqueRecipes.length!==1?"s":""} planned</div>
 <h2>📅 Meal Plan</h2>
 <table><thead><tr><th>Day</th><th>Protein / Complete dish</th><th>Vegetable side</th><th style="text-align:right">Protein (2 srv)</th></tr></thead><tbody>${planRows}</tbody></table>
 <h2>🛒 Shopping List</h2>
@@ -3090,16 +3092,16 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
         <div style={{ position: "absolute", bottom: "-20px", left: "20px", width: "100px", height: "100px", borderRadius: "50%", background: "rgba(217,119,6,0.08)", pointerEvents: "none" }} />
         <div style={{ maxWidth: "680px", margin: "0 auto", position: "relative" }}>
           <div style={{ fontSize: "36px", marginBottom: "8px" }}>🍳</div>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.1 }}>Our Kitchen</h1>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "32px", fontWeight: 900, color: "#fff", margin: "0 0 4px", lineHeight: 1.1 }}>My Kitchen</h1>
           <p style={{ color: "#a8a29e", fontSize: "13px", margin: "0 0 20px" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}{inventoryCount > 0 ? ` · ${inventoryCount} pantry items` : ""}</p>
 
           {/* Search bar */}
           <div style={{ position: "relative" }}>
-            <span style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", fontSize: "16px", pointerEvents: "none" }}>🔍</span>
+            <svg style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.6 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search any recipe… try 'ayam mentega'"
+              placeholder="Search any recipe… try 'ayam mentega'" 
               style={{ width: "100%", boxSizing: "border-box", background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "12px", padding: "12px 14px 12px 42px", color: "#fff", fontSize: "14px", outline: "none", fontFamily: "'DM Sans', sans-serif" }}
             />
             {search && (
