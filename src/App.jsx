@@ -2383,16 +2383,15 @@ function TodayPlanner({ allRecipes, onSelect }) {
                   : (
                     <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                       {proteinDishes.map((r, i) => (
-                        <div key={r.id} style={{ position: "relative" }}
-                          onClick={() => {
+                        <div key={r.id} style={{ position: "relative" }}>
+                          <RecipeCard recipe={r} onSelect={() => {
                             const newPick = pickedProtein?.id === r.id ? null : r;
                             setPickedProtein(newPick);
                             setPickedVeg(null);
                             if (newPick) setStep(2);
-                          }}>
-                          <RecipeCard recipe={r} onSelect={() => {}} accentColor={pickedProtein?.id === r.id ? C.orange : ACCENTS[i % ACCENTS.length]} />
+                          }} accentColor={pickedProtein?.id === r.id ? C.orange : ACCENTS[i % ACCENTS.length]} />
                           {pickedProtein?.id === r.id && (
-                            <div style={{ position: "absolute", top: "8px", right: "10px", background: C.orange, color: "#fff", borderRadius: "50%", width: "18px", height: "18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 700 }}>✓</div>
+                            <div style={{ position: "absolute", top: "8px", right: "10px", background: C.orange, color: "#fff", borderRadius: "50%", width: "18px", height: "18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 700, pointerEvents: "none" }}>✓</div>
                           )}
                         </div>
                       ))}
