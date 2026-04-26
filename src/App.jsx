@@ -3745,7 +3745,7 @@ export default function App() {
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Screen content */}
-      <div style={{ paddingBottom: "80px" }}>
+      <div style={{ paddingBottom: "90px" }}>
         {screen === "home" && (
           <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
         )}
@@ -3763,7 +3763,7 @@ export default function App() {
                 <button onClick={() => setShowAddModal(true)} style={{ padding: "8px 16px", border: "none", borderRadius: "20px", background: C.orange, color: "#fff", fontSize: "13px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 14px ${C.orange}50` }}>+ Add</button>
               </div>
             </div>
-            <div style={{ padding: "16px 16px 20px" }}>
+            <div style={{ padding: "16px 16px 100px" }}>
               {!storageReady ? (
                 <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading…</div>
               ) : (
