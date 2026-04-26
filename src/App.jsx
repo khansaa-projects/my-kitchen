@@ -2019,7 +2019,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
   if (r.hasGluten) warnings.push({ icon: "🌾", text: "Contains gluten — limit for wife" });
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
+    <div style={{ width: "100%", fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
@@ -2230,8 +2230,7 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
   const handlePrint = () => window.print();
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <div style={{ width: "100%", fontFamily: "'Nunito', sans-serif" }}>
       <style>{`@media print { .no-print { display: none !important; } body { background: #fff; } }`}</style>
 
       {/* Header */}
@@ -3668,9 +3667,7 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
     : [];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-
+    <div style={{ width: "100%", fontFamily: "'Nunito', sans-serif" }}>
       <div style={{ padding: "20px 18px 20px" }}>
 
         {/* Greeting */}
@@ -3853,7 +3850,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
+    <div style={{ width: "100%", fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Screen content */}
