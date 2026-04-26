@@ -13,16 +13,6 @@ const recipes = [
     steps: ["Marinate chicken with garlic powder, salt, pepper, paprika, oregano for at least 2 hrs.", "Cook chicken in oil on medium heat until golden. Set aside.", "In same pan, melt butter, sauté garlic on low until fragrant.", "Add cooking cream and stir. Add cheddar, cook until melted and thickened.", "Return chicken, coat in sauce. Season to taste. Serve with garlic butter rice."],
   },
   {
-    id: 10, name: "Korean Chicken Rice Bowl (치킨 덮밥)",
-    protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
-    cuisine: "Korean", time: "35 min", servings: 4,
-    image: "https://www.cherryonmysundae.com/wp-content/uploads/2021/02/korean-spicy-chicken-bowls-feature.jpg",
-    nutrition: { calories: 480, protein: 32, carbs: 45, fat: 16, fiber: 2 },
-    tags: ["spicy", "rice bowl", "egg"],
-    ingredients: ["300g chicken thigh meat", "½ onion", "2–3 cheongyang chili peppers", "1.5–2 tbsp soy sauce", "2 tbsp mirin", "1.5 tbsp sugar", "1.5–2 tbsp gochugaru", "Sesame oil to taste", "3 eggs", "Steamed rice"],
-    steps: ["Pan-fry chicken thigh until golden brown.", "Add onion, chili peppers, soy sauce, mirin, sugar, gochugaru, sesame oil. Stir-fry together.", "Beat eggs, pour over top. Cook lightly until just set. Serve over rice."],
-  },
-  {
     id: 13, name: "Waterless Chicken Soup",
     protein: "Chicken", taste: "Savory", method: "Steaming / Braising",
     cuisine: "Indonesian", time: "38 min", servings: 6,
@@ -87,17 +77,6 @@ const recipes = [
     steps: ["Cut chicken into bite-sized pieces.", "Cold start: combine broth with raw chicken and onion in cold pan. Turn to medium heat.", "Once boiling, skim foam. Reduce to low and simmer ~5 min.", "Turn heat to medium. Pour ⅔ of egg in a circle.", "Once first layer begins to set, pour remaining egg. Turn off heat while still slightly runny.", "Slide over warm rice. Garnish with nori."],
   },
   {
-    id: 29, name: "Marry Me Chicken",
-    protein: "Chicken", taste: "Savory", method: "Pan-fry / Sauté",
-    cuisine: "Italian-inspired", time: "30 min", servings: 4,
-    link: "https://www.tamingtwins.com/marry-me-chicken/",
-    image: "https://littlesunnykitchen.com/wp-content/uploads/2022/03/Creamy-Garlic-Chicken-1.jpg",
-    nutrition: { calories: 540, protein: 42, carbs: 14, fat: 32, fiber: 2 },
-    tags: ["creamy", "sun-dried tomato", "parmesan"],
-    ingredients: ["650g boneless skinless chicken breasts (~4)", "50g plain flour", "1 tbsp olive oil", "3 garlic cloves, crushed", "150g sun-dried tomatoes, drained", "1 tsp dried oregano", "2 tsp paprika", "150ml double cream", "200ml chicken stock", "50g parmesan, grated", "15g fresh basil", "½ lemon, juiced", "Salt and pepper"],
-    steps: ["Coat chicken in flour.", "Cook in hot oil 5 min each side. Remove to plate.", "On low heat, add garlic, sun-dried tomatoes, oregano, paprika. Stir 3–5 min.", "Add cream, stock, parmesan, salt and pepper. Stir.", "Return chicken to sauce. Cover, cook 5 min. Flip, cook another 5 min.", "Remove from heat. Add basil and lemon juice."],
-  },
-  {
     id: 23, name: "Sapi Cah Cabai",
     protein: "Beef", taste: "Savory", method: "Stir-fry",
     cuisine: "Indonesian", time: "45 min", servings: 6,
@@ -142,22 +121,11 @@ const recipes = [
     steps: ["Peel and chop potatoes, carrots, onion.", "Sauté beef and vegetables on medium-high for 5 min.", "Add 3 cups water. Boil then simmer 15 min.", "Add curry blocks. Add more water if too thick.", "Serve over rice or udon noodles."],
   },
   {
-    id: 2, name: "Lasagna Cake (Joel's)",
-    protein: "Minced Beef", taste: "Savory", method: "Baking + Simmering",
-    cuisine: "Italian-inspired", time: "55 min", servings: 6,
-    link: "https://www.instagram.com/reel/DWJ7VXBl4VM/?igsh=N3JqMmZiODlmczk0",
-    image: "https://i.ytimg.com/vi/PFvV14olgjE/maxresdefault.jpg",
-    nutrition: { calories: 680, protein: 38, carbs: 52, fat: 32, fiber: 4 },
-    tags: ["bolognese", "bechamel", "mashed potato", "showstopper"],
-    ingredients: ["1kg minced beef", "500g tomato puree", "2 onions, 1 carrot, 135g celery", "Spices: salt, beef stock, sugar, pepper, thyme, rosemary", "Bechamel: 25g butter + 25g flour + 400–500ml milk", "Mashed potato: ~900g potatoes, 100g butter, 250g milk", "Red cheddar (for crispy topping)", "Mozzarella", "Instant lasagna sheets (ready to bake)", "Garnish: thyme, parsley, paprika"],
-    steps: ["Roll beef into balls, pan-sear until browned.", "Sauté onion, carrot, celery. Add garlic, tomato puree, spices.", "Return beef. Simmer on lowest heat 3–4 hours.", "Bechamel: make roux with butter+flour, gradually add milk, stir until thick.", "Mashed potato: steam, mash through sieve, mix with butter and milk.", "Bake red cheddar at 140–150°C for 30–40 min until crispy.", "Assemble in 20cm springform: bechamel → cheese → lasagna → ragù, repeat 3–4 layers.", "Cover with foil. Bake 180°C for 45–50 min. Remove foil, bake 200°C for 10 min.", "Cool, coat sides with mashed potato, decorate with red cheddar crispy."],
-  },
-  {
     id: 14, name: "Classic Lasagna",
     protein: "Minced Beef", taste: "Savory", method: "Baking + Simmering",
     cuisine: "Italian", time: "90 min", servings: 6,
     link: "https://www.instagram.com/reel/DEE8USPsMGg/?igsh=MWRrMTlpNm5wcTdibw==",
-    image: "https://japan.recipetineats.com/wp-content/uploads/2021/12/Katsu_Curry_7011bsq-500x500.jpg",
+    image: "https://amandascookin.com/wp-content/uploads/2025/08/Italian-Lasagna-RCSQ.jpg",
     nutrition: { calories: 620, protein: 36, carbs: 48, fat: 28, fiber: 4 },
     tags: ["bechamel", "mozzarella", "cheddar", "spinach"],
     ingredients: ["1kg minced beef or mutton", "2–3 tbsp olive oil", "1 onion, 1 carrot, 1–2 celery sticks diced", "4 garlic cloves", "1 tbsp chili flakes", "2 cans chopped tomatoes", "1 tbsp Italian herbs", "3 beef stock cubes", "¼ cup tomato paste + 1 cup water", "Bechamel: 4 tbsp butter + 4 tbsp flour + 3 cups cold milk", "Lasagna sheets (1–2 boxes)", "300g mozzarella + 300g white cheddar grated", "Spinach, basil (optional)"],
@@ -372,16 +340,6 @@ const recipes = [
     steps: ["Tap-tap saikoro beef dengan tisu dapur untuk menyerap sisa air.", "Bumbui dengan garam, lada putih, lada hitam. Balur rata, sisihkan.", "Goreng bawang putih iris sampai coklat keemasan, sisihkan (minyaknya jangan dibuang).", "Pakai minyak bekas bawang putih untuk memasak saikoro beef sampai semua sisi kecoklatan. Sisihkan (minyak jangan dibuang).", "Pakai minyak bekas, tumis bawang bombay sampai layu & harum. Masukkan bawang putih cincang, tumis sampai harum.", "Masukkan kecap asin, tambahkan sedikit air, lalu masukkan kecap manis. Aduk rata.", "Masukkan butter dan sedikit lada putih. Aduk rata, koreksi rasa.", "Tata daging di piring, tuang saus, taburi bawang putih goreng. Sajikan."],
   },
   {
-    id: 110, name: "Ayam Telur Asin",
-    protein: "Chicken", taste: "Savory", method: "Stir-fry",
-    cuisine: "Indonesian", time: "~35 min", servings: 4,
-    image: "https://cdn0-production-images-kly.akamaized.net/MpogO6rxIVcqTILVwtbX3PnynwU=/469x625/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3944155/original/037701800_1645672522-shutterstock_1808666278.jpg",
-    nutrition: { calories: 380, protein: 28, carbs: 14, fat: 18, fiber: 2 },
-    tags: ["Indonesian"],
-    ingredients: ["1 potong dada ayam fillet", "1 butir telur (untuk rendaman sebelum digoreng)", "200 gr tepung terigu + sedikit tepung beras (campur)", "3 butir kuning telur asin rebus (pilih yang merah)", "2 siung bawang putih, cincang", "200–300 ml susu fresh milk", "Daun kari secukupnya", "Cabai rawit potong secukupnya", "Minyak untuk menggoreng secukupnya", "Lada & garam secukupnya"],
-    steps: ["Potong dada ayam fillet. Campur dengan 1 telur kocok lepas, sedikit garam & lada. Diamkan 1 jam di kulkas.", "Pisahkan telur asin rebus: gunakan kuningnya saja. Hancurkan dengan garpu.", "Balur ayam dengan campuran tepung, goreng sampai kecoklatan, angkat.", "Wajan anti lengket: tumis bawang putih sampai wangi. Masukkan kuning telur asin halus, aduk sampai sedikit berbusa (±1–2 menit).", "Tambahkan fresh milk, cabai rawit, daun kari. Cek rasa, tambah garam jika perlu. Masak sampai creamy.", "Tuang saus saat penyajian."],
-  },
-  {
     id: 111, name: "Ayam Goreng Mentega",
     protein: "Chicken", taste: "Savory", method: "Stir-fry",
     cuisine: "Indonesian", time: "~35 min", servings: 4,
@@ -459,17 +417,6 @@ const recipes = [
     steps: ["Didihkan air, masukkan tulang rongkong. Rebus 1 jam api kecil lalu bumbui garam, merica, gula, kaldu jamur.", "Food processor: haluskan dada ayam, garam, kaldu jamur, gula, merica, bawang putih, bawang merah goreng sampai lengket.", "Masukkan tahu putih, putih telur, baking powder, kecap ikan, maizena, dan air es. Haluskan rata lalu masukkan sebagian adonan ke piping bag.", "Isi tahu pong dengan adonan, semprotkan di tengah kulit tahu, lipat lalu pipihkan. Goreng api kecil-sedang sampai sedikit kecokelatan.", "Potong miring terong, belah tengah lalu isi adonan. Goreng sampai kecokelatan.", "Isi paprika, pare, dan brokoli dengan adonan, ratakan dengan bantuan air.", "Rebus pelengkap isi di api kecil-sedang sampai matang, tiriskan.", "Susun pelengkap dalam mangkuk, tuang kuah, tambahkan daun bawang & garlic oil."],
   },
   {
-    id: 119, name: "Brokoli Daging Sapi",
-    protein: "Beef", taste: "Savory", method: "Stir-fry",
-    cuisine: "Indonesian", time: "~35 min", servings: 4,
-    link: "https://cookpad.com/id/resep/272975",
-    image: "https://awsimages.detik.net.id/community/media/visual/2021/12/13/resep-tumis-daging-brokoli-pedas-1_43.jpeg?w=1200",
-    nutrition: { calories: 420, protein: 30, carbs: 12, fat: 22, fiber: 2 },
-    tags: ["Indonesian"],
-    ingredients: ["300 gr brokoli, lepas per kuntum, cuci bersih", "150 gr daging sapi has dalam, iris tipis", "50 gr bawang bombai, iris bulat", "2 sdm saus tiram", "1 sdt tepung maizena + sedikit air (larutan)", "1 sdt minyak wijen", "50 ml air", "6 sdm minyak goreng", "1 sdm kecap ikan", "1/2 sdt merica", "1/4 sdt soda kue"],
-    steps: ["Rendam/baluri daging sapi dengan bumbu perendam, diamkan 30 menit.", "Rebus brokoli 2 menit, tiriskan. Sisihkan.", "Panaskan 3 sdm minyak, tumis daging sapi sampai matang. Sisihkan.", "Panaskan lagi 3 sdm minyak, tumis bawang bombai sampai layu. Masukkan saus tiram, daging, air, brokoli, dan minyak wijen. Aduk rata.", "Tambahkan larutan maizena, aduk sebentar sampai mengental. Angkat dan sajikan."],
-  },
-  {
     id: 122, name: "Udang Mayonnaise",
     protein: "Shrimp", taste: "Savory", method: "Stir-fry",
     cuisine: "Indonesian", time: "~35 min", servings: 4,
@@ -512,17 +459,6 @@ const recipes = [
     tags: ["sweet", "grilled"],
     ingredients: ["500 gr udang utuh", "1/3 sdt garam", "1/4 sdt merica", "1 jeruk nipis", "3 sdm madu", "2 sdm saus tomat", "2 sdm saus sambal rasa bawang putih", "1 sdm saus tiram", "2 sdm margarin (suhu ruang)", "2 sdm air"],
     steps: ["Buang bagian kepala/ujung tajam, belah punggung udang, buang kotorannya.", "Marinasi udang dengan jeruk nipis, garam, dan merica. Diamkan sebentar.", "Campur madu, saus sambal, saus tomat, saus tiram, dan margarin. Aduk rata.", "Tambahkan air, aduk rata.", "Panaskan sedikit minyak, masukkan udang, masak hingga setengah matang di kedua sisi.", "Masukkan saus, aduk sebentar.", "Sajikan."],
-  },
-  {
-    id: 126, name: "Ebi Furai Ala HOKBEN",
-    protein: "Shrimp", taste: "Savory", method: "Deep-fry",
-    cuisine: "Indonesian", time: "~35 min", servings: 4,
-    link: "https://cookpad.com/id/resep/11163602",
-    image: "https://img-global.cpcdn.com/recipes/c3ddb14ba17714a0/680x781cq80/ebi-furai-ala-hokben-rahasia-supaya-udang-lurus-dan-krispi-foto-resep-utama.jpg",
-    nutrition: { calories: 280, protein: 24, carbs: 16, fat: 10, fiber: 2 },
-    tags: ["crispy"],
-    ingredients: ["8 ekor udang (ukuran 30–40 ekor/kg)", "Tepung terigu secukupnya", "Tepung roti secukupnya", "Minyak untuk menggoreng secukupnya", "2 sdm tepung terigu", "1/2 butir telur", "50 ml susu/cream/santan", "Garam, merica, kaldu jamur/penyedap (sesuai selera)", "Bawang putih parut secukupnya"],
-    steps: ["Kupas udang, buang kotorannya, lalu bilas.", "Kerat bagian perut udang tiap ±1/2 cm (jangan terlalu dalam).", "Tekan/pijat punggung udang sampai urat di punggung putus, supaya udang lurus.", "Buat adonan tepung basah: campur tepung terigu, telur, cream/susu/santan, bawang putih, dan bumbu.", "Balur udang: tepung terigu kering → adonan tepung basah → tepung roti.", "Goreng sampai keemasan."],
   },
   {
     id: 127, name: "Shrimp Roll",
@@ -578,17 +514,6 @@ const recipes = [
     tags: ["crispy"],
     ingredients: ["250 gr ayam", "10 siung bawang putih, geprek (asli 9)", "1 butir telur", "2 sdm maizena", "1/4 sdt merica bubuk", "1 buah jeruk nipis", "Minyak goreng secukupnya", "5 butir bawang merah", "3 siung bawang putih", "1 sdt ketumbar", "1/2 ruas kunyit", "1/2 ruas jahe", "1/2 sdm garam", "1/2 sdm gula pasir"],
     steps: ["Ulek semua bumbu halus, sisihkan.", "Campur telur dan maizena sampai rata. Masukkan ayam dan bumbu halus, aduk rata. Diamkan 15 menit (lebih enak 30 menit/semalaman).", "Geprek bawang putih (dengan kulit). Masukkan ke adonan ayam lalu goreng bersama ayam sampai kecoklatan."],
-  },
-  {
-    id: 132, name: "Sayap Ayam Goreng dengan Oseng Bawang",
-    protein: "Chicken", taste: "Savory", method: "Stir-fry",
-    cuisine: "Indonesian", time: "~35 min", servings: 4,
-    link: "https://cookpad.com/id/resep/16108115",
-    image: "https://assets.promediateknologi.id/crop/0x0:0x0/1200x600/webp/photo/2022/04/17/2893128938.jpeg",
-    nutrition: { calories: 380, protein: 28, carbs: 14, fat: 18, fiber: 2 },
-    tags: ["crispy"],
-    ingredients: ["10 pcs sayap ayam", "5 siung bawang putih halus", "1 butir telur", "1 sdm cuka / air jeruk lemon", "1 sdt baking powder (opsional)", "6 sdm tepung tapioka", "2 sdt kaldu", "1 sdt garam", "1/2 sdm gula", "1/2 sdt merica", "2 saset terasi", "100 gr bawang merah kecil utuh", "3 siung bawang putih halus", "2 batang daun bawang", "15 cabai rawit merah", "10 cabai rawit hijau", "50 ml air", "1 sdm saus tiram", "1/4 sdt garam", "1/2 sdm gula", "1/4 sdt kaldu bubuk/penyedap"],
-    steps: ["Belah sayap jadi 2. Marinasi dengan bawang putih halus, telur, tepung tapioka, cuka, baking powder, kaldu, garam, gula, merica. Aduk rata.", "Bakar terasi, hancurkan lalu saring masuk ke adonan ayam. Diamkan min. 30 menit.", "Goreng ayam hingga kecokelatan, tiriskan.", "Potong daun bawang dan cabai. Panaskan sedikit minyak, tumis bawang putih halus sebentar lalu masukkan bawang merah dan bagian putih daun bawang, tumis hingga wangi.", "Masukkan air, saus tiram, garam, gula, kaldu bubuk. Masak sebentar lalu masukkan cabai dan sisa daun bawang, aduk rata.", "Sajikan sayap ayam goreng dengan oseng sambal bawang."],
   },
   {
     id: 133, name: "Beef Teriyaki (ala hokben)",
@@ -1099,38 +1024,6 @@ const recipes = [
     ],
   },
   {
-    id: 156, name: "Oseng Tahu Telur Kucai",
-    protein: "Tofu & Tempeh", taste: "Savory", method: "Stir-fry",
-    cuisine: "Indonesian", time: "~25 min", servings: 4,
-    image: "https://image.popmama.com/post/20260227/upload_5fcb83f0316cb2ddbc398eb1b0fb5773_895ad477-5380-456d-a962-8b8c8320b385.png",
-    nutrition: { calories: 190, protein: 12, carbs: 10, fat: 11, fiber: 2 },
-    tags: ["tahu", "telur", "kucai", "ebi"],
-    ingredients: [
-      "6 buah tahu putih, potong-potong",
-      "1 butir telur, kocok lepas",
-      "80 gr kucai, potong-potong",
-      "1 sdt gula pasir",
-      "½ sdt garam",
-      "1 sdm saus tiram",
-      "1 sdt kaldu jamur",
-      "50 ml air",
-      "Minyak untuk menumis",
-      "1 sdm ebi kering, rendam air panas",
-      "5 siung bawang putih",
-      "5 siung bawang merah",
-      "5 buah cabai rawit merah",
-      "5 buah cabai merah keriting",
-    ],
-    steps: [
-      "Masukkan bawang merah, bawang putih, cabai merah keriting, cabai rawit, dan ebi ke food chopper. Haluskan.",
-      "Potong-potong tahu, kocok telur lalu campurkan ke tahu. Aduk rata.",
-      "Panaskan sedikit minyak, masak campuran tahu dan telur hingga kecokelatan. Sisihkan.",
-      "Panaskan sedikit minyak, tumis bumbu halus hingga wangi.",
-      "Masukkan tahu, air, garam, kaldu jamur, gula pasir, dan saus tiram. Masak beberapa saat.",
-      "Masukkan kucai, masak sesaat hingga layu. Sajikan dengan nasi putih.",
-    ],
-  },
-  {
     id: 157, name: "Sapi Saus Lada Hitam",
     protein: "Beef", taste: "Savory", method: "Stir-fry",
     cuisine: "Indonesian", time: "~25 min", servings: 3,
@@ -1221,40 +1114,6 @@ const recipes = [
       "Tuang adonan ke loyang yang sudah dialasi baking paper, ratakan dan hentakkan ke meja. Tutup dengan aluminium foil.",
       "Kukus 40 menit api sedang-kecil. Diamkan hingga dingin lalu potong-potong.",
       "Panaskan sedikit minyak, goreng potongan chicken luncheon hingga sedikit kecokelatan. Sajikan dengan nasi dan telur mata sapi.",
-    ],
-  },
-  {
-    id: 160, name: "Ayam Cincang Kemangi",
-    protein: "Minced Beef", taste: "Savory", method: "Stir-fry",
-    cuisine: "Indonesian", time: "~25 min", servings: 5,
-    image: "https://img-global.cpcdn.com/recipes/7b932a30b5e33f10/680x781f0.5_0.552868_1.0q80/ayam-cincang-pedas-daun-kemangi-spicy-thai-basil-chicken-foto-resep-utama.jpg",
-    nutrition: { calories: 300, protein: 26, carbs: 8, fat: 16, fiber: 1 },
-    tags: ["kemangi", "ayam giling", "pedas", "terasi"],
-    ingredients: [
-      "350 gr paha ayam giling",
-      "1 sdm kecap manis (marinasi)",
-      "1½ sdm saus tiram (marinasi)",
-      "1 sdt kecap maggi / kecap ikan (marinasi)",
-      "4 siung bawang putih, cincang",
-      "4 siung bawang merah, cincang",
-      "5 buah cabai merah keriting, iris",
-      "8 buah cabai rawit hijau, iris",
-      "1 batang serai bagian putih, cincang",
-      "4 gr terasi, bakar",
-      "2 sdm minyak",
-      "10 buah bawang merah kecil, utuh",
-      "2 sdt gula pasir",
-      "¼ sdt merica",
-      "½ sdt kaldu bubuk",
-      "½ sdm saus tiram",
-      "25 gr kemangi",
-    ],
-    steps: [
-      "Campurkan ayam giling dengan kecap manis, saus tiram, dan kecap maggi. Aduk rata.",
-      "Cincang bawang putih, bawang merah, dan serai. Iris cabai merah keriting dan cabai rawit hijau.",
-      "Panaskan minyak, tumis bawang putih dan bawang merah hingga wangi. Masukkan terasi bakar, serai, dan cabai. Tumis hingga harum.",
-      "Masukkan ayam yang sudah dimarinasi, masak hingga matang. Tambahkan bawang merah utuh, gula, merica, kaldu bubuk, dan saus tiram. Masak sesaat.",
-      "Masukkan kemangi, aduk sebentar hingga layu. Sajikan dengan nasi putih, telur mata sapi, dan perasan jeruk limau.",
     ],
   },
   {
@@ -1858,7 +1717,7 @@ const recipes = [
     protein: "Chicken", taste: "Savory", method: "Simmering",
     cuisine: "Chinese", time: "55 min", servings: 4,
     link: "https://www.instagram.com/reel/C0lW0KTCdHY/?igsh=d29uazhqNjFpdTB1",
-    image: "",
+    image: "https://image.idntimes.com/post/20231112/img-20231112-171622-afc9ecaae56e8bd77ef24466c6e9adc0.jpg",
     nutrition: { calories: 320, protein: 34, carbs: 12, fat: 14, fiber: 1 },
     tags: ["kecap", "hongkong", "ayam", "chinese", "braised"],
     ingredients: [
@@ -3642,12 +3501,23 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
   const totalRecipes = allRecipes.length;
   const [search, setSearch] = useState("");
 
-  // 6 random savory recipes — shuffled once on mount, stable during session
-  const suggested = useState(() => {
+  // 6 random suggestions with filter
+  const [suggestFilter, setSuggestFilter] = useState("all");
+  const [suggested, setSuggested] = useState(() => {
     const savory = allRecipes.filter(r => r.taste === "Savory");
-    const shuffled = [...savory].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 6);
-  })[0];
+    return [...savory].sort(() => Math.random() - 0.5).slice(0, 6);
+  });
+
+  const handleSuggestFilter = (f) => {
+    setSuggestFilter(f);
+    const VEGGIE = ["Vegetable", "Vegetarian", "Tofu & Tempeh"];
+    const pool = allRecipes.filter(r => {
+      if (f === "protein") return !VEGGIE.includes(r.protein);
+      if (f === "vegetables") return VEGGIE.includes(r.protein);
+      return r.taste === "Savory";
+    });
+    setSuggested([...pool].sort(() => Math.random() - 0.5).slice(0, 6));
+  };
 
   const features = [
     { id: "today",     emoji: "🍽", title: "What's for dinner?", subtitle: "Pick from what's in your freezer", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
@@ -3746,9 +3616,22 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
             </div>
 
             {/* Random recipe suggestions */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", margin: "24px 0 14px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", margin: "24px 0 12px" }}>
               <span style={{ fontWeight: 900, fontSize: "18px", color: C.ink }}>Suggestions</span>
               <span onClick={() => onNavigate("browse")} style={{ fontSize: "13px", fontWeight: 700, color: C.orange, cursor: "pointer" }}>See all</span>
+            </div>
+            {/* Filter pills */}
+            <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
+              {[["all","All"],["protein","Protein"],["vegetables","Vegetables"]].map(([f, label]) => (
+                <button key={f} onClick={() => handleSuggestFilter(f)} style={{
+                  padding: "6px 14px", borderRadius: "20px", border: "none", cursor: "pointer",
+                  fontSize: "12px", fontWeight: 800, fontFamily: "'Nunito', sans-serif",
+                  background: suggestFilter === f ? C.orange : C.card,
+                  color: suggestFilter === f ? "#fff" : C.textMuted,
+                  boxShadow: C.shadow,
+                  transition: "background 0.15s, color 0.15s",
+                }}>{label}</button>
+              ))}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
               {suggested.map((r, i) => (
