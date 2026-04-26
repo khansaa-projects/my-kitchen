@@ -1853,6 +1853,36 @@ const recipes = [
       "Toss cooked wings in the honey garlic sauce. Garnish with sesame seeds and green onions. Serve immediately.",
     ],
   },
+  {
+    id: 180, name: "Ayam Kecap Hongkong",
+    protein: "Chicken", taste: "Savory", method: "Simmering",
+    cuisine: "Chinese", time: "55 min", servings: 4,
+    link: "https://www.instagram.com/reel/C0lW0KTCdHY/?igsh=d29uazhqNjFpdTB1",
+    image: "",
+    nutrition: { calories: 320, protein: 34, carbs: 12, fat: 14, fiber: 1 },
+    tags: ["kecap", "hongkong", "ayam", "chinese", "braised"],
+    ingredients: [
+      "4 pcs paha ayam",
+      "2 batang daun bawang",
+      "5 cm jahe",
+      "4 pcs bawang putih",
+      "7 pcs bawang merah",
+      "1 sdm cuka masak",
+      "50 ml kecap asin",
+      "3 sdm minyak wijen",
+      "1 sdm oyster sauce",
+      "2 sdm kecap manis",
+      "1 sdt kaldu jamur",
+      "½ sdt garam",
+      "½ sdt lada putih",
+    ],
+    steps: [
+      "Susun ayam, jahe, bawang dan daun bawang dalam wajan.",
+      "Di bowl, campurkan semua sauce kemudian tuang ke dalam wajan.",
+      "Masak selama 40 menit atau sampai matang.",
+      "Sajikan dengan daun ketumbar.",
+    ],
+  },
 ];
 
 // ─── ENRICHMENT ────────────────────────────────────────────────────────────────
@@ -1989,7 +2019,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
   if (r.hasGluten) warnings.push({ icon: "🌾", text: "Contains gluten — limit for wife" });
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
@@ -2000,7 +2030,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
         <span style={{ fontSize: "16px", fontWeight: 900, color: "#fff", fontFamily: "'Nunito', sans-serif", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{recipe.name}</span>
       </div>
 
-      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "28px 20px 60px" }}>
+      <div style={{ padding: "20px 16px 60px" }}>
         {/* Hero image */}
         {recipe.image && (
           <div style={{ marginBottom: "20px", borderRadius: "14px", overflow: "hidden", boxShadow: C.shadowMd }}>
@@ -2206,7 +2236,7 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
 
       {/* Header */}
       <div className="no-print" style={{ background: "#1A2B5A", borderBottom: "none", padding: "16px 20px", position: "sticky", top: 0, zIndex: 10 }}>
-        <div style={{ maxWidth: "640px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
           <button onClick={onBack} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "12px", padding: "7px 12px", cursor: "pointer", fontSize: "13px", fontWeight: 700 }}>← Back</button>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: "'Nunito', sans-serif", fontSize: "16px", fontWeight: 900, color: "#fff" }}>Today's Meal</div>
@@ -2215,7 +2245,7 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
       </div>
 
       {/* Sticky PDF export button */}
-      <div className="no-print" style={{ position: "sticky", top: "56px", zIndex: 9, maxWidth: "640px", margin: "0 auto", padding: "10px 16px 0", pointerEvents: "none" }}>
+      <div className="no-print" style={{ position: "sticky", top: "56px", zIndex: 9, padding: "10px 16px 0", pointerEvents: "none" }}>
         <div style={{ display: "flex", justifyContent: "flex-end", pointerEvents: "all" }}>
           <button onClick={handlePrint} style={{ background: C.orange, color: "#fff", border: "none", borderRadius: "20px", padding: "9px 18px", fontSize: "13px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 16px ${C.orange}50`, display: "flex", alignItems: "center", gap: "6px" }}>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
@@ -2224,7 +2254,7 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
         </div>
       </div>
 
-      <div style={{ maxWidth: "640px", margin: "0 auto", padding: "16px 16px 60px" }}>
+      <div style={{ padding: "16px 16px 60px" }}>
 
         {/* Protein summary card */}
         <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "16px", marginBottom: "20px", boxShadow: C.shadowMd }}>
@@ -2472,7 +2502,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
                   <div style={{ fontSize: "11px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>✓ Complete dishes — no veg side needed</div>
                   <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                     {completeDishes.map(r => (
-                      <button key={r.id} onClick={() => { const newPick = pickedProtein?.id === r.id ? null : r; setPickedProtein(newPick); setPickedVeg(null); if (newPick) setTimeout(() => setStep(2), 300); }}
+                      <button key={r.id} onClick={() => { const newPick = pickedProtein?.id === r.id ? null : r; setPickedProtein(newPick); setPickedVeg(null); if (newPick) setStep(2); }}
                         style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", transition: "all 0.12s", border: `1px solid ${pickedProtein?.id === r.id ? C.green : C.greenBorder}`, background: pickedProtein?.id === r.id ? C.green : C.greenLight, color: pickedProtein?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow }}>
                         {pickedProtein?.id === r.id ? "✓ " : ""}{r.name}
                       </button>
@@ -2490,8 +2520,13 @@ function TodayPlanner({ allRecipes, onSelect }) {
                     <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
                       {proteinDishes.map((r, i) => (
                         <div key={r.id} style={{ position: "relative" }}
-                          onClick={() => { const newPick = pickedProtein?.id === r.id ? null : r; setPickedProtein(newPick); if (newPick) setTimeout(() => setStep(2), 300); }}>
-                          <RecipeCard recipe={r} onSelect={() => setPickedProtein(pickedProtein?.id === r.id ? null : r)} accentColor={pickedProtein?.id === r.id ? C.orange : ACCENTS[i % ACCENTS.length]} />
+                          onClick={() => {
+                            const newPick = pickedProtein?.id === r.id ? null : r;
+                            setPickedProtein(newPick);
+                            setPickedVeg(null);
+                            if (newPick) setStep(2);
+                          }}>
+                          <RecipeCard recipe={r} onSelect={() => {}} accentColor={pickedProtein?.id === r.id ? C.orange : ACCENTS[i % ACCENTS.length]} />
                           {pickedProtein?.id === r.id && (
                             <div style={{ position: "absolute", top: "8px", right: "10px", background: C.orange, color: "#fff", borderRadius: "50%", width: "18px", height: "18px", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", fontWeight: 700 }}>✓</div>
                           )}
@@ -3636,7 +3671,7 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-      <div style={{ maxWidth: "680px", margin: "0 auto", padding: "20px 18px 20px" }}>
+      <div style={{ padding: "20px 18px 20px" }}>
 
         {/* Greeting */}
         <div style={{ marginBottom: "20px" }}>
@@ -3742,7 +3777,7 @@ function BottomNav({ active, onNav }) {
       position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 100,
       background: C.card, borderTop: `1px solid ${C.border}`,
       display: "flex", alignItems: "center", justifyContent: "space-around",
-      padding: "10px 0 18px", boxShadow: "0 -2px 12px rgba(0,0,0,0.06)",
+      padding: "10px 0 env(safe-area-inset-bottom, 18px)", boxShadow: "0 -2px 12px rgba(0,0,0,0.06)", margin: 0,
     }}>
       {NAV_ITEMS.map(item => {
         const a = active === item.id;
@@ -3818,7 +3853,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Screen content */}
@@ -3829,8 +3864,8 @@ export default function App() {
         {screen !== "home" && (
           <>
             {/* Screen header */}
-            <div style={{ background: "#1A2B5A", padding: "14px 20px", position: "sticky", top: 0, zIndex: 10 }}>
-              <div style={{ maxWidth: "680px", margin: "0 auto", display: "flex", alignItems: "center", gap: "12px" }}>
+            <div style={{ background: "#1A2B5A", padding: "14px 20px", position: "sticky", top: 0, zIndex: 10, margin: 0, width: "100%", boxSizing: "border-box" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <button onClick={() => setScreen("home")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "10px", width: "36px", height: "36px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <svg width="10" height="18" viewBox="0 0 10 18" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 1L1 9l8 8"/></svg>
                 </button>
@@ -3840,7 +3875,7 @@ export default function App() {
                 <button onClick={() => setShowAddModal(true)} style={{ padding: "8px 16px", border: "none", borderRadius: "20px", background: C.orange, color: "#fff", fontSize: "13px", fontWeight: 800, cursor: "pointer", boxShadow: `0 4px 14px ${C.orange}50` }}>+ Add</button>
               </div>
             </div>
-            <div style={{ maxWidth: "680px", margin: "0 auto", padding: "16px 16px 20px" }}>
+            <div style={{ padding: "16px 16px 20px" }}>
               {!storageReady ? (
                 <div style={{ textAlign: "center", padding: "60px 20px", color: C.textMuted, fontSize: "14px" }}>Loading…</div>
               ) : (
