@@ -2255,8 +2255,8 @@ function TodayPlanner({ allRecipes, onSelect }) {
     <div>
       {/* ── Sticky picked section ── */}
       {hasPick && (
-        <div style={{ position: "sticky", top: "94px", zIndex: 9, marginBottom: "16px" }}>
-          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "12px 14px", boxShadow: "0 4px 16px rgba(0,0,0,0.1)" }}>
+        <div style={{ position: "sticky", top: "60px", zIndex: 8, marginBottom: "16px", pointerEvents: "none" }}>
+          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "12px 14px", boxShadow: "0 4px 16px rgba(0,0,0,0.1)", pointerEvents: "all" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
               <span style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em" }}>Today's Meal</span>
               <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
@@ -2361,7 +2361,12 @@ function TodayPlanner({ allRecipes, onSelect }) {
                   <div style={{ fontSize: "11px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>✓ Complete dishes — no veg side needed</div>
                   <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
                     {completeDishes.map(r => (
-                      <button key={r.id} onClick={() => { const newPick = pickedProtein?.id === r.id ? null : r; setPickedProtein(newPick); setPickedVeg(null); if (newPick) setStep(2); }}
+                      <button key={r.id} onClick={() => {
+                        const newPick = pickedProtein?.id === r.id ? null : r;
+                        setPickedProtein(newPick);
+                        setPickedVeg(null);
+                        if (newPick) setStep(2);
+                      }}
                         style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", transition: "all 0.12s", border: `1px solid ${pickedProtein?.id === r.id ? C.green : C.greenBorder}`, background: pickedProtein?.id === r.id ? C.green : C.greenLight, color: pickedProtein?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow }}>
                         {pickedProtein?.id === r.id ? "✓ " : ""}{r.name}
                       </button>
