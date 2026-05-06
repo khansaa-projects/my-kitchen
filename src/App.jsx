@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const recipes = [
   {
@@ -1879,7 +1879,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
   if ((recipe.nutrition?.fat || 0) >= 25) warnings.push({ icon: "🧈", text: "High fat dish" });
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
@@ -3153,7 +3153,7 @@ ${pantryHtml?`<div style="margin-top:20px"><h4 style="color:#7c3aed;margin-botto
 function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
   const [search, setSearch] = useState("");
   const [activeGroup, setActiveGroup] = useState(null);
-  const scrollRef = React.useRef(0);
+  const scrollRef = useRef(0);
 
   // Save scroll position before navigating to a recipe
   const handleSelect = (recipe, accent) => {
@@ -3162,7 +3162,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
   };
 
   // Restore scroll position when returning
-  React.useEffect(() => {
+  useEffect(() => {
     if (scrollRef.current > 0) {
       window.scrollTo(0, scrollRef.current);
     }
@@ -3839,18 +3839,19 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
+    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Screen content */}
-      <div style={{ paddingBottom: "90px" }}>
         {screen === "home" && (
-          <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
+          <div style={{ paddingBottom: "90px" }}>
+            <HomeScreen onNavigate={setScreen} allRecipes={allRecipes} inventory={inventory} customRecipes={customRecipes} onSelect={handleSelect} />
+          </div>
         )}
         {screen !== "home" && (
           <>
-            {/* Screen header */}
-            <div style={{ background: "#1A2B5A", padding: "14px 20px", position: "sticky", top: 0, zIndex: 10, margin: 0, width: "100%", boxSizing: "border-box" }}>
+            {/* Screen header — sticky at very top of scroll container */}
+            <div style={{ background: "#1A2B5A", padding: "14px 20px", position: "sticky", top: 0, zIndex: 10, boxSizing: "border-box" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
                 <button onClick={() => setScreen("home")} style={{ background: "rgba(255,255,255,0.15)", border: "none", color: "#fff", borderRadius: "10px", width: "36px", height: "36px", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   <svg width="10" height="18" viewBox="0 0 10 18" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 1L1 9l8 8"/></svg>
@@ -3875,7 +3876,6 @@ export default function App() {
             </div>
           </>
         )}
-      </div>
 
 
       {showAddModal && <AddRecipeModal onClose={() => setShowAddModal(false)} onAdd={handleAddRecipe} />}
