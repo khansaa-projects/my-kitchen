@@ -1874,8 +1874,9 @@ function RecipeDetail({ recipe, onBack, accent }) {
   const toggleCheck = (i) => setChecked(prev => ({ ...prev, [i]: !prev[i] }));
 
   const warnings = [];
-  if (r.isDeepFried) warnings.push({ icon: "⚠️", text: "Deep-fried — not ideal for wife's IBD" });
-  if (r.hasGluten) warnings.push({ icon: "🌾", text: "Contains gluten — limit for wife" });
+  if (r.isDeepFried) warnings.push({ icon: "⚠️", text: "Deep-fried dish" });
+  if (r.hasGluten) warnings.push({ icon: "🌾", text: "Contains gluten" });
+  if ((recipe.nutrition?.fat || 0) >= 25) warnings.push({ icon: "🧈", text: "High fat dish" });
 
   return (
     <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif", overflowX: "hidden" }}>
@@ -2086,7 +2087,76 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
   const pct = Math.min(100, Math.round((proteinTotal / COMBINED_PROTEIN_GOAL) * 100));
   const ok = pct >= 80;
 
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    // Build a standalone HTML string from current meal data and print it
+    const recipeHtml = recipes.map((recipe, i) => {
+      const acc = i === 0 ? '#C88A20' : '#70A860';
+      const label = i === 0 ? '🥩 Protein dish' : '🥦 Vegetable side';
+      return `
+        <div class="recipe-card">
+          <div class="recipe-header" style="border-left:4px solid ${acc}">
+            ${recipe.image ? `<img src="${recipe.image}" class="recipe-img" />` : ''}
+            <div class="recipe-header-text">
+              <div class="recipe-label" style="color:${acc}">${label}</div>
+              <div class="recipe-name">${recipe.name}</div>
+              <div class="recipe-meta">⏱ ${recipe.time} · 👤 ${recipe.servings} servings · <strong style="color:${acc}">${recipe.nutrition.protein}g protein/srv</strong></div>
+            </div>
+          </div>
+          <div class="section">
+            <div class="section-title">Ingredients</div>
+            ${(recipe.ingredients || []).map(ing => `<div class="ingredient">◆ ${ing}</div>`).join('')}
+          </div>
+          <div class="section">
+            <div class="section-title">Directions</div>
+            ${(recipe.steps || []).map((step, j) => `<div class="step"><span class="step-num" style="background:${acc}">${j+1}</span>${step}</div>`).join('')}
+          </div>
+          ${recipe.link ? `<div class="source"><a href="${recipe.link}">📎 View original source</a></div>` : ''}
+        </div>`;
+    }).join('');
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+      <title>Today's Meal</title>
+      <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+      <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:'Nunito',sans-serif;background:#fff;color:#1A2B5A;padding:24px;max-width:720px;margin:0 auto}
+        h1{font-size:22px;font-weight:900;margin-bottom:4px}
+        .summary{background:#f8f5ee;border:1px solid #E8DCC8;border-radius:12px;padding:14px;margin-bottom:20px}
+        .summary-row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:8px}
+        .bar-bg{background:#E8DCC8;border-radius:6px;height:8px;overflow:hidden}
+        .bar-fill{height:100%;border-radius:6px;background:${ok ? '#70A860' : '#C88A20'};width:${pct}%}
+        .recipe-card{background:#fff;border:1px solid #E8DCC8;border-radius:12px;overflow:hidden;margin-bottom:20px;page-break-inside:avoid}
+        .recipe-header{padding:14px 16px;display:flex;gap:14px;align-items:flex-start;border-bottom:1px solid #E8DCC8}
+        .recipe-img{width:80px;height:80px;object-fit:cover;border-radius:10px;flex-shrink:0}
+        .recipe-header-text{flex:1}
+        .recipe-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+        .recipe-name{font-size:17px;font-weight:900;margin-bottom:6px}
+        .recipe-meta{font-size:12px;color:#3A5080}
+        .section{padding:12px 16px;border-bottom:1px solid #E8DCC8}
+        .section:last-child{border-bottom:none}
+        .section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#8090A8;margin-bottom:8px}
+        .ingredient{font-size:13px;padding:3px 0;border-bottom:1px solid #f0ebe0;color:#1A2B5A}
+        .step{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #f0ebe0;font-size:13px;line-height:1.6}
+        .step-num{width:22px;height:22px;min-width:22px;border-radius:50%;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:2px}
+        .source{padding:10px 16px;background:#f8f5ee;font-size:12px}
+        .source a{color:#C88A20}
+        @media print{body{padding:12px}}
+      </style>
+    </head><body>
+      <h1>Today's Meal 🍽</h1>
+      <p style="font-size:12px;color:#8090A8;margin-bottom:16px">${new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</p>
+      <div class="summary">
+        <div class="summary-row"><span>Combined protein (2 servings)</span><span style="font-weight:700;color:${ok ? '#70A860' : '#C88A20'}">${proteinTotal}g / ${COMBINED_PROTEIN_GOAL}g goal</span></div>
+        <div class="bar-bg"><div class="bar-fill"></div></div>
+      </div>
+      ${recipeHtml}
+    </body></html>`;
+
+    const w = window.open('', '_blank');
+    w.document.write(html);
+    w.document.close();
+    w.onload = () => w.print();
+  };
 
   return (
     <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
@@ -2153,6 +2223,8 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
                   </div>
                   <div style={{ display: "flex", gap: "6px", marginTop: "8px", flexWrap: "wrap" }}>
                     {r.isDeepFried && <span style={{ fontSize: "10px", color: "#c2410c", background: "#fff7ed", padding: "2px 8px", borderRadius: "20px", border: "1px solid #fed7aa" }}>⚠️ Deep-fried</span>}
+                    {r.hasGluten && <span style={{ fontSize: "10px", color: C.yellow, background: C.yellowLight, padding: "2px 8px", borderRadius: "20px", border: "1px solid #fde68a" }}>🌾 Gluten</span>}
+                    {(recipe.nutrition?.fat || 0) >= 25 && <span style={{ fontSize: "10px", color: "#b45309", background: "#fffbeb", padding: "2px 8px", borderRadius: "20px", border: "1px solid #fcd34d" }}>🧈 High fat</span>}
                     {recipe.tags?.map(t => <span key={t} style={{ fontSize: "10px", color: C.textMuted, background: C.bg, padding: "2px 8px", borderRadius: "20px", border: `1px solid ${C.border}` }}>#{t}</span>)}
                   </div>
                 </div>
@@ -2213,6 +2285,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
   const [wifeFilter, setWifeFilter] = useState(true);
   const [quickOnly, setQuickOnly] = useState(false);
   const [showMealSummary, setShowMealSummary] = useState(false);
+  const [dishFilter, setDishFilter] = useState("all");
 
   const enriched = allRecipes.map(enrichRecipe);
   const savory = enriched.filter(r => r.taste === "Savory");
@@ -2229,8 +2302,10 @@ function TodayPlanner({ allRecipes, onSelect }) {
   };
 
   const browsedProteins = browsedProtein ? PROTEIN_GROUPS[browsedProtein] : [];
-  const completeDishes = applyFilters(savory.filter(r => r.isComplete && browsedProteins.includes(r.protein)));
-  const proteinDishes  = applyFilters(savory.filter(r => browsedProteins.includes(r.protein) && !r.isComplete && !r.isVegSide));
+  const allCompleteDishes = applyFilters(savory.filter(r => r.isComplete && browsedProteins.includes(r.protein)));
+  const allProteinDishes  = applyFilters(savory.filter(r => browsedProteins.includes(r.protein) && !r.isComplete && !r.isVegSide));
+  const completeDishes = dishFilter === "complete" ? [...allCompleteDishes, ...allProteinDishes] : allCompleteDishes;
+  const proteinDishes  = dishFilter === "complete" ? [] : allProteinDishes;
   const vegSides       = savory.filter(r => r.isVegSide);
 
   const hasPick = pickedProtein || pickedVeg;
@@ -2325,12 +2400,14 @@ function TodayPlanner({ allRecipes, onSelect }) {
 
 
       {/* ── Step tabs ── */}
-      <div style={{ display: "flex", gap: "0", marginBottom: "20px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", overflow: "hidden", boxShadow: C.shadow }}>
-        {[{ id: 1, label: "Step 1 — Protein" }, { id: 2, label: "Step 2 — Vegetables" }].map(s => (
-          <button key={s.id} onClick={() => setStep(s.id)} style={{ flex: 1, padding: "10px", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 600, background: step === s.id ? C.orange : "transparent", color: step === s.id ? "#fff" : C.textMuted, transition: "all 0.15s" }}>
-            {s.label}
-          </button>
-        ))}
+      <div style={{ position: "sticky", top: "64px", zIndex: 8, background: C.bg, paddingBottom: "10px" }}>
+        <div style={{ display: "flex", gap: "0", marginBottom: "0", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", overflow: "hidden", boxShadow: C.shadow }}>
+          {[{ id: 1, label: "Step 1 — Protein" }, { id: 2, label: "Step 2 — Vegetables" }].map(s => (
+            <button key={s.id} onClick={() => setStep(s.id)} style={{ flex: 1, padding: "10px", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 600, background: step === s.id ? C.orange : "transparent", color: step === s.id ? "#fff" : C.textMuted, transition: "all 0.15s" }}>
+              {s.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* ── Step 1: Protein ── */}
@@ -2338,6 +2415,13 @@ function TodayPlanner({ allRecipes, onSelect }) {
         <div>
           <div style={{ fontSize: "12px", color: C.textMuted, fontWeight: 600, marginBottom: "12px" }}>
             What protein do you have in the freezer?
+          </div>
+
+          {/* Complete / All toggle */}
+          <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
+            {[["all","All"],["complete","✓ Complete only"]].map(([f, lbl]) => (
+              <button key={f} onClick={() => setDishFilter(f)} style={{ padding: "6px 14px", borderRadius: "20px", border: "none", cursor: "pointer", fontSize: "12px", fontWeight: 800, fontFamily: "'Nunito', sans-serif", background: dishFilter === f ? C.text : C.surface, color: dishFilter === f ? "#fff" : C.textMuted, boxShadow: C.shadow, transition: "all 0.15s" }}>{lbl}</button>
+            ))}
           </div>
 
           {/* Protein group pills */}
@@ -2772,7 +2856,7 @@ function WeeklyPlanner({ allRecipes, onSelect }) {
 
     const recipeHtml = uniqueRecipes.map(r => {
       const er = enrichRecipe(r);
-      const warns = [er.isDeepFried ? "⚠️ Deep-fried" : null, er.hasGluten ? "🌾 Gluten" : null].filter(Boolean).join(" · ");
+      const warns = [er.isDeepFried ? "⚠️ Deep-fried" : null, er.hasGluten ? "🌾 Gluten" : null, (er.nutrition?.fat || 0) >= 25 ? "🧈 High fat" : null].filter(Boolean).join(" · ");
       return `<div class="recipe">
         <h3>${r.name}</h3>
         <div class="rmeta">${r.protein} · ${r.method} · ⏱ ${r.time} · ${r.nutrition.protein}g protein/srv${warns ? ` · <span style="color:#c2410c">${warns}</span>` : ""}</div>
@@ -3069,6 +3153,20 @@ ${pantryHtml?`<div style="margin-top:20px"><h4 style="color:#7c3aed;margin-botto
 function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
   const [search, setSearch] = useState("");
   const [activeGroup, setActiveGroup] = useState(null);
+  const scrollRef = React.useRef(0);
+
+  // Save scroll position before navigating to a recipe
+  const handleSelect = (recipe, accent) => {
+    scrollRef.current = window.scrollY;
+    onSelect(recipe, accent);
+  };
+
+  // Restore scroll position when returning
+  React.useEffect(() => {
+    if (scrollRef.current > 0) {
+      window.scrollTo(0, scrollRef.current);
+    }
+  }, []);
 
   const enriched = allRecipes.map(enrichRecipe);
   const filtered = search.trim()
@@ -3095,10 +3193,11 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
 
   return (
     <div>
+      <div style={{ position: "sticky", top: "64px", zIndex: 8, background: C.bg, paddingBottom: "10px", marginBottom: "4px" }}>
       <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search recipes, methods, tags…"
-        style={{ width: "100%", boxSizing: "border-box", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", color: C.text, fontSize: "13px", outline: "none", marginBottom: "14px", boxShadow: C.shadow }} />
+        style={{ width: "100%", boxSizing: "border-box", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", color: C.text, fontSize: "13px", outline: "none", marginBottom: "10px", boxShadow: C.shadow }} />
 
-      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap", marginBottom: "20px" }}>
+      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
         <button onClick={() => setActiveGroup(null)}
           style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${!activeGroup ? C.orange : C.border}`, background: !activeGroup ? C.orange : C.surface, color: !activeGroup ? '#fff' : C.textMuted }}>
           All ({filtered.length})
@@ -3116,6 +3215,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
           </button>
         ))}
       </div>
+      </div>{/* end sticky search+filters */}
 
       {/* "Added by you" special group */}
       {activeGroup === "__custom__" && (
@@ -3126,7 +3226,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
             {filtered.filter(r => customIds.includes(r.id)).map(r => (
               <div key={r.id} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                <div style={{ flex: 1, minWidth: 0 }}><RecipeCard recipe={r} onSelect={onSelect} accentColor={C.green} /></div>
+                <div style={{ flex: 1, minWidth: 0 }}><RecipeCard recipe={r} onSelect={handleSelect} accentColor={C.green} /></div>
                 <button onClick={() => onDelete(r.id)}
                   title="Remove recipe"
                   style={{ flexShrink: 0, width: "36px", height: "72px", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", cursor: "pointer", color: C.textFaint, fontSize: "16px", boxShadow: C.shadow }}>
@@ -3146,7 +3246,7 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
           <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
             {g.recs.map(r => (
               <div key={r.id} style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                <div style={{ flex: 1, minWidth: 0 }}><RecipeCard recipe={r} onSelect={onSelect} accentColor={g.accent} /></div>
+                <div style={{ flex: 1, minWidth: 0 }}><RecipeCard recipe={r} onSelect={handleSelect} accentColor={g.accent} /></div>
                 {customIds.includes(r.id) && (
                   <button onClick={() => onDelete(r.id)}
                     title="Remove recipe"
@@ -3549,8 +3649,8 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
 
         {/* Greeting */}
         <div style={{ marginBottom: "20px" }}>
-          <div style={{ fontSize: "14px", fontWeight: 700, color: C.mid, marginBottom: "4px" }}>Good evening 👋</div>
-          <h1 style={{ fontSize: "28px", fontWeight: 900, color: C.ink, lineHeight: 1.2, letterSpacing: "-0.5px", margin: "0 0 4px" }}>What's for<br />dinner tonight?</h1>
+          {(() => { const h = new Date().getHours(); const greet = h < 12 ? "Good morning 👋" : h < 17 ? "Good afternoon 👋" : "Good evening 👋"; return <div style={{ fontSize: "14px", fontWeight: 700, color: C.mid, marginBottom: "4px" }}>{greet}</div>; })()}
+          {(() => { const h = new Date().getHours(); const heading = h < 12 ? <>What's for<br />lunch today?</> : h < 17 ? <>What to cook<br />right now?</> : <>What's for<br />dinner tonight?</>; return <h1 style={{ fontSize: "28px", fontWeight: 900, color: C.ink, lineHeight: 1.2, letterSpacing: "-0.5px", margin: "0 0 4px" }}>{heading}</h1>; })()}
           <p style={{ color: C.textFaint, fontSize: "12px", margin: "4px 0 0" }}>{totalRecipes} recipes · 2 pax{customRecipes.length > 0 ? ` · ${customRecipes.length} added` : ""}</p>
         </div>
 
