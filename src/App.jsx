@@ -2328,87 +2328,77 @@ function TodayPlanner({ allRecipes, onSelect }) {
   }
   return (
     <div>
-      {/* ── Sticky picked section ── */}
-      {hasPick && (
-        <div style={{ position: "sticky", top: "60px", zIndex: 8, marginBottom: "16px", pointerEvents: "none" }}>
-          <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "12px 14px", boxShadow: "0 4px 16px rgba(0,0,0,0.1)", pointerEvents: "all" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-              <span style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em" }}>Today's Meal</span>
-              <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-                {pickedProtein && pickedVeg && (
-                  <button onClick={() => setShowMealSummary(true)} title="View full meal plan"
-                    style={{ background: C.orange, border: "none", borderRadius: "8px", padding: "5px 12px", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "12px", fontWeight: 700, color: "#fff", boxShadow: C.shadow }}>
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                      <polyline points="17 21 17 13 7 13 7 21"/>
-                      <polyline points="7 3 7 8 15 8"/>
-                    </svg>
-                    View recipes
-                  </button>
-                )}
-                <button onClick={clearAll} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "12px", fontWeight: 600 }}>Clear ×</button>
-              </div>
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: pickedProtein && pickedVeg ? "1fr 1fr" : "1fr", gap: "8px" }}>
-              {pickedProtein && (
-                <div style={{ background: C.orangeLight, border: `1px solid ${C.orangeBorder}`, borderRadius: "10px", padding: "10px 12px" }}>
-                  <div style={{ fontSize: "10px", color: C.orange, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>🥩 Protein</div>
-                  <div style={{ fontSize: "13px", fontWeight: 700, color: C.text, lineHeight: 1.3, marginBottom: "4px" }}>{pickedProtein.name}</div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: "11px", color: C.textMuted }}>⏱ {pickedProtein.time} · {pickedProtein.nutrition.protein}g protein</span>
-                    <button onClick={() => setPickedProtein(null)} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "14px", lineHeight: 1, padding: "0 2px" }}>×</button>
-                  </div>
-                </div>
-              )}
-              {pickedVeg && (
-                <div style={{ background: C.greenLight, border: `1px solid ${C.greenBorder}`, borderRadius: "10px", padding: "10px 12px" }}>
-                  <div style={{ fontSize: "10px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>🥦 Vegetable</div>
-                  <div style={{ fontSize: "13px", fontWeight: 700, color: C.text, lineHeight: 1.3, marginBottom: "4px" }}>{pickedVeg.name}</div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontSize: "11px", color: C.textMuted }}>⏱ {pickedVeg.time} · {pickedVeg.nutrition.protein}g protein</span>
-                    <button onClick={() => setPickedVeg(null)} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "14px", lineHeight: 1, padding: "0 2px" }}>×</button>
-                  </div>
-                </div>
-              )}
-            </div>
-            {/* Protein progress bar — counts both protein dish AND veg dish */}
-            {(pickedProtein || pickedVeg) && (() => {
-              const proteinTotal = ((pickedProtein?.nutrition?.protein || 0) + (pickedVeg?.nutrition?.protein || 0)) * 2;
-              const pct = Math.min(100, Math.round((proteinTotal / COMBINED_PROTEIN_GOAL) * 100));
-              const ok = pct >= 80;
-              return (
-                <div style={{ marginTop: "10px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
-                    <span style={{ fontSize: "11px", color: C.textMuted }}>Combined protein (2 servings)</span>
-                    <span style={{ fontSize: "11px", fontWeight: 700, color: ok ? C.green : C.orange }}>{proteinTotal}g / {COMBINED_PROTEIN_GOAL}g goal</span>
-                  </div>
-                  <div style={{ background: C.bg, borderRadius: "4px", height: "6px", overflow: "hidden", border: `1px solid ${C.border}` }}>
-                    <div style={{ width: `${pct}%`, height: "100%", background: ok ? C.green : C.orange, borderRadius: "4px", transition: "width 0.3s" }} />
-                  </div>
-                  {pickedProtein && pickedVeg && (
-                    <div style={{ fontSize: "10px", color: C.textFaint, marginTop: "4px" }}>
-                      {pickedProtein.nutrition.protein * 2}g from protein dish + {pickedVeg.nutrition.protein * 2}g from veg dish
-                    </div>
-                  )}
-                </div>
-              );
-            })()}
+      {/* ── Today's Meal — always visible (empty state or filled) ── */}
+      <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "14px", padding: "14px", marginBottom: "16px", boxShadow: C.shadowMd }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
+          <span style={{ fontSize: "11px", fontWeight: 700, color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.07em" }}>Today's Meal</span>
+          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+            {pickedProtein && pickedVeg && (
+              <button onClick={() => setShowMealSummary(true)}
+                style={{ background: C.orange, border: "none", borderRadius: "8px", padding: "5px 12px", cursor: "pointer", fontSize: "12px", fontWeight: 700, color: "#fff", boxShadow: C.shadow }}>
+                View recipes
+              </button>
+            )}
+            {hasPick && <button onClick={clearAll} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "12px", fontWeight: 600 }}>Clear ×</button>}
           </div>
         </div>
-      )}
 
+        {/* Two boxes — protein and veg, filled or empty */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+          {/* Protein box */}
+          <div onClick={() => setStep(1)}
+            style={{ background: pickedProtein ? C.orangeLight : C.bg, border: `1.5px ${pickedProtein ? "solid" : "dashed"} ${pickedProtein ? C.orangeBorder : C.borderStrong}`, borderRadius: "12px", padding: "12px", cursor: "pointer", minHeight: "80px", transition: "all 0.15s" }}>
+            <div style={{ fontSize: "10px", color: C.orange, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>🥩 Protein</div>
+            {pickedProtein ? (
+              <>
+                <div style={{ fontSize: "12px", fontWeight: 800, color: C.text, lineHeight: 1.3, marginBottom: "4px" }}>{pickedProtein.name}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "10px", color: C.textMuted }}>{pickedProtein.nutrition.protein}g protein</span>
+                  <button onClick={e => { e.stopPropagation(); setPickedProtein(null); }} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "14px", lineHeight: 1 }}>×</button>
+                </div>
+              </>
+            ) : (
+              <div style={{ fontSize: "12px", color: C.textFaint, fontWeight: 600 }}>+ Choose protein</div>
+            )}
+          </div>
 
-
-      {/* ── Step tabs ── */}
-      <div style={{ position: "sticky", top: "64px", zIndex: 8, background: C.bg, paddingBottom: "10px" }}>
-        <div style={{ display: "flex", gap: "0", marginBottom: "0", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", overflow: "hidden", boxShadow: C.shadow }}>
-          {[{ id: 1, label: "Step 1 — Protein" }, { id: 2, label: "Step 2 — Vegetables" }].map(s => (
-            <button key={s.id} onClick={() => setStep(s.id)} style={{ flex: 1, padding: "10px", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: 600, background: step === s.id ? C.orange : "transparent", color: step === s.id ? "#fff" : C.textMuted, transition: "all 0.15s" }}>
-              {s.label}
-            </button>
-          ))}
+          {/* Veg box */}
+          <div onClick={() => setStep(2)}
+            style={{ background: pickedVeg ? C.greenLight : C.bg, border: `1.5px ${pickedVeg ? "solid" : "dashed"} ${pickedVeg ? C.greenBorder : C.borderStrong}`, borderRadius: "12px", padding: "12px", cursor: "pointer", minHeight: "80px", transition: "all 0.15s" }}>
+            <div style={{ fontSize: "10px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "6px" }}>🥦 Vegetables</div>
+            {pickedVeg ? (
+              <>
+                <div style={{ fontSize: "12px", fontWeight: 800, color: C.text, lineHeight: 1.3, marginBottom: "4px" }}>{pickedVeg.name}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "10px", color: C.textMuted }}>{pickedVeg.nutrition.protein}g protein</span>
+                  <button onClick={e => { e.stopPropagation(); setPickedVeg(null); }} style={{ background: "none", border: "none", color: C.textFaint, cursor: "pointer", fontSize: "14px", lineHeight: 1 }}>×</button>
+                </div>
+              </>
+            ) : (
+              <div style={{ fontSize: "12px", color: C.textFaint, fontWeight: 600 }}>+ Choose veg</div>
+            )}
+          </div>
         </div>
+
+        {/* Protein progress bar */}
+        {hasPick && (() => {
+          const proteinTotal = ((pickedProtein?.nutrition?.protein || 0) + (pickedVeg?.nutrition?.protein || 0)) * 2;
+          const pct = Math.min(100, Math.round((proteinTotal / COMBINED_PROTEIN_GOAL) * 100));
+          const ok = pct >= 80;
+          return (
+            <div style={{ marginTop: "12px" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
+                <span style={{ fontSize: "11px", color: C.textMuted }}>Combined protein (2 servings)</span>
+                <span style={{ fontSize: "11px", fontWeight: 700, color: ok ? C.green : C.orange }}>{proteinTotal}g / {COMBINED_PROTEIN_GOAL}g goal</span>
+              </div>
+              <div style={{ background: C.bg, borderRadius: "4px", height: "6px", overflow: "hidden", border: `1px solid ${C.border}` }}>
+                <div style={{ width: `${pct}%`, height: "100%", background: ok ? C.green : C.orange, borderRadius: "4px", transition: "width 0.3s" }} />
+              </div>
+            </div>
+          );
+        })()}
       </div>
+
 
       {/* ── Step 1: Protein ── */}
       {step === 1 && (
@@ -2439,34 +2429,14 @@ function TodayPlanner({ allRecipes, onSelect }) {
 
           {browsedProtein && (
             <>
-              {/* Complete dishes — shown as pills */}
-              {completeDishes.length > 0 && (
-                <div style={{ marginBottom: "16px" }}>
-                  <div style={{ fontSize: "11px", color: C.green, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>✓ Complete dishes — no veg side needed</div>
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                    {completeDishes.map(r => (
-                      <button key={r.id} onClick={() => {
-                        const newPick = pickedProtein?.id === r.id ? null : r;
-                        setPickedProtein(newPick);
-                        setPickedVeg(null);
-                        if (newPick) setStep(2);
-                      }}
-                        style={{ padding: "7px 14px", borderRadius: "20px", fontSize: "13px", fontWeight: 600, cursor: "pointer", transition: "all 0.12s", border: `1px solid ${pickedProtein?.id === r.id ? C.green : C.greenBorder}`, background: pickedProtein?.id === r.id ? C.green : C.greenLight, color: pickedProtein?.id === r.id ? "#fff" : C.green, boxShadow: C.shadow }}>
-                        {pickedProtein?.id === r.id ? "✓ " : ""}{r.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               {/* Protein-only dishes — clicking card picks it */}
               <div style={{ marginBottom: "8px" }}>
                 <div style={{ fontSize: "11px", color: C.orange, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "8px" }}>{browsedProtein} dishes</div>
-                {proteinDishes.length === 0
+                {proteinDishes.length === 0 && completeDishes.length === 0
                   ? <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "16px", textAlign: "center", color: C.textMuted, fontSize: "13px" }}>No results — try turning off filters above.</div>
                   : (
                     <div style={{ display: "flex", flexDirection: "column", gap: "7px" }}>
-                      {proteinDishes.map((r, i) => (
+                      {[...completeDishes, ...proteinDishes].map((r, i) => (
                         <div key={r.id} style={{ position: "relative" }}>
                           <RecipeCard recipe={r} onSelect={() => {
                             const newPick = pickedProtein?.id === r.id ? null : r;
@@ -2484,7 +2454,6 @@ function TodayPlanner({ allRecipes, onSelect }) {
                 }
               </div>
 
-              {/* Next step nudge */}
               {pickedProtein && (
                 <div style={{ marginTop: "20px", textAlign: "center" }}>
                   <button onClick={() => setStep(2)}
