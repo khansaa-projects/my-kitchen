@@ -3194,28 +3194,27 @@ function BrowseView({ allRecipes, onSelect, customIds = [], onDelete }) {
   return (
     <div>
       <div style={{ position: "sticky", top: "64px", zIndex: 8, background: C.bg, paddingBottom: "10px", marginBottom: "4px" }}>
-      <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search recipes, methods, tags…"
-        style={{ width: "100%", boxSizing: "border-box", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", color: C.text, fontSize: "13px", outline: "none", marginBottom: "10px", boxShadow: C.shadow }} />
-
-      <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-        <button onClick={() => setActiveGroup(null)}
-          style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${!activeGroup ? C.orange : C.border}`, background: !activeGroup ? C.orange : C.surface, color: !activeGroup ? '#fff' : C.textMuted }}>
-          All ({filtered.length})
-        </button>
-        {customIds.length > 0 && (
-          <button onClick={() => setActiveGroup(activeGroup === "__custom__" ? null : "__custom__")}
-            style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${activeGroup === "__custom__" ? C.green : C.border}`, background: activeGroup === "__custom__" ? C.greenLight : C.surface, color: activeGroup === "__custom__" ? C.green : C.textMuted }}>
-            ✨ Added by you ({customIds.length})
+        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search recipes, methods, tags…"
+          style={{ width: "100%", boxSizing: "border-box", background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "10px 14px", color: C.text, fontSize: "13px", outline: "none", marginBottom: "10px", boxShadow: C.shadow }} />
+        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+          <button onClick={() => setActiveGroup(null)}
+            style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${!activeGroup ? C.orange : C.border}`, background: !activeGroup ? C.orange : C.surface, color: !activeGroup ? '#fff' : C.textMuted }}>
+            All ({filtered.length})
           </button>
-        )}
-        {groups.map(g => (
-          <button key={g.label} onClick={() => setActiveGroup(activeGroup === g.label ? null : g.label)}
-            style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${activeGroup === g.label ? g.accent : C.border}`, background: activeGroup === g.label ? `${g.accent}18` : C.surface, color: activeGroup === g.label ? g.accent : C.textMuted }}>
-            {g.label} ({g.recs.length})
-          </button>
-        ))}
+          {customIds.length > 0 && (
+            <button onClick={() => setActiveGroup(activeGroup === "__custom__" ? null : "__custom__")}
+              style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${activeGroup === "__custom__" ? C.green : C.border}`, background: activeGroup === "__custom__" ? C.greenLight : C.surface, color: activeGroup === "__custom__" ? C.green : C.textMuted }}>
+              ✨ Added by you ({customIds.length})
+            </button>
+          )}
+          {groups.map(g => (
+            <button key={g.label} onClick={() => setActiveGroup(activeGroup === g.label ? null : g.label)}
+              style={{ padding: "5px 12px", borderRadius: "20px", fontSize: "12px", fontWeight: 600, cursor: "pointer", border: `1px solid ${activeGroup === g.label ? g.accent : C.border}`, background: activeGroup === g.label ? `${g.accent}18` : C.surface, color: activeGroup === g.label ? g.accent : C.textMuted }}>
+              {g.label} ({g.recs.length})
+            </button>
+          ))}
+        </div>
       </div>
-      </div>{/* end sticky search+filters */}
 
       {/* "Added by you" special group */}
       {activeGroup === "__custom__" && (
@@ -3624,10 +3623,10 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
   };
 
   const features = [
-    { id: "today",     emoji: "🍽", title: "What's for dinner?", subtitle: "Pick from what's in your freezer", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
-    { id: "week",      emoji: "📅", title: "Plan the week",       subtitle: "Weekend prep made easy",            description: "Map out 7 days of meals, auto-generate your shopping list", color: "#0284c7", light: "#e0f2fe", border: "#bae6fd", stat: "Mon — Sun" },
-    { id: "inventory", emoji: "🧺", title: "My pantry",           subtitle: "Know what you have",               description: "Upload grocery receipts — get recipe recommendations from your inventory", color: "#16a34a", light: "#dcfce7", border: "#bbf7d0", stat: inventoryCount > 0 ? `${inventoryCount} items` : "Upload receipt" },
-    { id: "browse",    emoji: "📖", title: "Recipe book",         subtitle: "Browse all recipes",               description: "Search and explore your full collection by ingredient or cuisine", color: "#7c3aed", light: "#f3e8ff", border: "#ddd6fe", stat: `${totalRecipes} recipes` },
+    { id: "today",     emoji: "🍽", title: new Date().getHours() < 17 ? "What's for lunch?" : "What's for dinner?", subtitle: "Choose your protein & veg side", description: "Step-by-step meal planning with protein tracking for 2", color: "#d97706", light: "#fef3c7", border: "#fde68a", stat: `${totalRecipes} recipes` },
+    { id: "week",      emoji: "📅", title: "Meal prep for the week", subtitle: "Shop smart, cook less, eat well", description: "Map out 7 days of meals, auto-generate your shopping list", color: "#0284c7", light: "#e0f2fe", border: "#bae6fd", stat: "Mon — Sun" },
+    { id: "inventory", emoji: "🧺", title: "Cook what you have",    subtitle: "Turn your pantry into a meal",   description: "Upload grocery receipts — get recipe recommendations from your inventory", color: "#16a34a", light: "#dcfce7", border: "#bbf7d0", stat: inventoryCount > 0 ? `${inventoryCount} items` : "Upload receipt" },
+    { id: "browse",    emoji: "📖", title: "Recipe book",           subtitle: "Browse all recipes",             description: "Search and explore your full collection by ingredient or cuisine", color: "#7c3aed", light: "#f3e8ff", border: "#ddd6fe", stat: `${totalRecipes} recipes` },
   ];
 
   // Multi-word search
@@ -3833,7 +3832,7 @@ export default function App() {
   }
 
   const SCREEN_META = {
-    today:     { label: "What's for dinner?", emoji: "🍽" },
+    today:     { label: new Date().getHours() < 17 ? "What's for lunch?" : "What's for dinner?", emoji: "🍽" },
     week:      { label: "Weekly plan",         emoji: "📅" },
     inventory: { label: "My pantry",           emoji: "🧺" },
     browse:    { label: "Recipe book",         emoji: "📖" },
