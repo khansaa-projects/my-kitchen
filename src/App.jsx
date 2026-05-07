@@ -1879,7 +1879,7 @@ function RecipeDetail({ recipe, onBack, accent }) {
   if ((recipe.nutrition?.fat || 0) >= 25) warnings.push({ icon: "🧈", text: "High fat dish" });
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Top bar */}
@@ -2159,7 +2159,7 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
   };
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
       <style>{`@media print { .no-print { display: none !important; } body { background: #fff; } }`}</style>
 
@@ -2278,14 +2278,13 @@ function MealSummaryPage({ protein, veg, onBack, onSelect }) {
 
 function TodayPlanner({ allRecipes, onSelect }) {
   const [step, setStep] = useState(1); // 1 = protein, 2 = veg
-  const [browsedProtein, setBrowsedProtein] = useState(null);
+  const [browsedProtein, setBrowsedProtein] = useState("🐔 Chicken");
   const [browsedVeg, setBrowsedVeg] = useState(null);
   const [pickedProtein, setPickedProtein] = useState(null);
   const [pickedVeg, setPickedVeg] = useState(null);
   const [wifeFilter, setWifeFilter] = useState(true);
   const [quickOnly, setQuickOnly] = useState(false);
   const [showMealSummary, setShowMealSummary] = useState(false);
-  const [dishFilter, setDishFilter] = useState("all");
 
   const enriched = allRecipes.map(enrichRecipe);
   const savory = enriched.filter(r => r.taste === "Savory");
@@ -2302,10 +2301,8 @@ function TodayPlanner({ allRecipes, onSelect }) {
   };
 
   const browsedProteins = browsedProtein ? PROTEIN_GROUPS[browsedProtein] : [];
-  const allCompleteDishes = applyFilters(savory.filter(r => r.isComplete && browsedProteins.includes(r.protein)));
-  const allProteinDishes  = applyFilters(savory.filter(r => browsedProteins.includes(r.protein) && !r.isComplete && !r.isVegSide));
-  const completeDishes = dishFilter === "complete" ? [...allCompleteDishes, ...allProteinDishes] : allCompleteDishes;
-  const proteinDishes  = dishFilter === "complete" ? [] : allProteinDishes;
+  const completeDishes = applyFilters(savory.filter(r => r.isComplete && browsedProteins.includes(r.protein)));
+  const proteinDishes  = applyFilters(savory.filter(r => browsedProteins.includes(r.protein) && !r.isComplete && !r.isVegSide));
   const vegSides       = savory.filter(r => r.isVegSide);
 
   const hasPick = pickedProtein || pickedVeg;
@@ -2313,7 +2310,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
   const clearAll = () => {
     setPickedProtein(null);
     setPickedVeg(null);
-    setBrowsedProtein(null);
+    setBrowsedProtein("🐔 Chicken");
     setBrowsedVeg(null);
     setStep(1);
     setShowMealSummary(false);
@@ -2407,14 +2404,7 @@ function TodayPlanner({ allRecipes, onSelect }) {
             What protein do you have in the freezer?
           </div>
 
-          {/* Complete / All toggle */}
-          <div style={{ display: "flex", gap: "8px", marginBottom: "14px" }}>
-            {[["all","All"],["complete","✓ Complete only"]].map(([f, lbl]) => (
-              <button key={f} onClick={() => setDishFilter(f)} style={{ padding: "6px 14px", borderRadius: "20px", border: "none", cursor: "pointer", fontSize: "12px", fontWeight: 800, fontFamily: "'Nunito', sans-serif", background: dishFilter === f ? C.text : C.surface, color: dishFilter === f ? "#fff" : C.textMuted, boxShadow: C.shadow, transition: "all 0.15s" }}>{lbl}</button>
-            ))}
-          </div>
-
-          {/* Protein group pills */}
+{/* Protein group pills */}
           <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
             {proteinGroupsAvailable.map(([label]) => {
               const active = browsedProtein === label;
@@ -3610,7 +3600,7 @@ function HomeScreen({ onNavigate, allRecipes, inventory, customRecipes, onSelect
     : [];
 
   return (
-    <div style={{ minHeight: "100vh", background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       <div style={{ padding: "20px 18px 20px" }}>
@@ -3808,7 +3798,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ minHeight: "100vh", width: "100%", background: C.bg, color: C.text, fontFamily: "'Nunito', sans-serif" }}>
+    <div style={{ background: C.bg, fontFamily: "'Nunito', sans-serif" }}>
       <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
       {/* Screen content */}
